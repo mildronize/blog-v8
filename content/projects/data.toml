@@ -1,12 +1,12 @@
 [[project]]
-name = ""
+name = "Nammatham"
 desc = ""
 tags = ["", ""]
 img = ""
 links = [{ name = "", url = "" }, { name = "", url = "" }]
 
 [[project]]
-name = ""
+name = "Azure Functions Adapter"
 desc = ""
 tags = ["", ""]
 img = ""

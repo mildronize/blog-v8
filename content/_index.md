@@ -5,4 +5,4 @@ template = 'home.html'
 lang = 'en'
 +++
 
-Words about you xxx
+Hi 👋 I'm Thada, DevOps & SRE Lead, welcome to my blog. TypeScript, Azure, Creator of Nammatham, Serverless.

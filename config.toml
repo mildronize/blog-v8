@@ -6,8 +6,8 @@
 #=========================================================================================
 
 base_url = "https://v8.thadaw.com"     # Domain name of your website
-title = "xxxx"
-description = "xxxx xxxx xxxx"
+title = "Thada W."
+description = "My personal blog"
 default_language = "en"
 theme = "serene"
 output_dir = "public"
@@ -41,9 +41,9 @@ anchors = "on"
 
 [extra]
 
-name = "xxxx"
-id = "xxxx"
-bio = "xxxx"
+name = "Thada Wangthammang"
+id = "mildronize"
+bio = "My personal blog"
 avatar = "img/avatar.webp"
 
 display_id = true
