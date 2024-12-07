@@ -44,7 +44,7 @@ anchors = "on"
 name = "Thada Wangthammang"
 id = "mildronize"
 bio = "My personal blog"
-avatar = "img/avatar.webp"
+avatar = "images/avatar.jpg"
 
 display_id = true
 display_bio = true
@@ -57,19 +57,19 @@ recent_more_text = "more »"
 sections = [
     { name = "posts", path = "/posts", is_external = false },
     { name = "projects", path = "/projects", is_external = false },
-    # { name = "about", path = "/about", is_external = false },
+    { name = "about", path = "/about", is_external = false },
     # { name = "github", path = "https://github.com/<your-username>", is_external = true },
 ]
 blog_section_path = "/posts"
 
 links = [
-    { name = "GitHub", icon = "github", url = "https://github.com/<your-username>" },
-    { name = "Twitter", icon = "twitter", url = "https://twitter.com/<your-username>" },
-    { name = "Email", icon = "email", url = "mailto:<your-email-address>" },
+    { name = "GitHub", icon = "github", url = "https://github.com/mildronize" },
+    { name = "Twitter", icon = "twitter", url = "https://twitter.com/mildronize" },
+    { name = "Email", icon = "email", url = "mailto:thada.wth@gmail.com" },
 ]
 
 force_theme = false                   # false | "light" | "dark"
-blog_categorized = true               # Whether to categorize blog posts
+blog_categorized = false              # Whether to categorize blog posts
 blur_effect = false                   # Whether to turn on blur effect on navigation bar
 back_to_top = true                    # Whether to show back-to-top button on post pages
 toc = true                            # Whether to show Table-of-Contents by default

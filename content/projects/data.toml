@@ -1,13 +1,13 @@
 [[project]]
 name = "Nammatham"
-desc = ""
-tags = ["", ""]
+desc = "Type-safe Serverless Library for Azure Functions and friends"
+tags = ["AzureFunctions", "Framework", "TypeScript"]
 img = ""
-links = [{ name = "", url = "" }, { name = "", url = "" }]
+links = [{ name = "GitHub", url = "https://github.com/thaitype/nammatham" }, { name = "Doc", url = "https://nammatham.thaitype.dev/" }]
 
 [[project]]
-name = "Azure Functions Adapter"
-desc = ""
-tags = ["", ""]
+name = "Azure Functions tRPC Adapter"
+desc = "tRPC Adapter with Azure Functions v4."
+tags = ["AzureFunctions", "TypeScript", "tRPC"]
 img = ""
-links = [{ name = "", url = "" }, { name = "", url = "" }]
+links = [{ name = "GitHub", url = "https://github.com/thaitype/trpc-azure-functions-adapter" }]
