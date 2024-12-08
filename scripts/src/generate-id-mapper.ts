@@ -3,6 +3,18 @@ import fs from "fs-extra";
 import path from "path";
 import toml from "@iarna/toml";
 
+class Logger {
+  constructor(public readonly verbose: boolean = false) {
+  }
+  log(message: string) {
+    if (this.verbose) console.log(message);
+  }
+  error(message: string) {
+    console.error(message);
+  }
+}
+const logger = new Logger(String(process.env.DEBUG).toLowerCase() === "true");
+
 const IGNORE_MARKDOWN_FILES = ["_index.md"];
 type MarkdownType = 'regular' | 'nested';
 
@@ -63,6 +75,7 @@ function extractZolaSlug(dir: string, markdownFilePath: string): string {
 }
 
 async function processMarkdownFiles(sourceDirs: string[], targetDir: string) {
+  console.time('Execution Time');
 
   const idMapper = new Map<string, {
     path: string;
@@ -78,7 +91,7 @@ async function processMarkdownFiles(sourceDirs: string[], targetDir: string) {
 
       for (const file of files) {
         if (IGNORE_MARKDOWN_FILES.includes(path.basename(file))) {
-          console.log(`Ignoring: ${file}`);
+          logger.log(`Ignoring: ${file}`);
           continue;
         }
         // Read file content
@@ -88,7 +101,7 @@ async function processMarkdownFiles(sourceDirs: string[], targetDir: string) {
         const frontmatter = extractFrontMatter(content);
 
         if (!frontmatter?.extra?.uuid) {
-          console.error(`Error: No ID found in frontmatter of file: ${file}`);
+          logger.error(`Error: No ID found in frontmatter of file: ${file}`);
           continue;
         }
 
@@ -97,17 +110,23 @@ async function processMarkdownFiles(sourceDirs: string[], targetDir: string) {
           path: `/${path.basename(dir)}/${slug}`,
         });
 
-        console.log(`Processed: ${frontmatter.title} -> '${file}'`);
+        logger.log(`Processed: ${frontmatter.title} -> '${file}'`);
       }
     }
 
     fs.writeJSON(path.join(targetDir, "id-mapper.json"), Object.fromEntries(idMapper));
 
-    console.log("All files processed successfully!");
+    console.log(`ID mapper generated with ${idMapper.size} entries.`);
+
+    console.timeEnd('Execution Time');
+
+    console.log("-----");
   } catch (error) {
-    console.error("Error processing files:", error);
+    logger.error("Error processing files: " + error);
   }
 }
+
+console.log("Generating ID mapper...");
 
 const sourceDirectories = ["../content/posts"];
 const targetDirectory = "../public/api";
