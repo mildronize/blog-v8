@@ -4,43 +4,46 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - main
+
+env:
+  SWA_ENVIRONMENT: "production"
+  SWA_NAME: "thadaw-main-site-v8"
+  # Version of Zola available in GitHub releases.
+  # Ref: https://www.getzola.org/documentation/deployment/gitlab-pages/
+  ZOLA_VERSION: "0.19.2"
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          lfs: false
-      - name: Build And Deploy
-        id: builddeploy
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_SALMON_PEBBLE_0100C4100 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-          action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "public" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
 
-  close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    name: Close Pull Request Job
-    steps:
-      - name: Close Pull Request
-        id: closepullrequest
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_SALMON_PEBBLE_0100C4100 }}
-          action: "close"
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install Scripts Dependencies
+        run: bun install
+        working-directory: scripts
+
+      - name: Install Zola
+        run: |
+          zola_url="https://github.com/getzola/zola/releases/download/v$ZOLA_VERSION/zola-v$ZOLA_VERSION-x86_64-unknown-linux-gnu.tar.gz"
+          if ! wget --quiet --spider $zola_url; then
+            echo "A Zola release with the specified version could not be found.";
+            exit 1;
+          fi
+          wget $zola_url
+          tar -xzf *.tar.gz
+
+      - name: Build
+        run: |
+          make prebuild
+          ./zola build
+          make clean-js-build
+
+      - name: Deploy
+        run: bunx @azure/static-web-apps-cli deploy ./public --env ${{ env.SWA_ENVIRONMENT}} -n  ${{ env.SWA_NAME }}
+        env:
+          SWA_CLI_DEPLOYMENT_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_SALMON_PEBBLE_0100C4100 }}
