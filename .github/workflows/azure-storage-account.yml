@@ -1,0 +1,56 @@
+name: Azure Storage Account
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_STORAGE_ACCOUNT_NAME: "thadawmainv8"
+  # Version of Zola available in GitHub releases.
+  # Ref: https://www.getzola.org/documentation/deployment/gitlab-pages/
+  ZOLA_VERSION: "0.19.2"
+
+jobs:
+  build_and_deploy_job:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install Scripts Dependencies
+        run: bun install
+        working-directory: scripts
+
+      - name: Install Zola
+        run: |
+          zola_url="https://github.com/getzola/zola/releases/download/v$ZOLA_VERSION/zola-v$ZOLA_VERSION-x86_64-unknown-linux-gnu.tar.gz"
+          if ! wget --quiet --spider $zola_url; then
+            echo "A Zola release with the specified version could not be found.";
+            exit 1;
+          fi
+          wget $zola_url
+          tar -xzf *.tar.gz
+
+      - name: Build
+        run: |
+          ./zola build
+          make id-mapper
+          make clean-js-build
+
+      - name: Login Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+  
+      - name: Upload to Azure Storage Account
+        run: az storage blob upload-batch --account-name ${{ env.AZURE_STORAGE_ACCOUNT_NAME }} --auth-mode key --destination '$web' --source "./public" --overwrite
+  
+      - name: Logout Azure
+        if: always()
+        shell: bash
+        run: az logout
