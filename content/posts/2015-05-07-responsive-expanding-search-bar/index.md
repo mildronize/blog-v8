@@ -3,7 +3,6 @@ title = "Responsive expanding search bar"
 date = "2015-05-07"
 description = "Expanding search bar extension for any HTML page or Jekyll. This extension is a lightweight version of http://tympanus.net/Tutorials/ExpandingSearchBar/ for using  in Jekyll or HTML. This extension is used in my blog."
 
-# id = "cnhkvv7"
 # slug = "responsive-expanding-search-bar-cnhkvv7"
 # aliases = ["/s/cnhkvv7"]
 
