@@ -110,6 +110,6 @@ async function processMarkdownFiles(sourceDirs: string[], targetDir: string) {
 }
 
 const sourceDirectories = ["../content/posts"];
-const targetDirectory = "../public";
+const targetDirectory = "../public/api";
 
 processMarkdownFiles(sourceDirectories, targetDirectory);

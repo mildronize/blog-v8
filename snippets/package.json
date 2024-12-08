@@ -6,10 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:watch": "nodemon --exec 'bun run build' --watch src --ext ts",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/bun": "^1.1.14",
     "@types/node": "^22.10.1",
+    "nodemon": "^3.1.7",
     "typescript": "~5.6.2",
     "vite": "^6.0.2"
   }
