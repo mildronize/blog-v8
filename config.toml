@@ -42,11 +42,11 @@ anchors = "on"
 [extra]
 
 name = "Thada Wangthammang"
-id = "mildronize"
+id = "Thada W."
 bio = "My personal blog"
 avatar = "images/avatar.jpg"
 
-display_id = true
+# display_id = true
 display_bio = true
 display_avatar = true
 
