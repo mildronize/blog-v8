@@ -11,7 +11,7 @@ categories = [ "HTML" ]
 tags = [ "HTML", "CSS", "JavaScript", "Jekyll", "Responsive Web Design" ]
 
 [extra]
-id = "cnhkvv7"
+uuid = "cnhkvv7"
 +++
 
 ![responsive-expanding-search-bar](2015-05-06-responsive-expanding-search-bar.jpg)
