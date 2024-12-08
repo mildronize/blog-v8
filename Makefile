@@ -9,4 +9,7 @@ prebuild:
 
 dev: prebuild serve
 
-build: prebuild blog-build
+build: prebuild blog-build clean-js-build
+
+clean-js-build:
+	rm -rf public/js/src
