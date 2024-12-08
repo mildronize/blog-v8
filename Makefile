@@ -4,12 +4,12 @@ serve:
 blog-build:
 	zola build
 
-prebuild:
+id-mapper:
 	cd scripts && bun run src/generate-id-mapper.ts 
 
-dev: prebuild serve
+dev: id-mapper serve
 
-build: prebuild blog-build clean-js-build
+build: blog-build id-mapper clean-js-build
 
 clean-js-build:
 	rm -rf public/js/src
