@@ -4,6 +4,7 @@ import path from "path";
 import toml from "@iarna/toml";
 
 const IGNORE_MARKDOWN_FILES = ["_index.md"];
+type MarkdownType = 'regular' | 'nested';
 
 interface FrontMatterOptions {
   delimiters: string[];
@@ -35,34 +36,30 @@ function extractFrontMatter(content: string, options?: Partial<FrontMatterOption
  * @param markdownFilePath - The full path to the Markdown file.
  * @returns The extracted slug.
  */
-function extractZolaSlug(markdownFilePath: string): string {
-  // Normalize the file path to ensure consistent path separators
-  const normalizedPath = path.normalize(markdownFilePath);
-
-  // Extract the directory and filename components
-  const directory = path.dirname(normalizedPath);
-  const filename = path.basename(normalizedPath, path.extname(normalizedPath));
+function extractZolaSlug(dir: string, markdownFilePath: string): string {
 
   // Regular expression to match a 'YYYY-MM-DD' prefix
   const datePrefixPattern = /^\d{4}-\d{2}-\d{2}[-_]?/;
 
-  // Determine if the file is nested by checking if its parent directory is not the root
-  const isNested = path.basename(directory) !== path.basename(path.resolve(directory, '..'));
+  let relativePath = path.relative(dir, markdownFilePath);
+
+  // Classify the markdown file
+  const markdownType: MarkdownType = relativePath.includes(path.sep) ? 'nested' : 'regular';
 
   // Extract the slug based on whether the file is nested
   let slug: string;
-  if (isNested) {
+  if (markdownType === 'nested') {
     // Use the parent folder name for nested Markdown files
-    slug = path.basename(directory);
+    slug = path.dirname(relativePath);
   } else {
     // Use the filename for regular Markdown files
-    slug = filename;
+    slug = path.basename(relativePath).replace(/\.md$/, '');
   }
 
   // Remove the date prefix if present
   slug = slug.replace(datePrefixPattern, '');
 
-  return slug;
+  return slug.toLowerCase();
 }
 
 async function processMarkdownFiles(sourceDirs: string[], targetDir: string) {
@@ -90,13 +87,13 @@ async function processMarkdownFiles(sourceDirs: string[], targetDir: string) {
         // Extract front matter and body
         const frontmatter = extractFrontMatter(content);
 
-        if (!frontmatter?.extra?.id) {
+        if (!frontmatter?.extra?.uuid) {
           console.error(`Error: No ID found in frontmatter of file: ${file}`);
           continue;
         }
 
-        const slug = frontmatter?.slug ?? extractZolaSlug(file);
-        idMapper.set(frontmatter.extra.id, {
+        const slug = frontmatter?.slug ?? extractZolaSlug(dir, file);
+        idMapper.set(frontmatter.extra.uuid, {
           path: `/${path.basename(dir)}/${slug}`,
         });
 
