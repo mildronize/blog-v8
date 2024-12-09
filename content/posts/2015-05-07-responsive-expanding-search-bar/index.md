@@ -1,17 +1,18 @@
 +++
 title = "Responsive expanding search bar"
-date = "2015-05-07"
 description = "Expanding search bar extension for any HTML page or Jekyll. This extension is a lightweight version of http://tympanus.net/Tutorials/ExpandingSearchBar/ for using  in Jekyll or HTML. This extension is used in my blog."
 
-# slug = "responsive-expanding-search-bar-cnhkvv7"
-# aliases = ["/s/cnhkvv7"]
-
 [taxonomies]
-categories = [ "HTML" ]
-tags = [ "HTML", "CSS", "JavaScript", "Jekyll", "Responsive Web Design" ]
+tags = [ "HTML/CSS", "JavaScript", "Jekyll", "Responsive Web Design" ]
+categories = [ "HTML/CSS" ]
 
 [extra]
+featured_image = "2015-05-06-responsive-expanding-search-bar.jpg"
+image = "public/images/2015-05-06-responsive-expanding-search-bar.jpg"
+home = "https://github.com/mildronize/ExpandingSearchBar"
+source = "https://github.com/mildronize/ExpandingSearchBar/archive/master.zip"
 uuid = "cnhkvv7"
+unsplashImgCoverId = "6JVlSdgMacE"
 +++
 
 ![responsive-expanding-search-bar](2015-05-06-responsive-expanding-search-bar.jpg)
