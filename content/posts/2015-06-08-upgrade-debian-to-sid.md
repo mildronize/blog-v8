@@ -9,7 +9,7 @@ categories = [ "Debian" ]
 
 [extra]
 last_modified_at = 2016-02-16T00:00:00.000Z
-uuid = "l0ywmex"
+id = "l0ywmex"
 unsplashImgCoverId = "yGPxCYPS8H4"
 +++
 

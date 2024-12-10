@@ -6,7 +6,7 @@ categories = [ "JavaScript" ]
 tags = [ "JavaScript", "Terraform Cloud", "Axios" ]
 
 [extra]
-uuid = "jv881wo"
+id = "jv881wo"
 +++
 
 การใช้งาน Terraform Cloud จะต้องใช้ User API Token เพื่อทำการจัดการ Workspace ของคุณ โดยคุณสามารถสร้าง Token ได้ที่ลิงก์ https://app.terraform.io/app/settings/tokens นี้

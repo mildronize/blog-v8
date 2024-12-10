@@ -7,7 +7,7 @@ categories = [ "TypeScript" ]
 tags = [ "TypeScript", "Zod" ]
 
 [extra]
-uuid = "cg05r7u"
+id = "cg05r7u"
 +++
 
 Hey there, fellow programmers!

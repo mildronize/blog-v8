@@ -6,7 +6,7 @@ categories = [ "Experience" ]
 tags = [ "Experience", "Research", "Master Degree" ]
 
 [extra]
-uuid = "x6nfc7a"
+id = "x6nfc7a"
 unsplashImgCoverId = "uenlGiyP_qo"
 +++
 

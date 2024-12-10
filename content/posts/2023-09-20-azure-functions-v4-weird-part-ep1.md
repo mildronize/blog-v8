@@ -7,7 +7,7 @@ categories = [ "Azure Functions" ]
 tags = [ "Azure Functions", "TypeScript" ]
 
 [extra]
-uuid = "2blwllg"
+id = "2blwllg"
 +++
 
 Welcome to the first episode of our "Azure Functions Node.js v4 with TypeScript Weird Part" series. In this series, we'll dive into some intriguing nuances and challenges you might come across while working with Azure Functions in Node.js version 4, especially when using TypeScript. In this episode, we'll explore a type-safety issue that arises when dealing with input and output bindings and provide a practical workaround.

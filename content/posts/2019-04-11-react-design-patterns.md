@@ -8,7 +8,7 @@ tags = [ "React", "Design Pattern", "JavaScript", "ES6" ]
 
 [extra]
 image = "https://www.dropbox.com/s/9u7jxihxp12n06w/2019-03-13-react-pattern.jpg?raw=1"
-uuid = "ho462dz"
+id = "ho462dz"
 unsplashImgCoverId = "1HCb2gPk3ik"
 +++
 

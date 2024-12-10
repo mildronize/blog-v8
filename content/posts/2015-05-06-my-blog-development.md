@@ -8,7 +8,7 @@ categories = [ "Jekyll" ]
 tags = [ "Jekyll", "GitHub Page", "Angular JS" ]
 
 [extra]
-uuid = "hm371bt"
+id = "hm371bt"
 unsplashImgCoverId = "i0e3m7aMk10"
 +++
 

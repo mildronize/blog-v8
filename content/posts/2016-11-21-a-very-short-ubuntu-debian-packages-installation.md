@@ -7,7 +7,7 @@ tags = [ "Ubuntu", "Debian", "Chrome", "Docker", "VS Code", "Zotero" ]
 categories = [ "Ubuntu" ]
 
 [extra]
-uuid = "0967oym"
+id = "0967oym"
 unsplashImgCoverId = "4Mw7nkQDByk"
 +++
 

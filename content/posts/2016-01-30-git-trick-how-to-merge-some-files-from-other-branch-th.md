@@ -8,7 +8,7 @@ categories = [ "git" ]
 tags = [ "git", "How to" ]
 
 [extra]
-uuid = "2zgi1pu"
+id = "2zgi1pu"
 unsplashImgCoverId = "UT8LMo-wlyk"
 +++
 

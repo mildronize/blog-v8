@@ -6,7 +6,7 @@ categories = [ "Docker Image" ]
 tags = [ "Docker Image", "Github Package", "Github Actions" ]
 
 [extra]
-uuid = "6wrk7rh"
+id = "6wrk7rh"
 +++
 
 Greetings, readers! If you've been using Docker Hub for managing your Docker images, did you know that GitHub offers an alternative with GitHub Package? In this blog post, we'll walk through the process of publishing your Docker images on GitHub Package, leveraging the power of GitHub Actions. This is particularly beneficial if you're already hosting your code on GitHub. Let's dive into the details and explore how to seamlessly integrate Docker image publishing into your GitHub workflows.

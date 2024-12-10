@@ -12,7 +12,7 @@ tags = [
 ]
 
 [extra]
-uuid = "whaab42"
+id = "whaab42"
 unsplashImgCoverId = "L8KQIPCODV8"
 +++
 

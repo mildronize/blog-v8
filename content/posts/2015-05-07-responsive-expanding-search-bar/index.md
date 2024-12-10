@@ -11,7 +11,7 @@ featured_image = "2015-05-06-responsive-expanding-search-bar.jpg"
 image = "public/images/2015-05-06-responsive-expanding-search-bar.jpg"
 home = "https://github.com/mildronize/ExpandingSearchBar"
 source = "https://github.com/mildronize/ExpandingSearchBar/archive/master.zip"
-uuid = "cnhkvv7"
+id = "cnhkvv7"
 unsplashImgCoverId = "6JVlSdgMacE"
 +++
 

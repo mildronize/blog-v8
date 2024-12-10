@@ -7,7 +7,7 @@ tags = [ "Atom Editor", "Thai" ]
 categories = [ "Atom Editor" ]
 
 [extra]
-uuid = "5zqwlzs"
+id = "5zqwlzs"
 unsplashImgCoverId = "5PEy9UraJ5c"
 +++
 

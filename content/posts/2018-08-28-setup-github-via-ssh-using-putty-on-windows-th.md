@@ -8,7 +8,7 @@ categories = [ "How to" ]
 
 [extra]
 image = "https://www.dropbox.com/s/6j7n98dlmnubjxq/cover.jpg?raw=1"
-uuid = "mo4feik"
+id = "mo4feik"
 unsplashImgCoverId = "z0uPpx6DDcA"
 +++
 

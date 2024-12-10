@@ -8,7 +8,7 @@ tags = [ "Hotspot", "Wifi", "Windows" ]
 categories = [ "Hotspot" ]
 
 [extra]
-uuid = "4hztzdg"
+id = "4hztzdg"
 unsplashImgCoverId = "sNvBTRQR7eE"
 +++
 

@@ -7,7 +7,7 @@ categories = [ "Docker" ]
 tags = [ "Docker", "Mac M1", "Arm", "Colima", "Container" ]
 
 [extra]
-uuid = "j4wuxv0"
+id = "j4wuxv0"
 +++
 
 

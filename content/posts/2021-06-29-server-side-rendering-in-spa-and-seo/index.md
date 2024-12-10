@@ -8,7 +8,7 @@ tags = [ "SSR", "SEO", "React", "SPA", "PWA", "Server-side Rendering" ]
 [extra]
 category = "React"
 cover = "02-csr-vs-ssr.png"
-uuid = "8jexlus"
+id = "8jexlus"
 unsplashImgCoverId = "l5if0iQfV4c"
 +++
 

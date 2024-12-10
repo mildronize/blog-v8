@@ -7,7 +7,7 @@ categories = [ "Dotnet" ]
 tags = [ "Dotnet", "Dotnet5", "Dotnet-script" ]
 
 [extra]
-uuid = "t2z614m"
+id = "t2z614m"
 unsplashImgCoverId = "EzUZqqp_yrc"
 +++
 
