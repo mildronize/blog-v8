@@ -12,6 +12,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         "404": resolve(__dirname, 'src/pages/404/index.html'),
+        "post": resolve(__dirname, 'src/pages/post/index.html'),
       },
       output: {
         entryFileNames: `[name].js`,
