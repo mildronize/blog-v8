@@ -7,7 +7,7 @@ categories = [ "Azure" ]
 tags = [ "Azure", "Uptime Kuma", "Docker", "Virtual Machine", "HTTPS" ]
 
 [extra]
-uuid = "h4uaaip"
+id = "h4uaaip"
 +++
 
 > หมายเหตุ บทความนี้ Draft ไว้ตั้งแต่วันที่ Dec 21, 2022 ถ้ามีเนื้อหาไหนที่ไม่ได้ Up-to-date ก็สามารถแจ้งได้เลยนะครับ

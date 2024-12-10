@@ -7,7 +7,7 @@ categories = [ "Database" ]
 tags = [ "Database", "Migration", "SQL Server", "MSSQL" ]
 
 [extra]
-uuid = "h10x942"
+id = "h10x942"
 unsplashImgCoverId = "lRoX0shwjUQ"
 +++
 

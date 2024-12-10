@@ -7,7 +7,7 @@ categories = [ "Mi2s" ]
 tags = [ "Mi2s", "Xposed", "Proximity Sensor" ]
 
 [extra]
-uuid = "92rs1lc"
+id = "92rs1lc"
 unsplashImgCoverId = "uIF40JqldaI"
 +++
 

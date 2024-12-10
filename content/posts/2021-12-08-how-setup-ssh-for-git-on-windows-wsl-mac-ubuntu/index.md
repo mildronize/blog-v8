@@ -6,7 +6,7 @@ categories = [ "GitHub" ]
 tags = [ "GitHub", "SSH", "Windows", "MacOS", "Ubuntu" ]
 
 [extra]
-uuid = "hzpnrnx"
+id = "hzpnrnx"
 unsplashImgCoverId = "842ofHC6MaI"
 +++
 

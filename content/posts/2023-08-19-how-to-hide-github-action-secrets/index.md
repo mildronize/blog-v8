@@ -6,7 +6,7 @@ categories = [ "GitHub Actions" ]
 tags = [ "GitHub Actions", "Secrets" ]
 
 [extra]
-uuid = "kauwjer"
+id = "kauwjer"
 +++
 
 > หมายเหตุ บทความนี้ Draft ไว้ตั้งแต่วันที่ Apr 11, 2022 ถ้ามีเนื้อหาไหนที่ไม่ได้ Up-to-date ก็สามารถแจ้งได้เลยนะครับ

@@ -6,7 +6,7 @@ categories = [ "Nest.js" ]
 tags = [ "Nest.js", "Docker", "esbuild", "monorepo", "nx" ]
 
 [extra]
-uuid = "c2tcmvl"
+id = "c2tcmvl"
 unsplashImgCoverId = "jOqJbvo1P9g"
 +++
 

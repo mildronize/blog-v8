@@ -8,7 +8,7 @@ tags = [ "VPN", "PSU", "How to" ]
 categories = [ "VPN" ]
 
 [extra]
-uuid = "ix43nzw"
+id = "ix43nzw"
 unsplashImgCoverId = "CXlqHmQy3MY"
 +++
 

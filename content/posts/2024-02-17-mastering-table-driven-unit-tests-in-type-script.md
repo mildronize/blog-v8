@@ -7,7 +7,7 @@ categories = [ "TypeScript" ]
 tags = [ "TypeScript", "Unit Test", "Table-driven" ]
 
 [extra]
-uuid = "4ufzuye"
+id = "4ufzuye"
 +++
 
 Hey there, fellow TypeScript enthusiasts!

@@ -7,7 +7,7 @@ tags = [ "Awesome", "Keyword" ]
 categories = [ "Awesome" ]
 
 [extra]
-uuid = "utkfndt"
+id = "utkfndt"
 unsplashImgCoverId = "FCHlYvR5gJI"
 +++
 

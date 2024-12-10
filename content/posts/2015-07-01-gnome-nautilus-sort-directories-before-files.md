@@ -8,7 +8,7 @@ tags = [ "Debian", "Gnome Nautilus" ]
 categories = [ "Debian" ]
 
 [extra]
-uuid = "8q0uj3s"
+id = "8q0uj3s"
 unsplashImgCoverId = "Pyjp2zmxuLk"
 +++
 

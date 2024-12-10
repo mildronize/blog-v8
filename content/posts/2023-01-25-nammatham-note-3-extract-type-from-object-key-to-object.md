@@ -7,7 +7,7 @@ categories = [ "TypeScript" ]
 tags = [ "TypeScript", "Nammatham" ]
 
 [extra]
-uuid = "ziwr7je"
+id = "ziwr7je"
 unsplashImgCoverId = "k4mEY-KBDnM"
 +++
 

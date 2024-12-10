@@ -14,7 +14,7 @@ categories = [ "Web Optimization" ]
 
 [extra]
 image = "https://www.dropbox.com/s/lxir9pr41qsc9eu/cover.jpg?raw=1"
-uuid = "i4kssit"
+id = "i4kssit"
 unsplashImgCoverId = "a_PDPUPuNZ8"
 +++
 

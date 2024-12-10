@@ -7,7 +7,7 @@ categories = [ "TypeScript" ]
 tags = [ "TypeScript", "Data Validation", "Zod" ]
 
 [extra]
-uuid = "z8daujr"
+id = "z8daujr"
 +++
 
 วันนี้เราจะมาเรียนรู้วิธีการสร้างฟังก์ชั่นทั่วไปสำหรับเครื่องมือตรวจสอบข้อมูลใน TypeScript กันครับ! 

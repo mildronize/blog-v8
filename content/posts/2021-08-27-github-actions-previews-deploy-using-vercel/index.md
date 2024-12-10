@@ -6,7 +6,7 @@ categories = [ "GitHub Actions" ]
 tags = [ "GitHub Actions", "Pull Request" ]
 
 [extra]
-uuid = "qocjeqb"
+id = "qocjeqb"
 unsplashImgCoverId = "LG8ToawE8WQ"
 +++
 

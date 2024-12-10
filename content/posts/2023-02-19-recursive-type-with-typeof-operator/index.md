@@ -6,7 +6,7 @@ categories = [ "TypeScript" ]
 tags = [ "TypeScript", "ChatGPT" ]
 
 [extra]
-uuid = "uhy9o25"
+id = "uhy9o25"
 unsplashImgCoverId = "dJvORIisw80"
 +++
 
