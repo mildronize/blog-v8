@@ -12,6 +12,9 @@ class Logger {
   error(message: string) {
     console.error(message);
   }
+  warn(message: string) {
+    console.warn(message);
+  }
 }
 const logger = new Logger(String(process.env.DEBUG).toLowerCase() === "true");
 
@@ -101,7 +104,7 @@ async function processMarkdownFiles(sourceDirs: string[], targetDir: string) {
         const frontmatter = extractFrontMatter(content);
 
         if (!frontmatter?.extra?.id) {
-          logger.error(`Error: No ID found in frontmatter of file: ${file}`);
+          logger.warn(`Error: No ID found in frontmatter of file: ${file}`);
           continue;
         }
 

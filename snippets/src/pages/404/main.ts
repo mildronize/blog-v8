@@ -20,7 +20,18 @@ export function getIdFromPath(url: string): string | null {
   if (typeof window === 'undefined') return;
   const href = window.location.href;
   console.log(`Current URL: ${href}`);
-  const id = getIdFromPath(href);
+  let id: string | null = null;
+  const idFromPath = getIdFromPath(href);
+  if (idFromPath) {
+    id = idFromPath;
+    console.log(`Extracted ID from path: ${id}`);
+  }
+  const currentUrl = new URL(href);
+  const idFromSearchParams = currentUrl.searchParams.get('id');
+  if (idFromSearchParams) {
+    id = idFromSearchParams;
+    console.log(`Extracted ID from search params: ${id}`);
+  }
   if (id === null) {
     console.log('No ID found in the URL');
     return;
