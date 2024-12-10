@@ -16,7 +16,7 @@ categories = [ "Docker" ]
 
 [extra]
 featured_image = "logo/docker.png"
-id = "deb407s"
+uuid = "deb407s"
 unsplashImgCoverId = "SInhLTQouEk"
 +++
 

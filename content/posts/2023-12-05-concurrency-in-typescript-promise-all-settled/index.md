@@ -6,7 +6,7 @@ categories = [ "Concurrency" ]
 tags = [ "Concurrency", "TypeScript", "Node.js" ]
 
 [extra]
-id = "ko0ecz1"
+uuid = "ko0ecz1"
 +++
 
 การทำงานแบบ concurrency หรือการทำงานพร้อมกันหลายๆ งานที่ต้องใช้เวลานานใน TypeScript สามารถทำได้ง่ายๆ ด้วย `Promise.allSettled` ซึ่งช่วยให้เราสามารถรัน Promise หลายๆ ตัวพร้อมกันและรับผลลัพธ์ทั้งหมดได้ไม่ว่า Promise ตัวไหนจะสำเร็จหรือไม่สำเร็จก็ตาม

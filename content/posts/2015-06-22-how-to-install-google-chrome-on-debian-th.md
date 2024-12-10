@@ -8,7 +8,7 @@ tags = [ "Debian", "Chrome", "How to" ]
 categories = [ "Debian" ]
 
 [extra]
-id = "uckstjz"
+uuid = "uckstjz"
 unsplashImgCoverId = "FnKKF2bATEE"
 +++
 

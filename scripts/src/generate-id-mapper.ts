@@ -100,13 +100,13 @@ async function processMarkdownFiles(sourceDirs: string[], targetDir: string) {
         // Extract front matter and body
         const frontmatter = extractFrontMatter(content);
 
-        if (!frontmatter?.extra?.id) {
+        if (!frontmatter?.extra?.uuid) {
           logger.error(`Error: No ID found in frontmatter of file: ${file}`);
           continue;
         }
 
         const slug = frontmatter?.slug ?? extractZolaSlug(dir, file);
-        idMapper.set(frontmatter.extra.id, {
+        idMapper.set(frontmatter.extra.uuid, {
           path: `/${path.basename(dir)}/${slug}`,
         });
 

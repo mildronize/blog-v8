@@ -7,7 +7,7 @@ categories = [ "Terraform" ]
 tags = [ "Terraform", "Terraform Cloud" ]
 
 [extra]
-id = "hye03ea"
+uuid = "hye03ea"
 +++
 
 > Terraform v1.5.2

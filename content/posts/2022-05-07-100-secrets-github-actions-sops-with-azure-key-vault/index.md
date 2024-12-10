@@ -6,7 +6,7 @@ categories = [ "GitHub Actions" ]
 tags = [ "GitHub Actions", "Mozila SOPS", "Azure Key Vault" ]
 
 [extra]
-id = "suzlta6"
+uuid = "suzlta6"
 unsplashImgCoverId = "NWmcp5fE_4M"
 +++
 

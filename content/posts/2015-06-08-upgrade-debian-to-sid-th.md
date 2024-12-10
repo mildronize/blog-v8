@@ -9,7 +9,7 @@ tags = [ "Debian", "How to", "Firmware Linux" ]
 
 [extra]
 last_modified_at = 2016-02-16T00:00:00.000Z
-id = "e52fdze"
+uuid = "e52fdze"
 unsplashImgCoverId = "raNIrcd39jY"
 +++
 

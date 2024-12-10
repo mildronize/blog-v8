@@ -9,7 +9,7 @@ tags = [ "Hearthstone", "Debian", "How to", "Wine" ]
 
 [extra]
 featured_image = "logo/hearthstone.jpg"
-id = "2vpnolt"
+uuid = "2vpnolt"
 unsplashImgCoverId = "22W93iChREU"
 +++
 

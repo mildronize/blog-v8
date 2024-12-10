@@ -7,7 +7,7 @@ categories = [ "TypeScript" ]
 tags = [ "TypeScript", "dayjs", "date", "timezone" ]
 
 [extra]
-id = "yyqq6jk"
+uuid = "yyqq6jk"
 +++
 
 Unit testing is a crucial aspect of software development, and when it comes to testing functionality dependent on time and timezones, having readable and effective tests is essential. 

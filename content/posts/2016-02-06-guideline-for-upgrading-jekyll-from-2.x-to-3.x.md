@@ -8,7 +8,7 @@ tags = [ "Jekyll", "Jekyll 3", "Guideline" ]
 categories = [ "Jekyll" ]
 
 [extra]
-id = "z578nvw"
+uuid = "z578nvw"
 unsplashImgCoverId = "H7LxvEmVZnE"
 +++
 

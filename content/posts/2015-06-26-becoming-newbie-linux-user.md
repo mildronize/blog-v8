@@ -8,7 +8,7 @@ categories = [ "Linux" ]
 tags = [ "Linux", "Debian" ]
 
 [extra]
-id = "it3xlde"
+uuid = "it3xlde"
 unsplashImgCoverId = "9XngoIpxcEo"
 +++
 

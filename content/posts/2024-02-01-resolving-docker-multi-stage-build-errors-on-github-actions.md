@@ -13,7 +13,7 @@ tags = [
 ]
 
 [extra]
-id = "faa2fwg"
+uuid = "faa2fwg"
 +++
 
 Setting up a CI/CD pipeline with multi-stage Docker builds on GitHub Actions can be a powerful way to automate your workflow. However, you may encounter challenges, as I recently did, when building a Docker image using multi-stage builds and GitHub Actions.

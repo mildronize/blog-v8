@@ -8,7 +8,7 @@ categories = [ "Jekyll" ]
 tags = [ "Jekyll", "GitHub Page", "Case Study", "GitHub Support" ]
 
 [extra]
-id = "lo3mz9g"
+uuid = "lo3mz9g"
 unsplashImgCoverId = "vPGGRXPvltE"
 +++
 > **Note:** This is a part of solutions for solving belowing problem message from GitHub Page. It may be other solutions for solving the problem.

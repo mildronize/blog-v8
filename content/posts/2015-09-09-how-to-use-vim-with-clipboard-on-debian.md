@@ -8,7 +8,7 @@ tags = [ "Vim", "Clipboard", "Linux" ]
 categories = [ "Vim" ]
 
 [extra]
-id = "rfih9o0"
+uuid = "rfih9o0"
 unsplashImgCoverId = "TDV1i2f7rcc"
 +++
 

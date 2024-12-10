@@ -8,7 +8,7 @@ tags = [ "Experience", "Research", "OpenTSDB", "Master Degree" ]
 
 [extra]
 image = "https://www.dropbox.com/s/mophblmhv1psxua/2019-03-17-what-i-get-from-master-degree.jpg?raw=1"
-id = "9tdymnn"
+uuid = "9tdymnn"
 unsplashImgCoverId = "8kDOOrs608I"
 +++
 

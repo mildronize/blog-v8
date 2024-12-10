@@ -8,7 +8,7 @@ tags = [ "SOAP", "SOAP Client", "Python", "Flask" ]
 categories = [ "SOAP" ]
 
 [extra]
-id = "91bu9k0"
+uuid = "91bu9k0"
 unsplashImgCoverId = "DlZD4V2j9oM"
 +++
 

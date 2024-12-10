@@ -7,7 +7,7 @@ tags = [ "Debian", "Xfce", "Linux Desktop Customization" ]
 categories = [ "Debian" ]
 
 [extra]
-id = "gtg6emr"
+uuid = "gtg6emr"
 unsplashImgCoverId = "hWgsxV_VQW0"
 +++
 

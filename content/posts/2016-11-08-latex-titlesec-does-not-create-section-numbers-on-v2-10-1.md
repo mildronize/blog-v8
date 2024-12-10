@@ -7,7 +7,7 @@ tags = [ "Titlesec", "LaTex" ]
 categories = [ "Titlesec" ]
 
 [extra]
-id = "ptkagjo"
+uuid = "ptkagjo"
 unsplashImgCoverId = "LboV5Qpqm1E"
 +++
 

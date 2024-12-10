@@ -8,7 +8,7 @@ tags = [ "Time Series Database", "Internet of things" ]
 
 [extra]
 image = "https://www.dropbox.com/s/d9xvup8eylfhgeu/2018-08-13-%E0%B8%A3%E0%B8%B9%E0%B9%89%E0%B8%88%E0%B8%B1%E0%B8%81%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%90%E0%B8%B2%E0%B8%99%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%B9%E0%B8%A5%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%81%E0%B8%A3%E0%B8%A1%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2%20OpenTSDB%20%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B9%80%E0%B8%96%E0%B8%AD%E0%B8%B0-cover.jpg?raw=1"
-id = "et0zg84"
+uuid = "et0zg84"
 unsplashImgCoverId = "BXOXnQ26B7o"
 +++
 

@@ -8,7 +8,7 @@ categories = [ "Promise" ]
 
 [extra]
 image = "https://www.dropbox.com/s/53ds3aqow09hl0g/cover.jpeg?raw=1"
-id = "leu0374"
+uuid = "leu0374"
 unsplashImgCoverId = "hopnkQoC0dg"
 +++
 

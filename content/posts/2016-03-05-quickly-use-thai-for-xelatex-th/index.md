@@ -8,7 +8,7 @@ tags = [ "XeLaTeX", "Thai", "MiKTeX", "LaTex" ]
 
 [extra]
 featured_image = "logo/latex.png"
-id = "1esbgon"
+uuid = "1esbgon"
 unsplashImgCoverId = "XoByiBymX20"
 +++
 

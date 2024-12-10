@@ -8,7 +8,7 @@ tags = [ "Web Design", "UX/UI" ]
 
 [extra]
 image = "https://www.dropbox.com/s/zk9rpnoxncolajw/2019-03-24-amazing-ui-design-articles.jpg?raw=1"
-id = "14liwiu"
+uuid = "14liwiu"
 unsplashImgCoverId = "_t-l5FFH8VA"
 +++
 

@@ -7,7 +7,7 @@ tags = [ "Notion", "Notion Formula", "TDD" ]
 
 [extra]
 category = "notion"
-id = "fk36d30"
+uuid = "fk36d30"
 unsplashImgCoverId = "rRX70iCT6o0"
 +++
 

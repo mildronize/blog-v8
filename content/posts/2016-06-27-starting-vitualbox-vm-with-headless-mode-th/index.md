@@ -9,7 +9,7 @@ tags = [ "VirtualBox", "Virtual Machine" ]
 [extra]
 category = "th"
 featured_image = "logo/virtual.png"
-id = "5v44hmt"
+uuid = "5v44hmt"
 unsplashImgCoverId = "eygpU6KfOBk"
 +++
 

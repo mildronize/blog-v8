@@ -8,7 +8,7 @@ categories = [ "Debian" ]
 tags = [ "Debian", "Gnome builder", "How to" ]
 
 [extra]
-id = "1jxvb3m"
+uuid = "1jxvb3m"
 unsplashImgCoverId = "Tjbk79TARiE"
 +++
 

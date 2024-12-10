@@ -6,7 +6,7 @@ categories = [ "Go" ]
 tags = [ "Go", "go1.17", "gopls", "VS Code" ]
 
 [extra]
-id = "0ydbrqj"
+uuid = "0ydbrqj"
 unsplashImgCoverId = "jvtKm4Wjd0Q"
 +++
 

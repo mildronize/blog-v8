@@ -8,7 +8,7 @@ tags = [ "How to", "GitHub Page", "Jekyll" ]
 categories = [ "How to" ]
 
 [extra]
-id = "we3xr8r"
+uuid = "we3xr8r"
 unsplashImgCoverId = "z0uPpx6DDcA"
 +++
 

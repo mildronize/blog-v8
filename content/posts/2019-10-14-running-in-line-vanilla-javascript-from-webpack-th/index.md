@@ -6,7 +6,7 @@ categories = [ "Web" ]
 tags = [ "Webpack", "Vanilla JavaScript", "JavaScript", "jQuery" ]
 
 [extra]
-id = "2kbbdkt"
+uuid = "2kbbdkt"
 unsplashImgCoverId = "EJSaEnVvZcg"
 +++
 

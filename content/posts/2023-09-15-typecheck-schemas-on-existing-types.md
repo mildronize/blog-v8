@@ -7,7 +7,7 @@ categories = [ "TypeScript" ]
 tags = [ "TypeScript", "Data Validation", "Zod" ]
 
 [extra]
-id = "e6btvc1"
+uuid = "e6btvc1"
 +++
 
 วันนี้เราจะมาพูดถึงวิธีการในการตรวจสอบความเข้ากันได้ระหว่าง [Zod](https://github.com/colinhacks/zod) Schema และ TypeScript อย่างสะดวกและรวดเร็ว ไอเดียดีๆ นี้มาจาก [@colinhacks](https://github.com/colinhacks) ซึ่งเป็นคนสร้าง Zod โดยการใช้ Zod และอยากแบ่งปันให้ทุกคน
