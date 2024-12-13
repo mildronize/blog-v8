@@ -1,8 +1,21 @@
+import z from 'zod';
 
-/**
- * Redirect with src=404 in the URL
- */
-const SOURCE_VALUE = '404';
+const idMapperSchema = z.record(
+  z.union([
+    z.undefined(),
+    z.object({
+      path: z.string(),
+    })]
+  )
+);
+
+const sourceMap = {
+  /**
+   * Redirect with src=404 in the URL
+   */
+  notFound: '404',
+  shortUrl: 'short-url',
+}
 
 export function getIdFromPath(url: string): string | null {
   const urlObj = new URL(url);
@@ -20,6 +33,40 @@ export function getIdFromPath(url: string): string | null {
   }
 }
 
+function extractIdFromUrl(url: string): string | null {
+  let id: string | null = null;
+  const idFromPath = getIdFromPath(url);
+  if (idFromPath) {
+    id = idFromPath;
+    console.log(`Extracted ID from path: ${id}`);
+  }
+  const currentUrl = new URL(url);
+  const idFromSearchParams = currentUrl.searchParams.get('id');
+  if (idFromSearchParams) {
+    id = idFromSearchParams;
+    console.log(`Extracted ID from search params: ${id}`);
+  }
+  return id;
+}
+
+export function identityRedirectType(url: string): keyof typeof sourceMap {
+  const currentUrl = new URL(url);
+  const src = currentUrl.searchParams.get('src');
+  if (src) {
+    return src as keyof typeof sourceMap;
+  }
+  return 'shortUrl';
+}
+
+function redirectUserToCorrectPage(path: string | undefined, hostOrigin: string, redirectType: keyof typeof sourceMap) {
+  if (!path) {
+    console.log('No mapping found for the ID');
+    return;
+  }
+  const targetUrl = new URL(path, hostOrigin);
+  targetUrl.searchParams.set('src', sourceMap[redirectType]);
+  window.location.assign(targetUrl.toString());
+}
 
 /**
  * This script is used to redirect the user to the correct page when they land on a 404 page.
@@ -28,37 +75,19 @@ export function getIdFromPath(url: string): string | null {
  */
 
 async function autoResolveBrokenUrl() {
-
   if (typeof window === 'undefined') return;
   const href = window.location.href;
   console.log(`Current URL: ${href}`);
-  let id: string | null = null;
-  const idFromPath = getIdFromPath(href);
-  if (idFromPath) {
-    id = idFromPath;
-    console.log(`Extracted ID from path: ${id}`);
-  }
-  const currentUrl = new URL(href);
-  const idFromSearchParams = currentUrl.searchParams.get('id');
-  if (idFromSearchParams) {
-    id = idFromSearchParams;
-    console.log(`Extracted ID from search params: ${id}`);
-  }
+  const id = extractIdFromUrl(href);
   if (id === null) {
     console.log('No ID found in the URL');
     return;
   }
-
   console.log(`Extracted ID: ${id}`);
 
-  const idMapper = await (await fetch(`/api/id-mapper.json`)).json();
-  const newUrl = idMapper[id] as { path: string };
-  const targetUrl = new URL(newUrl.path, window.location.origin);
-  targetUrl.searchParams.set('src', SOURCE_VALUE);
-  if (newUrl) {
-    window.location.assign(targetUrl.toString());
-  }
-
+  const idMapperResponse = await (await fetch(`/api/id-mapper.json`)).json() as unknown;
+  const idMapper = idMapperSchema.parse(idMapperResponse);
+  redirectUserToCorrectPage(idMapper[id]?.path, window.location.origin, 'notFound');
 };
 
 autoResolveBrokenUrl();
