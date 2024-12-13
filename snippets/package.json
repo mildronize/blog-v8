@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "generate-id-mapper": "bun run src/scripts/generate-id-mapper.ts",
+    "add-id": "bun run src/scripts/add-id.ts",
     "build:watch": "nodemon --exec 'bun run build' --watch src --ext ts",
     "preview": "vite preview"
   },

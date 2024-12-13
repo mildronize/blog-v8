@@ -11,7 +11,10 @@ interface FrontMatterOptions {
 /**
  * Extract Zola front matter and body
  */
-export function extractFrontMatter(content: string, options?: Partial<FrontMatterOptions>): Record<string, any> {
+export function extractFrontMatter(markdownContent: string, options?: Partial<FrontMatterOptions>): {
+  data: Record<string, any>,
+  content: string,
+} {
 
   const defaultOptions: FrontMatterOptions = {
     delimiters: ["+++", "+++"],
@@ -22,9 +25,16 @@ export function extractFrontMatter(content: string, options?: Partial<FrontMatte
   const parser = options?.parser ?? defaultOptions.parser;
 
   const [start, _end] = delimiters;
-  const frontmatter = content.split(start)[1];
+  const frontmatter = markdownContent.split(start)[1];
 
-  return parser(frontmatter);
+  return {
+    data: parser(frontmatter),
+    content: markdownContent.split(start)[2],
+  }
+}
+
+export function composeFrontMatter(data: Record<string, any>, markdownContent: string): string {
+  return `+++\n${toml.stringify(data)}\n+++\n${markdownContent}`;
 }
 
 /**
