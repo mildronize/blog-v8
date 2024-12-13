@@ -2,3 +2,5 @@ public
 static/js/src
 
 .DS_Store
+
+.obsidian

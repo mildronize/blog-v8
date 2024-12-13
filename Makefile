@@ -5,7 +5,7 @@ blog-build:
 	zola build
 
 id-mapper:
-	cd scripts && bun run src/generate-id-mapper.ts 
+	cd snippets && bun generate-id-mapper
 
 dev: id-mapper serve
 

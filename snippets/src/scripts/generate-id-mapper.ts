@@ -37,7 +37,7 @@ function extractFrontMatter(content: string, options?: Partial<FrontMatterOption
   const delimiters = options?.delimiters ?? defaultOptions.delimiters;
   const parser = options?.parser ?? defaultOptions.parser;
 
-  const [start, end] = delimiters;
+  const [start, _end] = delimiters;
   const frontmatter = content.split(start)[1];
 
   return parser(frontmatter);
