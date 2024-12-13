@@ -14,7 +14,7 @@ const sourceMap = {
    * Redirect with src=404 in the URL
    */
   notFound: '404',
-  shortUrl: 'short-url',
+  shortUrl: 'short_url',
 }
 
 export function getIdFromPath(url: string): string | null {
@@ -51,11 +51,12 @@ function extractIdFromUrl(url: string): string | null {
 
 export function identityRedirectType(url: string): keyof typeof sourceMap {
   const currentUrl = new URL(url);
-  const src = currentUrl.searchParams.get('src');
-  if (src) {
-    return src as keyof typeof sourceMap;
+  const path = currentUrl.pathname;
+  // If match path with /s/${a-z0-9} then return shortUrl
+  if (path.match(/\/s\/[a-zA-Z0-9]+/)) {
+    return 'shortUrl';
   }
-  return 'shortUrl';
+  return 'notFound';
 }
 
 function redirectUserToCorrectPage(path: string | undefined, hostOrigin: string, redirectType: keyof typeof sourceMap) {
@@ -76,18 +77,15 @@ function redirectUserToCorrectPage(path: string | undefined, hostOrigin: string,
 
 async function autoResolveBrokenUrl() {
   if (typeof window === 'undefined') return;
-  const href = window.location.href;
-  console.log(`Current URL: ${href}`);
-  const id = extractIdFromUrl(href);
-  if (id === null) {
-    console.log('No ID found in the URL');
-    return;
-  }
+  const currentUrl = window.location.href;
+  console.log(`Current URL: ${currentUrl}`);
+  const id = extractIdFromUrl(currentUrl);
+  if (id === null) return console.log('No ID found in the URL');
   console.log(`Extracted ID: ${id}`);
 
   const idMapperResponse = await (await fetch(`/api/id-mapper.json`)).json() as unknown;
   const idMapper = idMapperSchema.parse(idMapperResponse);
-  redirectUserToCorrectPage(idMapper[id]?.path, window.location.origin, 'notFound');
+  redirectUserToCorrectPage(idMapper[id]?.path, window.location.origin, identityRedirectType(currentUrl));
 };
 
 autoResolveBrokenUrl();
