@@ -2,6 +2,7 @@ import { MarkdownFileProcessor, processMarkdownDirectories } from "./libs/markdo
 import { config } from "./_config";
 import { generateIdMapper } from "./generate-id-mapper";
 import { pinoLogBuilder } from "./utils/logger";
+import fs from 'fs-extra';
 
 const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 
@@ -9,5 +10,6 @@ const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 await generateIdMapper(pinoLogBuilder('gen-id-mapper', 'error'));
 // Add id to markdown files when missing
 const logger = pinoLogBuilder('add-id', 'info');
-const processor = new MarkdownFileProcessor('update', { ignoreMarkdownFiles, logger });
+const idStoreObject = (await fs.readJson(config.blogIdModule.targetFile)) as object;
+const processor = new MarkdownFileProcessor('update', { ignoreMarkdownFiles, logger, idStore: new Map(Object.entries(idStoreObject)) });
 await processMarkdownDirectories(sourceDirectories, processor, logger);

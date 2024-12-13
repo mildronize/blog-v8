@@ -4,6 +4,7 @@ import path from "path";
 import fs from 'fs-extra';
 import { composeFrontMatter, extractFrontMatter, generateZolaPostPath } from "./zola";
 import { PostId, IdMapperMetadata, PostMetadata, MarkdownFileProcessorMode } from "./type";
+import { retryNewId } from "./Uuid";
 
 export function extractMarkdownMetadata(dir: string, file: string, content: string): PostMetadata | undefined {
   const { data: frontmatter } = extractFrontMatter(content);
@@ -36,15 +37,19 @@ export class MarkdownFileProcessor implements FileProcessor {
   constructor(private mode: MarkdownFileProcessorMode, private options: {
     ignoreMarkdownFiles: string[]
     logger: Logger
+    idStore?: Map<string, unknown>
   }) {
     this.logger = options.logger;
     this.logger.info(`MarkdownFileProcessor: '${mode}' Mode`);
   }
 
   async updateId(file: string, markdownContent: string): Promise<void> {
+    if(!this.options.idStore) {
+      throw new Error('Id Store is required for update mode');
+    }
     const { data: frontmatter, content } = extractFrontMatter(markdownContent);
     if (!frontmatter?.extra?.id) {
-      const id = 'auto-generated';
+      const id = retryNewId(this.options.idStore);
       const outputMarkdown = composeFrontMatter({
         ...frontmatter,
         extra: {
