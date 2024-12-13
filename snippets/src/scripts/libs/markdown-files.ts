@@ -7,6 +7,20 @@ import { PostId, PostMetadata } from "./type";
 
 const logger = new Logger(String(process.env.DEBUG).toLowerCase() === "true");
 
+export function extractMarkdownMetadata(dir: string, file: string, content: string): { key: PostId, value: PostMetadata } | undefined {
+  const frontmatter = extractFrontMatter(content);
+  if (!frontmatter?.extra?.id) {
+    logger.warn(`Warn: No ID found in frontmatter of file: ${file}`);
+    return;
+  }
+  return {
+    key: frontmatter.extra.id,
+    value: {
+      path: generateZolaPostPath(dir, file, frontmatter.slug),
+    }
+  }
+}
+
 export async function processMarkdownFiles(dir: string, ignoreMarkdownFiles: string[]): Promise<Map<PostId, PostMetadata>> {
   const idMapper = new Map<PostId, PostMetadata>();
   // Find all markdown files in the directory
@@ -18,19 +32,12 @@ export async function processMarkdownFiles(dir: string, ignoreMarkdownFiles: str
       continue;
     }
     const content = await fs.readFile(file, "utf8");
-    const frontmatter = extractFrontMatter(content);
-
-    if (!frontmatter?.extra?.id) {
-      logger.warn(`Warn: No ID found in frontmatter of file: ${file}`);
-      continue;
-    }
-
-    idMapper.set(frontmatter.extra.id, {
-      path: generateZolaPostPath(dir, file, frontmatter.slug),
-    });
-
-    logger.log(`Processed: ${frontmatter.title} -> '${file}'`);
+    const result = extractMarkdownMetadata(dir, file, content);
+    if (!result) continue;
+    idMapper.set(result.key, result.value);
+    logger.log(`Processed: ${result.key} -> '${file}'`);
   }
+
   return idMapper;
 }
 
