@@ -1,12 +1,12 @@
 import { test, expect } from 'bun:test';
 import { extractMarkdownMetadata, processMarkdownDirectories } from './markdown-files';
-import { PostId, PostMetadata } from './type';
+import { PostId, IdMapperMetadata } from './type';
 
 
 test('processMarkdownFiles', async () => {
   const sourceDirs = ['test'];
   const processor = {
-    process: async (dir: string): Promise<Map<PostId, PostMetadata>> => {
+    process: async (_dir: string): Promise<Map<PostId, IdMapperMetadata>> => {
       return new Map([['id1', { path: 'path1' }]]);
     },
   };
@@ -24,5 +24,8 @@ test('extractMarkdownMetadata', () => {
     id = "id1"
     +++`;
   const result = extractMarkdownMetadata(dir, markdownFilePath, content);
-  expect(result).toEqual({ key: 'id1', value: { path: '/posts/hello-world' } });
+  expect(result).toEqual({
+    id: 'id1',
+    path: '/posts/hello-world',
+  });
 });
