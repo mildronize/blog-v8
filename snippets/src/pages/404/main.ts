@@ -1,10 +1,11 @@
-import z from 'zod';
+import * as v from 'valibot';
 
-const idMapperSchema = z.record(
-  z.union([
-    z.undefined(),
-    z.object({
-      path: z.string(),
+const idMapperSchema = v.record(
+  v.string(),
+  v.union([
+    v.undefined(),
+    v.object({
+      path: v.string(),
     })]
   )
 );
@@ -84,7 +85,7 @@ async function autoResolveBrokenUrl() {
   console.log(`Extracted ID: ${id}`);
 
   const idMapperResponse = await (await fetch(`/api/id-mapper.json`)).json() as unknown;
-  const idMapper = idMapperSchema.parse(idMapperResponse);
+  const idMapper = v.parse(idMapperSchema, idMapperResponse);
   redirectUserToCorrectPage(idMapper[id]?.path, window.location.origin, identityRedirectType(currentUrl));
 };
 
