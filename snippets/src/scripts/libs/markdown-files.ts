@@ -84,8 +84,7 @@ export class MarkdownFileProcessor implements FileProcessor {
 }
 
 export async function processMarkdownDirectories(sourceDirs: string[], processor: FileProcessor): Promise<Map<PostId, IdMapperMetadata> | undefined> {
-  console.time('Execution Time');
-
+  const startTime = Date.now();
   let idMapperCollection = new Map<PostId, IdMapperMetadata>();
 
   try {
@@ -93,7 +92,8 @@ export async function processMarkdownDirectories(sourceDirs: string[], processor
       const idMapper = await processor.process(dir);
       idMapperCollection = new Map([...idMapperCollection, ...idMapper]);
     }
-    console.timeEnd('Execution Time');
+    const endTime = Date.now();
+    logger.warn(`Processed ${idMapperCollection.size} files in ${endTime - startTime}ms`);
     return idMapperCollection;
   } catch (error) {
     logger.error("Error processing files: " + error);

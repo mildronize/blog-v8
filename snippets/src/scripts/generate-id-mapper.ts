@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import path from "path";
 
 import { MarkdownFileProcessor, processMarkdownDirectories } from "./libs/markdown-files";
-import { config } from "./config";
+import { config } from "./_config";
 
 const { sourceDirectories, targetFile, ignoreMarkdownFiles } = config.blogIdModule;
 
@@ -12,7 +12,6 @@ export async function generateIdMapper() {
   // Ensure target directory exists
   await fs.ensureDir(path.dirname(targetFile));
   fs.writeJSON(targetFile, Object.fromEntries(idMapperCollection));
-  console.log(`ID mapper generated with ${idMapperCollection.size} entries.`);
 }
 
 console.log("Generating ID mapper...");
