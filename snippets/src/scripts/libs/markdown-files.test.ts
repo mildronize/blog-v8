@@ -1,5 +1,5 @@
 import { test, expect } from 'bun:test';
-import { processMarkdownFiles } from './markdown-files';
+import { processMarkdownDirectories } from './markdown-files';
 import { PostId, PostMetadata } from './type';
 
 
@@ -11,7 +11,7 @@ test('processMarkdownFiles', async () => {
     },
   };
 
-  const idMapper = await processMarkdownFiles(sourceDirs, processor);
+  const idMapper = await processMarkdownDirectories(sourceDirs, processor);
 
   expect(idMapper).toEqual(new Map([['id1', { path: 'path1' }]]));
 });

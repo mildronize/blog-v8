@@ -7,7 +7,7 @@ import { PostId, PostMetadata } from "./type";
 
 const logger = new Logger(String(process.env.DEBUG).toLowerCase() === "true");
 
-export async function processMarkdownFile(dir: string, ignoreMarkdownFiles: string[]): Promise<Map<PostId, PostMetadata>> {
+export async function processMarkdownFiles(dir: string, ignoreMarkdownFiles: string[]): Promise<Map<PostId, PostMetadata>> {
   const idMapper = new Map<PostId, PostMetadata>();
   // Find all markdown files in the directory
   const files = await glob(`${dir}/**/*.md`);
@@ -42,11 +42,11 @@ export class MarkdownFileProcessor implements FileProcessor {
   constructor(private ignoreMarkdownFiles: string[]) { }
 
   async process(dir: string): Promise<Map<PostId, PostMetadata>> {
-    return processMarkdownFile(dir, this.ignoreMarkdownFiles);
+    return processMarkdownFiles(dir, this.ignoreMarkdownFiles);
   }
 }
 
-export async function processMarkdownFiles(sourceDirs: string[], processor: FileProcessor): Promise<Map<PostId, PostMetadata> | undefined> {
+export async function processMarkdownDirectories(sourceDirs: string[], processor: FileProcessor): Promise<Map<PostId, PostMetadata> | undefined> {
   console.time('Execution Time');
 
   let idMapperCollection = new Map<PostId, PostMetadata>();
