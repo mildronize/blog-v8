@@ -1,4 +1,5 @@
 
+
 export const config = {
   /**
    * This module is responsible for generating the blog id mapper.
@@ -9,3 +10,4 @@ export const config = {
     ignoreMarkdownFiles: ["_index.md"],
   }
 }
+

@@ -34,7 +34,7 @@ export function extractFrontMatter(markdownContent: string, options?: Partial<Fr
 }
 
 export function composeFrontMatter(data: Record<string, any>, markdownContent: string): string {
-  return `+++\n${toml.stringify(data)}\n+++\n${markdownContent}`;
+  return `+++\n${toml.stringify(data)}+++\n${markdownContent}`;
 }
 
 /**

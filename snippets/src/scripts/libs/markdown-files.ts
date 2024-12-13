@@ -4,16 +4,10 @@ import path from "path";
 import fs from 'fs-extra';
 import { composeFrontMatter, extractFrontMatter, generateZolaPostPath } from "./zola";
 import { PostId, IdMapperMetadata, PostMetadata, MarkdownFileProcessorMode } from "./type";
-import { log } from "console";
-
-const logger = new Logger(String(process.env.DEBUG).toLowerCase() === "true");
 
 export function extractMarkdownMetadata(dir: string, file: string, content: string): PostMetadata | undefined {
   const { data: frontmatter } = extractFrontMatter(content);
-  if (!frontmatter?.extra?.id) {
-    logger.warn(`Warn: No ID found in frontmatter of file: ${file}`);
-    return;
-  }
+  if (!frontmatter?.extra?.id) return;
   return {
     id: frontmatter.extra.id,
     path: generateZolaPostPath(dir, file, frontmatter.slug),
@@ -38,21 +32,28 @@ export interface FileProcessor {
  */
 
 export class MarkdownFileProcessor implements FileProcessor {
-  constructor(private mode: MarkdownFileProcessorMode, private ignoreMarkdownFiles: string[]) { }
+  private logger: Logger;
+  constructor(private mode: MarkdownFileProcessorMode, private options: {
+    ignoreMarkdownFiles: string[]
+    logger: Logger
+  }) {
+    this.logger = options.logger;
+    this.logger.info(`MarkdownFileProcessor: '${mode}' Mode`);
+  }
 
   async updateId(file: string, markdownContent: string): Promise<void> {
     const { data: frontmatter, content } = extractFrontMatter(markdownContent);
     if (!frontmatter?.extra?.id) {
-      console.log(`Updating file: ${file}`);
+      const id = 'auto-generated';
       const outputMarkdown = composeFrontMatter({
         ...frontmatter,
         extra: {
           ...frontmatter.extra,
-          id: 'auto-generated',
+          id,
         }
       }, content);
       await fs.writeFile(file, outputMarkdown, "utf8");
-      logger.log(`Update id: ${file}`);
+      this.logger.info(`Updated id: ${file} with id='${id}'`);
     }
   }
 
@@ -62,28 +63,31 @@ export class MarkdownFileProcessor implements FileProcessor {
     const files = await glob(`${dir}/**/*.md`);
 
     for (const file of files) {
-      if (this.ignoreMarkdownFiles.includes(path.basename(file))) {
-        logger.log(`Ignoring: ${file}`);
+      if (this.options.ignoreMarkdownFiles.includes(path.basename(file))) {
+        this.logger.debug(`Ignoring: ${file}`);
         continue;
       }
       const markdownContent = await fs.readFile(file, "utf8");
-      if (this.mode === 'update') {
-        await this.updateId(file, markdownContent);
+      const result = extractMarkdownMetadata(dir, file, markdownContent);
+      if (!result) {
+        if (this.mode === 'update') {
+          await this.updateId(file, markdownContent);
+        } else {
+          this.logger.warn(`No post ID found: ${file}`);
+        }
         continue;
       }
-      const result = extractMarkdownMetadata(dir, file, markdownContent);
-      if (!result) continue;
       idMapper.set(result.id, {
         path: result.path,
       });
-      logger.log(`Processed: ${result.id} -> '${file}'`);
+      this.logger.debug(`Processed: ${result.id} -> '${file}'`);
     }
 
     return idMapper;
   }
 }
 
-export async function processMarkdownDirectories(sourceDirs: string[], processor: FileProcessor): Promise<Map<PostId, IdMapperMetadata> | undefined> {
+export async function processMarkdownDirectories(sourceDirs: string[], processor: FileProcessor, logger: Logger): Promise<Map<PostId, IdMapperMetadata> | undefined> {
   const startTime = Date.now();
   let idMapperCollection = new Map<PostId, IdMapperMetadata>();
 
@@ -93,7 +97,7 @@ export async function processMarkdownDirectories(sourceDirs: string[], processor
       idMapperCollection = new Map([...idMapperCollection, ...idMapper]);
     }
     const endTime = Date.now();
-    logger.warn(`Processed ${idMapperCollection.size} files in ${endTime - startTime}ms`);
+    logger.info(`Processed ${idMapperCollection.size} files in ${endTime - startTime}ms`);
     return idMapperCollection;
   } catch (error) {
     logger.error("Error processing files: " + error);
