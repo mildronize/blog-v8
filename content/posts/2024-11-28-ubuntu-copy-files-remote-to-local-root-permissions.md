@@ -1,7 +1,6 @@
 +++
 title = "ดึงไฟล์จาก Server มาที่เครื่องด้วยสิทธิ Root บน Ubuntu"
 date = "2024-11-28"
-aliases = ["/s/yxrqebe"]
 
 [taxonomies]
 categories = [ "Ubuntu" ]
