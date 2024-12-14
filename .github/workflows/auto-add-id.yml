@@ -2,9 +2,9 @@ name: "Auto Add Post ID"
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main.issue-11 # Change this to your main branch name
+  push:
+    branches:
+      - main.issue-11 # Change this to your main branch name
 
 env:
   repo: mildronize/blog-v8
@@ -78,14 +78,15 @@ jobs:
           git_name: Add Post ID
 
       - name: Commit Change & Push
+        if: steps.add-post-id.outputs.added-id-is-updated == 'true'
         run: |
-          git add --all
+          git add --all content
           git diff --quiet && git diff --staged --quiet || git commit -am "${{ env.git_message }}"
-
+          git push --set-upstream origin ${{ env.branch_name }}
         working-directory: ${{ env.working_directory }}
-#           git push --set-upstream origin ${{ env.branch_name }}
 
       - name: Create Pull Request & Merge if possible
+        if: steps.add-post-id.outputs.added-id-is-updated == 'true'
         run: |
           gh pr create \
             --title "${{ env.git_message }}" \

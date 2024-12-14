@@ -17,11 +17,17 @@ try {
   const processor = new MarkdownFileProcessor('update', { ignoreMarkdownFiles, logger, idStore: new Map(Object.entries(idStoreObject)) });
   const processorOutput = await processMarkdownDirectories(sourceDirectories, processor, logger);
 
-  const stringifiedAddedIds = processorOutput.addedIds.join(', ');
+  const stringifiedAddedIds = processorOutput.addedIds.slice(0, 3).join(', ');
   const continueMessage = processorOutput.addedIds.length > 3 ? '...' : '';
-  logger.info(`Added Post with ${processorOutput.addedIds.length} ids, including: ${stringifiedAddedIds.slice(0, 3)} ${continueMessage}`);
+  let message = '';
+  if(processorOutput.addedIds.length > 0) {
+    message = `Added Post with ${processorOutput.addedIds.length} ids, including: ${stringifiedAddedIds} ${continueMessage}`;
+  } else {
+    message = 'No new ids added';
+  }
 
-  core.setOutput('added-id-message', JSON.stringify(processorOutput.addedIds));
+  core.setOutput('added-id-message', message);
+  core.setOutput('added-id-is-updated', processorOutput.addedIds.length > 0);
   core.setOutput('added-id-details', `Added ${processorOutput.addedIds.length} ids, including: ${processorOutput.addedIds.join(', ')}`);
 
 } catch (error) {
