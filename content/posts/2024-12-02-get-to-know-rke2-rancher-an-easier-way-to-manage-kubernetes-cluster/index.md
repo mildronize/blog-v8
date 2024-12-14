@@ -4,8 +4,12 @@ date = "2024-12-02"
 
 [taxonomies]
 categories = [ "Kubernetes" ]
-tags = [ "Rancher", "RKE2", "RKE","Kubernetes", "DevOps" ]
+tags = [ "Rancher", "RKE2", "RKE", "Kubernetes", "DevOps" ]
+
+[extra]
+id = "4mrbm76"
 +++
+
 
 เวลาที่เราพูดถึง **Kubernetes** มันจะมีสองมุมเสมอครับ ด้านหนึ่งคือฝั่ง **Admin** ที่ต้องคอย Setup และดูแล Cluster ตั้งแต่การติดตั้ง, การจัดการโหนด, ไปจนถึงการอัปเดตระบบ ส่วนอีกด้านคือฝั่ง **Dev** ที่ใช้ `kubectl` หรือเครื่องมือ CI/CD เพื่อ deploy แอปพลิเคชันโดยไม่ต้องสนใจเบื้องหลังของคลัสเตอร์ สำหรับบทความนี้ ผมจะพาเรามาโฟกัสที่ฝั่ง Admin โดยเฉพาะ และแนะนำเครื่องมือที่ช่วยให้การสร้างและจัดการ Kubernetes Cluster ง่ายขึ้นอย่าง **Rancher**
 
