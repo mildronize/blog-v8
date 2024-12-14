@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main.issue-11 # Change this to your main branch name
+      - main.issue-11.test # Change this to your main branch name
 
 env:
   repo: mildronize/blog-v8
@@ -14,7 +14,7 @@ env:
   # Ref: https://www.getzola.org/documentation/deployment/gitlab-pages/
   ZOLA_VERSION: "0.19.2"
 
-  base_branch: main.issue-11 # Change this to your main branch name
+  base_branch: main.issue-11.test # Change this to your main branch name
 
 jobs:
   add-post-id:
