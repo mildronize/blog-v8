@@ -46,7 +46,6 @@ jobs:
           fi
           wget $zola_url
           tar -xzf *.tar.gz
-        working-directory: ${{ env.working_directory }}
 
       - name: Install Scripts Dependencies
         run: bun install
@@ -65,7 +64,7 @@ jobs:
 
       - name: Zola Build
         run: |
-          ./zola build
+          ../zola build
         working-directory: ${{ env.working_directory }}
 
       - name: Setup Git
