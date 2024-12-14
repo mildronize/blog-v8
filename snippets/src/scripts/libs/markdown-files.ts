@@ -4,7 +4,7 @@ import path from "path";
 import fs from 'fs-extra';
 import { composeFrontMatter, extractFrontMatter, generateZolaPostPath } from "./zola";
 import { PostId, IdMapperMetadata, PostMetadata, MarkdownFileProcessorMode } from "./type";
-import { retryNewId } from "./Uuid";
+import { retryNewId } from "./uuid";
 
 export function extractMarkdownMetadata(dir: string, file: string, content: string): PostMetadata | undefined {
   const { data: frontmatter } = extractFrontMatter(content);
