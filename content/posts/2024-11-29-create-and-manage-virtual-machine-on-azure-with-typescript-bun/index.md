@@ -5,7 +5,11 @@ date = "2024-11-29"
 [taxonomies]
 categories = [ "Azure" ]
 tags = [ "Azure", "TypeScript", "Bun", "Virtual Machine", "DevOps" ]
+
+[extra]
+id = "l2dssbm"
 +++
+
 
 สวัสดีครับ! วันนี้เราจะมาพูดถึงการสร้าง Virtual Machine (VM) บน Microsoft Azure โดยใช้ TypeScript ซึ่งเป็น Runtime ที่เร็วมากสำหรับ JavaScript และ TypeScript และในบทความนี้ เราจะอธิบายการเขียนสคริปต์ทีละส่วน พร้อมกับสอนการติดตั้งและการใช้งาน TypeScript แบบง่าย ๆ
 
