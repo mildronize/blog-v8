@@ -83,6 +83,7 @@ jobs:
         if: steps.add-post-id.outputs.added-id-is-updated == 'true'
         run: |
           git add --all content
+          git restore --staged snippets/bun.lockb
           git diff --quiet && git diff --staged --quiet || git commit -am "${{ env.git_message }}"
           git push --set-upstream origin ${{ env.branch_name }}
         working-directory: ${{ env.working_directory }}
