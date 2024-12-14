@@ -20,6 +20,7 @@
     "vite": "^6.0.2"
   },
   "dependencies": {
+    "@actions/core": "^1.11.1",
     "@iarna/toml": "^2.2.5",
     "fs-extra": "^11.2.0",
     "gray-matter": "^4.0.3",

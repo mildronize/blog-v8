@@ -2,12 +2,121 @@ name: "Auto Add Post ID"
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main.issue-11 # Change this to your main branch name
+
+env:
+  repo: mildronize/blog-v8
+  working_directory: "tmp-site"
+  snippets_directory: "snippets"
+  # Version of Zola available in GitHub releases.
+  # Ref: https://www.getzola.org/documentation/deployment/gitlab-pages/
+  ZOLA_VERSION: "0.19.2"
+
+  base_branch: main.issue-11 # Change this to your main branch name
 
 jobs:
-  build:
+  add-post-id:
+    name: Add Post ID
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello, World!"
+      - name: Setup branch name
+        run: |
+          echo "branch_name=main.auto-add-post-id-$(date +%s)" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Clone Project
+        run: |
+          git clone https://${{ secrets.GH_TOKEN }}@github.com/${{ env.repo }} ${{ env.working_directory }}
+          cd ${{ env.working_directory }} && git submodule update --init --recursive
+
+      - name: Checkout Branch
+        run: git checkout ${{ env.base_branch }}
+        working-directory: ${{ env.working_directory }}
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install Zola
+        run: |
+          zola_url="https://github.com/getzola/zola/releases/download/v$ZOLA_VERSION/zola-v$ZOLA_VERSION-x86_64-unknown-linux-gnu.tar.gz"
+          if ! wget --quiet --spider $zola_url; then
+            echo "A Zola release with the specified version could not be found.";
+            exit 1;
+          fi
+          wget $zola_url
+          tar -xzf *.tar.gz
+        working-directory: ${{ env.working_directory }}
+
+      - name: Install Scripts Dependencies
+        run: bun install
+        working-directory: ${{ env.working_directory }}/${{ env.snippets_directory }}
+
+      - name: Add Post ID
+        id: add-post-id
+        run: |
+          bun run add-id
+        working-directory: ${{ env.working_directory }}/${{ env.snippets_directory }}
+      
+      - name: Setup Git Message & Pull Request Title
+        run: |
+          echo "git_message=content: ${{ steps.add-post-id.outputs.added-id-message }}" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Zola Build
+        run: |
+          ./zola build
+        working-directory: ${{ env.working_directory }}
+
+      - name: Setup Git
+        run: |
+          git config --global user.email "${{ env.git_email }}"
+          git config --global user.name "${{ env.git_name }}"
+          git checkout -b ${{ env.branch_name }}
+        working-directory: ${{ env.working_directory }}
+        env:
+          git_email: github-action-bot@thadaw.com
+          git_name: Add Post ID
+
+      - name: Commit Change & Push
+        run: |
+          git add --all
+          git diff --quiet && git diff --staged --quiet || git commit -am "${{ env.git_message }}"
+          git push --set-upstream origin ${{ env.branch_name }}
+        working-directory: ${{ env.working_directory }}
+
+      - name: Create Pull Request & Merge if possible
+        run: |
+          gh pr create \
+            --title "${{ env.git_message }}" \
+            --body "${{ steps.add-post-id.outputs.added-id-details }}" \
+            --base ${{ env.base_branch }} \
+            --head ${{ env.branch_name }} \
+            --repo "${{ env.repo }}"
+
+          retry=1
+          while [ $retry -lt 10 ]
+          do
+              pr_number=`gh pr view ${{ env.branch_name }} --repo "${{ env.repo }}" --json number | jq '.number'`
+              if [ "$pr_number" != "" ]; then
+                  break
+              fi
+              echo "Retry to get PR number... ($retry)"
+              sleep 3
+              retry=$(( $retry + 1 ))
+          done
+
+          if [ $retry -eq 10 ]
+          then
+              echo "Exceed limit retry"
+              exit 1
+          fi
+
+          echo "PR Number: $pr_number"
+          gh pr merge $pr_number \
+            --merge \
+            --delete-branch \
+            --repo ${{ env.repo }}
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

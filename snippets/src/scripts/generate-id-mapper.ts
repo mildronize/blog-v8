@@ -9,10 +9,10 @@ const { sourceDirectories, targetFile, ignoreMarkdownFiles } = config.blogIdModu
 
 export async function generateIdMapper(logger: Logger = new ConsoleLogger()) {
   const processor = new MarkdownFileProcessor('read', { ignoreMarkdownFiles, logger });
-  const idMapperCollection = await processMarkdownDirectories(sourceDirectories, processor, logger) ?? new Map();
+  const processorOutput = await processMarkdownDirectories(sourceDirectories, processor, logger) ?? new Map();
   // Ensure target directory exists
   await fs.ensureDir(path.dirname(targetFile));
-  fs.writeJSON(targetFile, Object.fromEntries(idMapperCollection));
+  fs.writeJSON(targetFile, Object.fromEntries(processorOutput.idMapperCollection));
 }
 
 generateIdMapper(pinoLogBuilder('gen-id-mapper', 'info'));
