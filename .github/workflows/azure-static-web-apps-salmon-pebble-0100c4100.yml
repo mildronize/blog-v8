@@ -30,7 +30,7 @@ jobs:
 
       - name: Install Scripts Dependencies
         run: bun install
-        working-directory: scripts
+        working-directory: snippets
 
       - name: Install Zola
         run: |
