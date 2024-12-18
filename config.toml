@@ -5,7 +5,7 @@
 #
 #=========================================================================================
 
-base_url = "https://v8.thadaw.com"     # Domain name of your website
+base_url = "https://thadaw.com"     # Domain name of your website
 # base_url = "https://salmon-pebble-0100c4100.4.azurestaticapps.net"    
 title = "Thada W."
 description = "My personal blog"
