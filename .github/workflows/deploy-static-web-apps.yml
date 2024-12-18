@@ -9,6 +9,7 @@ on:
     branches:
       - main
 
+      
 env:
   SWA_ENVIRONMENT: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
   SWA_NAME: "thadaw-main-site-v8"
@@ -45,6 +46,19 @@ jobs:
           fi
           wget $zola_url
           tar -xzf *.tar.gz
+
+      - name: Login Azure
+        if: env.SWA_ENVIRONMENT != 'production'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set Hostname for ${{ env.SWA_ENVIRONMENT }} Environment
+        if: env.SWA_ENVIRONMENT != 'production'
+        run: |
+          hostname=$(az staticwebapp environment show -n ${{ env.SWA_NAME }} --environment-name ${{ env.SWA_ENVIRONMENT }} --query "hostname" -o tsv)
+          echo "Hostname for ${{ env.SWA_ENVIRONMENT }} Environment: $hostname"
+          sed -i "s|^base_url = .*|base_url = \"https://$hostname\"|" config.toml
 
       - name: Build
         run: |
