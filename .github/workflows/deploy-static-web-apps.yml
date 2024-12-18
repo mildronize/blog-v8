@@ -1,12 +1,16 @@
-name: Azure Static Web Apps CI/CD
+name: Deploy Azure Static Web Apps
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
 
 env:
-  SWA_ENVIRONMENT: "production"
+  SWA_ENVIRONMENT: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
   SWA_NAME: "thadaw-main-site-v8"
   # Version of Zola available in GitHub releases.
   # Ref: https://www.getzola.org/documentation/deployment/gitlab-pages/
