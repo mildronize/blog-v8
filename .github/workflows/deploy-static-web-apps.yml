@@ -131,7 +131,7 @@ jobs:
           body-includes: This auto-generated comment was created by github actions
 
       - name: Create comment
-        if: steps.find-comment.outputs.comment-id == ''
+        if:  github.event_name == 'pull_request' && steps.find-comment.outputs.comment-id == ''
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.pull_request.number }}
