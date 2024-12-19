@@ -14,7 +14,8 @@ permissions:
   pull-requests: write
 
 env:
-  PULL_REQUEST_ENVIRONMENT: pr-${{ github.event.pull_request.number }}
+  # No dash (-) in the environment name
+  PULL_REQUEST_ENVIRONMENT: pr${{ github.event.pull_request.number }}
   SWA_NAME: "thadaw-main-site-v8"
   # Version of Zola available in GitHub releases.
   # Ref: https://www.getzola.org/documentation/deployment/gitlab-pages/
@@ -69,14 +70,28 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Set Hostname for ${{ steps.swa-environment.outputs.name }} Environment
+      # This step will generate hostname from pattern: <swa-default-hostname>-<swa-environment>.<region>.<swa-base-url>
+      # salmon-pebble-0100c4100-preview.eastasia.4.azurestaticapps.net
+      # 
+      # Because we cannot get the hostname before the environment is created, we need to set the hostname in the config.toml file
+      # so, this command will not work: `az staticwebapp environment show -n ${{ env.SWA_NAME }} --environment-name ${{ steps.swa-environment.outputs.name }} --query "hostname" -o tsv`
+
+      - name: Get Hostname for ${{ steps.swa-environment.outputs.name }} Environment
         if: github.event_name == 'pull_request'
-        id: hostname
+        id: get-hostname
         run: |
-          hostname=$(az staticwebapp environment show -n ${{ env.SWA_NAME }} --environment-name ${{ steps.swa-environment.outputs.name }} --query "hostname" -o tsv)
-          echo "Hostname for ${{ steps.swa-environment.outputs.name }} Environment: $hostname"
-          echo "hostname=$hostname" >> $GITHUB_OUTPUT
-          sed -i "s|^base_url = .*|base_url = \"https://$hostname\"|" config.toml
+          cd .github/workflows/scripts && \
+            bun run get-swa-hostname.ts
+          echo "Hostname for ${{ steps.swa-environment.outputs.name }}"
+        env:
+          SWA_NAME: ${{ env.SWA_NAME }}
+          SWA_ENVIRONMENT: ${{ steps.swa-environment.outputs.name }}
+
+      - name: Set Hostname in Config.toml
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "Hostname: ${{ steps.get-hostname.outputs.hostname }}"
+          sed -i "s|^base_url = .*|base_url = \"https://${{ steps.get-hostname.outputs.hostname }}\"|" config.toml
 
       - name: Build
         run: |
