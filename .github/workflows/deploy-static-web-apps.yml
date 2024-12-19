@@ -117,7 +117,7 @@ jobs:
           template: .github/deploy-comment-template.md
           vars: |
             environment: ${{ steps.swa-environment.outputs.name }}
-            hostname: ${{ steps.hostname.outputs.hostname }}
+            hostname: ${{ steps.get-hostname.outputs.hostname }}
             github_action_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
             deploy_time: ${{ steps.current_datetime.outputs.current_datetime }} (${{ env.TIMEZONE }})
 
