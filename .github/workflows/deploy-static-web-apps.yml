@@ -31,7 +31,7 @@ env:
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'main' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
@@ -158,4 +158,4 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Destroy Environment
-        run: az staticwebapp environment delete -n ${{ env.SWA_NAME }} --environment-name ${{ env.PULL_REQUEST_ENVIRONMENT }}
+        run: az staticwebapp environment delete -n ${{ env.SWA_NAME }} --environment-name ${{ env.PULL_REQUEST_ENVIRONMENT }} --yes
