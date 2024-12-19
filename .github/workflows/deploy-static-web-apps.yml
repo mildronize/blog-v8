@@ -5,12 +5,17 @@ on:
     branches:
       - main
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened, closed]
     branches:
       - main
 
+permissions:
+  issues: write
+  pull-requests: write
+
 env:
-  SWA_ENVIRONMENT: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
+  # No dash (-) in the environment name
+  PULL_REQUEST_ENVIRONMENT: pr${{ github.event.pull_request.number }}
   SWA_NAME: "thadaw-main-site-v8"
   # Version of Zola available in GitHub releases.
   # Ref: https://www.getzola.org/documentation/deployment/gitlab-pages/
@@ -21,11 +26,24 @@ env:
   RETRY_MAX_ATTEMPTS: 3
   RETRY_DELAY_SECONDS: 5
 
+  # Timezone in report on github pr comment
+  TIMEZONE: Asia/Bangkok
+
 jobs:
   build_and_deploy_job:
+    if: github.event_name == 'main' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
+      - name: Get SWA Environment
+        id: swa-environment
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "name=${{ env.PULL_REQUEST_ENVIRONMENT }}" >> $GITHUB_OUTPUT
+          else
+            echo "name=production" >> $GITHUB_OUTPUT
+          fi
+
       - uses: actions/checkout@v4
         with:
           submodules: true
@@ -46,18 +64,98 @@ jobs:
           wget $zola_url
           tar -xzf *.tar.gz
 
+      - name: Login Azure
+        if: github.event_name == 'pull_request'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Get Hostname for ${{ steps.swa-environment.outputs.name }} Environment
+        if: github.event_name == 'pull_request'
+        id: get-hostname
+        run: bun run src/scripts/get-swa-hostname.ts
+        env:
+          SWA_NAME: ${{ env.SWA_NAME }}
+          SWA_ENVIRONMENT: ${{ steps.swa-environment.outputs.name }}
+        working-directory: snippets
+
+      - name: Set Hostname in Config.toml
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "Hostname: ${{ steps.get-hostname.outputs.hostname }}"
+          sed -i "s|^base_url = .*|base_url = \"https://${{ steps.get-hostname.outputs.hostname }}\"|" config.toml
+
       - name: Build
         run: |
           ./zola build
           make id-mapper
           make clean-js-build
 
-      - name: Deploy
+      - name: Deploy to Azure Static Web Apps
         uses: nick-fields/retry@v2.8.3
         with:
           timeout_minutes: ${{ env.RETRY_TIMEOUT_MINUTES }}
           max_attempts: ${{ env.RETRY_MAX_ATTEMPTS }}
           polling_interval_seconds: ${{ env.RETRY_DELAY_SECONDS }}
-          command: bunx @azure/static-web-apps-cli deploy ./public --env ${{ env.SWA_ENVIRONMENT}} -n  ${{ env.SWA_NAME }}
+          command: bunx @azure/static-web-apps-cli deploy ./public --env ${{ steps.swa-environment.outputs.name }} -n  ${{ env.SWA_NAME }}
         env:
           SWA_CLI_DEPLOYMENT_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_SALMON_PEBBLE_0100C4100 }}
+
+      - name: Get Current DateTime
+        id: current_datetime
+        run: |
+          export TZ="${{ env.TIMEZONE }}"
+          CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+          echo "current_datetime=$CURRENT_DATETIME" >> $GITHUB_OUTPUT
+          echo "Current DateTime in UTC+7: $CURRENT_DATETIME"
+
+      - name: Render template
+        if: github.event_name == 'pull_request'
+        id: template
+        uses: chuhlomin/render-template@v1.4
+        with:
+          template: .github/deploy-comment-template.md
+          vars: |
+            environment: ${{ steps.swa-environment.outputs.name }}
+            hostname: ${{ steps.get-hostname.outputs.hostname }}
+            github_action_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            deploy_time: ${{ steps.current_datetime.outputs.current_datetime }} (${{ env.TIMEZONE }})
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@v3
+        if: github.event_name == 'pull_request'
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: This auto-generated comment was created by github actions
+
+      - name: Create comment
+        if: steps.find-comment.outputs.comment-id == ''
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: ${{ steps.template.outputs.result }}
+          reactions: rocket
+
+      - name: Update comment
+        if: steps.find-comment.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          body: ${{ steps.template.outputs.result }}
+          edit-mode: replace
+          reactions: hooray
+
+  destroy:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Destroy Environment
+    steps:
+      - name: Login Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Destroy Environment
+        run: az staticwebapp environment delete -n ${{ env.SWA_NAME }} --environment-name ${{ env.PULL_REQUEST_ENVIRONMENT }}
