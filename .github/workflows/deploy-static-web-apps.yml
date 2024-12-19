@@ -26,12 +26,12 @@ env:
   RETRY_MAX_ATTEMPTS: 3
   RETRY_DELAY_SECONDS: 5
 
-  # Timezone
+  # Timezone in report on github pr comment
   TIMEZONE: Asia/Bangkok
 
 jobs:
   build_and_deploy_job:
-    if: github.event.action != 'closed'
+    if: github.event_name == 'main' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
@@ -70,22 +70,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # This step will generate hostname from pattern: <swa-default-hostname>-<swa-environment>.<region>.<swa-base-url>
-      # salmon-pebble-0100c4100-preview.eastasia.4.azurestaticapps.net
-      # 
-      # Because we cannot get the hostname before the environment is created, we need to set the hostname in the config.toml file
-      # so, this command will not work: `az staticwebapp environment show -n ${{ env.SWA_NAME }} --environment-name ${{ steps.swa-environment.outputs.name }} --query "hostname" -o tsv`
-
       - name: Get Hostname for ${{ steps.swa-environment.outputs.name }} Environment
         if: github.event_name == 'pull_request'
         id: get-hostname
-        run: |
-          cd .github/workflows/scripts && \
-            bun run get-swa-hostname.ts
-          echo "Hostname for ${{ steps.swa-environment.outputs.name }}"
+        run: bun run src/scripts/get-swa-hostname.ts
         env:
           SWA_NAME: ${{ env.SWA_NAME }}
           SWA_ENVIRONMENT: ${{ steps.swa-environment.outputs.name }}
+        working-directory: snippets
 
       - name: Set Hostname in Config.toml
         if: github.event_name == 'pull_request'
@@ -154,9 +146,9 @@ jobs:
           body: ${{ steps.template.outputs.result }}
           edit-mode: replace
           reactions: hooray
-          
+
   destroy:
-    if: github.event.action == 'closed'
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Destroy Environment
     steps:
