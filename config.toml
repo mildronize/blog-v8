@@ -78,9 +78,9 @@ display_tags = true                   # Whether to display tags on post pages by
 truncate_summary = false              # Whether to truncate the summary of a post by default
 comment = true                        # Whether to show giscus comment section by default, see https://giscus.app for more info
 
-reaction = false                      # Whether to show anonymous reactions (Note: You need to set up a working api endpoint to enable anonymous reaction)
-reaction_align = "right"              # "left" | "center" | "right"
-reaction_endpoint = "https://example.com/api/reaction"
+reaction = true                      # Whether to show anonymous reactions (Note: You need to set up a working api endpoint to enable anonymous reaction)
+reaction_align = "center"              # "left" | "center" | "right"
+reaction_endpoint = "https://thadaw-reaction.azurewebsites.net/api"
 
 outdate_alert = false                 # Whether to show outdate alert by default
 outdate_alert_days = 120              # How many days will a post be outdated by default
