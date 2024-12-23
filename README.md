@@ -10,6 +10,9 @@ A modern, fast, and feature-rich static site powered by Zola and deployed seamle
   - Automatic deployment to production when changes are pushed to the main branch using [Deploy to Azure Static Web App GitHub Action](.github/workflows/deploy.yml).
   - Automatic preview deployments triggered by pull requests.
 - **Dynamic 404 Handling**: Automatically resolves URLs with a post ID to the correct post. For example, `/s/123` redirects to `/post/this-is-a-post`.
+- Enable Giscus comment, which is already provided by the theme.
+- Enable Anonymous Reaction, any user can react with Emoji ❤️ to the post without login, which is already provided by the theme.
+   - The backend is reimplemented in Azure Functions with TypeScript. Checkout [Reaction](https://github.com/mildronize/reaction) repo for more detail.
 
 ## 🛠️ Local Development
 
