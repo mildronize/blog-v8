@@ -50,7 +50,7 @@ avatar = "images/avatar.jpg"
 display_bio = true
 display_avatar = true
 
-recent = false
+recent = true
 recent_max = 5
 recent_more_text = "more »"
 
