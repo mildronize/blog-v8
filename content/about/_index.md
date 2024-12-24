@@ -1,6 +1,6 @@
 +++
 title = "About me"
-description = "A about page of ..."
+description = "Get to know me"
 template = "prose.html"
 insert_anchor_links = "none"
 
@@ -13,25 +13,12 @@ comment = false
 reaction = false
 +++
 
-# About
-Hi, I'm Mild, Thada, Software Engineer & DevSecOps, Based in Hatyai, Thailand, 👨‍💻 Work Remotely
+# Get to know me
 
-**Key Expertise**
+Hi there! 👋 I’m Thada, a **software engineer and DevSecOps enthusiast** with a knack for solving complex challenges and building secure, scalable infrastructures. I’ve had the privilege of working on everything from automating workflows with Terraform and GitHub Actions to mentoring teams and fostering a collaborative DevOps culture. My focus has always been on crafting solutions that are not just functional but also efficient and reliable.
 
-- Azure (App Service, SQL Sver)
-- GitHub Actions
-- Terraform
+Over the years, I’ve worn multiple hats—from leading DevOps teams to teaching university courses in web development, mobile apps, and game programming. These experiences have shaped my passion for both technical innovation and knowledge sharing. Whether it’s designing a modular framework, bringing legacy systems into the modern CI/CD pipeline, or ensuring SOC2 compliance, I thrive on blending technical depth with a strategic approach.
 
-**Technical Skills**
+When I’m not immersed in the tech world, you might find me contributing to the community through talks or workshops, or simply exploring creative outlets like photography. My journey is a mix of curiosity, learning, and building meaningful projects that make a difference.
 
-- Languages: `TypeScript`, `Go Lang`, `C#`,  `Python`
-- DevOps Tools: GitHub Action, Terraform
-- Platform/Framework: [ASP.NET](http://asp.NET) Core, Node.JS (TypeScript), React (TypeScript), Flutter, NestJS, NextJS
-- Database: MongoDB, MySQL, OpenTSDB, Firebase & Firestore
-- Tools: Docker, Memcached, Notion
-
-**Thada’s Community Engagement**
-
-- https://thadaw.notion.site/Thada-s-Community-Engagement-064f79a8e85e4532a4ab39e7831f34aa
-
-or checkout [My Talks](/talks)
+Curious to know more about my professional adventures and achievements? Head over to my [resume page](/resume) to dive deeper into my story. It’s a great way to see how my experiences align with your interests or projects!
