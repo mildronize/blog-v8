@@ -1,76 +1,85 @@
 {
   "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
   "basics": {
-    "name": "Richard Hendriks",
-    "label": "Programmer",
-    "image": "",
-    "email": "richard.hendriks@mail.com",
-    "phone": "(912) 555-4321",
-    "url": "http://richardhendricks.example.com",
-    "summary": "Richard hails from Tulsa. He has earned degrees from the University of Oklahoma and Stanford. (Go Sooners and Cardinal!) Before starting Pied Piper, he worked for Hooli as a part time software developer. While his work focuses on applied information theory, mostly optimizing lossless compression schema of both the length-limited and adaptive variants, his non-work interests range widely, everything from quantum computing to chaos theory. He could tell you about it, but THAT would NOT be a “length-limited” conversation!",
+    "name": "Thada Wangthammang",
+    "label": "Technical Lead",
+    "email": "thada.wth@gmail.com",
     "location": {
-      "address": "2712 Broadway St",
-      "postalCode": "CA 94115",
-      "city": "San Francisco",
-      "countryCode": "US",
-      "region": "California"
+      "city": "Hatyai",
+      "countryCode": "TH",
+      "country": "Thailand"
     },
     "profiles": [
       {
-        "network": "Twitter",
-        "username": "neutralthoughts",
-        "url": "https://www.twitter.com"
-      },
-      {
-        "network": "SoundCloud",
-        "username": "dandymusicnl",
-        "url": "https://soundcloud.example.com/dandymusicnl"
+        "network": "LinkedIn",
+        "username": "Thada Wangthammang",
+        "url": "https://www.linkedin.com/in/thada-wangthammang-281894a6/"
       }
-    ]
+    ],
+    "summary": "Experienced leader and technical consultant specializing in platform engineering, DevOps, and team management. Skilled in overseeing the development of automated infrastructure and pipelines using tools like Terraform and GitHub Actions to ensure secure, scalable, and high-performing solutions. Committed to ensuring system reliability, high availability, and operational excellence through best practices in CI/CD and infrastructure as code (IaC)."
   },
   "work": [
     {
-      "name": "Pied Piper",
-      "location": "Palo Alto, CA",
-      "description": "Awesome compression company",
-      "position": "CEO/President",
-      "url": "http://piedpiper.example.com",
-      "startDate": "2013-12-01",
-      "endDate": "2014-12-01",
-      "summary": "Pied Piper is a multi-platform technology based on a proprietary universal compression algorithm that has consistently fielded high Weisman Scores™ that are not merely competitive, but approach the theoretical limit of lossless compression.",
-      "highlights": [
-        "Build an algorithm for artist to detect if their music was violating copy right infringement laws",
-        "Successfully won Techcrunch Disrupt",
-        "Optimized an algorithm that holds the current world record for Weisman Scores"
-      ]
-    }
-  ],
-  "volunteer": [
+      "position": "Technical Lead",
+      "startDate": "2024-11",
+      "endDate": "present",
+      "name": "T.T. Software Solution / WRM Software",
+      "location": "Thailand",
+      "summary": "",
+      "url": "https://www.linkedin.com/company/t-t-software-solution"
+    },
     {
-      "organization": "CoderDojo",
-      "position": "Teacher",
-      "url": "http://coderdojo.example.com/",
-      "startDate": "2012-01-01",
-      "endDate": "2013-01-01",
-      "summary": "Global movement of free coding clubs for young people.",
+      "position": "DevOps & SRE Team Lead",
+      "startDate": "2022-06",
+      "endDate": "2024-11",
+      "name": "T.T. Software Solution / WRM Software",
+      "location": "Thailand",
+      "summary": "N/A",
       "highlights": [
-        "Awarded 'Teacher of the Month'"
-      ]
+        "Led the development of automated, secure, and scalable infrastructure using Terraform and GitHub Actions.",
+        "Conducted code reviews to ensure quality and adherence to best practices for security, scalability, and performance.",
+        "Spearheaded sprint planning to set team goals, allocate resources, and deliver objectives on time.",
+        "Provided technical consultation to address risks and implement robust, aligned solutions.",
+        "Championed SOC2 compliance, implementing security controls and conducting regular assessments.",
+        "Collaborated on resilient infrastructure design, focusing on monitoring and disaster recovery.",
+        "Ensured system reliability and high availability through CI/CD best practices and proactive monitoring."
+      ],
+      "url": "https://www.linkedin.com/company/t-t-software-solution"
+    },
+    {
+      "position": "DevSecOps Engineer",
+      "startDate": "2021-09",
+      "endDate": "2022-06",
+      "name": "T.T. Software Solution / WRM Software",
+      "location": "Thailand",
+      "summary": "",
+      "url": "https://www.linkedin.com/company/t-t-software-solution"
+    },
+    {
+      "position": "Full-Time Lecturer",
+      "startDate": "2018-11",
+      "endDate": "2021-05",
+      "name": "Prince of Songkla University International College",
+      "location": "Hatyai, Thailand",
+      "url": "https://www.psu.ac.th"
     }
   ],
   "education": [
     {
-      "institution": "University of Oklahoma",
-      "url": "https://www.ou.edu/",
-      "area": "Information Technology",
-      "studyType": "Bachelor",
-      "startDate": "2011-06-01",
-      "endDate": "2014-01-01",
-      "score": "4.0",
-      "courses": [
-        "DB1101 - Basic SQL",
-        "CS2011 - Java Introduction"
-      ]
+      "institution": "Prince of Songkla University",
+      "area": "Computer Engineering, A Cache Mechanism for Reducing Query Time for OpenTSDB Time Series Database",
+      "studyType": "Master's Degree",
+      "startDate": "2016-08",
+      "endDate": "2018-05",
+      "url": "https://www.psu.ac.th"
+    },
+    {
+      "institution": "Prince of Songkla University",
+      "area": "Computer Engineering",
+      "studyType": "Bachelor's Degree",
+      "startDate": "2012-08",
+      "endDate": "2016-05",
+      "url": "https://www.psu.ac.th"
     }
   ],
   "awards": [
@@ -83,37 +92,71 @@
   ],
   "publications": [
     {
-      "name": "Video compression for 3d media",
-      "publisher": "Hooli",
-      "releaseDate": "2014-10-01",
-      "url": "http://en.wikipedia.org/wiki/Silicon_Valley_(TV_series)",
-      "summary": "Innovative middle-out compression algorithm that changes the way we store data."
+      "name": "A Software Cache Mechanism for Reducing the OpenTSDB Query Time",
+      "publisher": "The 18th International Symposium on Communications and Information Technologies (ISCIT 2018)",
+      "releaseDate": "2018-09",
+      "url": "https://ieeexplore.ieee.org/document/8587857/"
+    },
+    {
+      "name": "Registration Assistant Application using Local Search and Tabu List Technique",
+      "publisher": "Thaksin University Journal Special Edition for 28th National Conference of Thaksin University",
+      "releaseDate": "2018",
+      "url": "https://ph02.tci-thaijo.org/index.php/tsujournal/article/view/151824"
     }
   ],
   "skills": [
     {
-      "name": "Web Development",
-      "level": "Master",
+      "name": "Programming Languages",
       "keywords": [
-        "HTML",
-        "CSS",
-        "Javascript"
+        "TypeScript",
+        "C#"
       ]
     },
     {
-      "name": "Compression",
-      "level": "Master",
+      "name": "DevOps Tools",
       "keywords": [
-        "Mpeg",
-        "MP4",
-        "GIF"
+        "GitHub Actions",
+        "Terraform"
+      ]
+    },
+    {
+      "name": "Platforms/Frameworks",
+      "keywords": [
+        "ASP.NET Core",
+        "React (TypeScript)",
+        "Flutter",
+        "NestJS",
+        "NextJS"
+      ]
+    },
+    {
+      "name": "Databases",
+      "keywords": [
+        "MongoDB",
+        "MySQL",
+        "OpenTSDB",
+        "Firebase",
+        "Firestore"
+      ]
+    },
+    {
+      "name": "Tools",
+      "keywords": [
+        "Docker",
+        "Memcached",
+        "Jenkins",
+        "Notion"
       ]
     }
   ],
   "languages": [
     {
-      "language": "English",
+      "language": "Thai",
       "fluency": "Native speaker"
+    },
+    {
+      "language": "English",
+      "fluency": "Communication level"
     }
   ],
   "interests": [
