@@ -25,7 +25,13 @@
       "endDate": "present",
       "name": "T.T. Software Solution / WRM Software",
       "location": "Thailand",
-      "summary": "",
+      "summary": "As Technical Lead, I guide the team in delivering scalable, high-quality solutions by overseeing system architecture, infrastructure management, and DevOps workflows while driving strategic initiatives and fostering innovation.",
+      "highlights": [
+        "Lead and mentor the team to deliver scalable, high-quality solutions aligned with business objectives.",
+        "Oversee infrastructure management, system architecture, and DevOps workflows to ensure operational efficiency.",
+        "Drive the technology roadmap and foster innovation through strategic initiatives and technical consultation.",
+        "Collaborate with stakeholders to align technical goals with broader business objectives and ensure seamless delivery."
+      ],
       "url": "https://www.linkedin.com/company/t-t-software-solution"
     },
     {
@@ -34,15 +40,11 @@
       "endDate": "2024-11",
       "name": "T.T. Software Solution / WRM Software",
       "location": "Thailand",
-      "summary": "N/A",
+      "summary": "Directed the delivery of secure, scalable infrastructure and system reliability while driving compliance and fostering team success through strategic leadership.",
       "highlights": [
-        "Led the development of automated, secure, and scalable infrastructure using Terraform and GitHub Actions.",
-        "Conducted code reviews to ensure quality and adherence to best practices for security, scalability, and performance.",
-        "Spearheaded sprint planning to set team goals, allocate resources, and deliver objectives on time.",
-        "Provided technical consultation to address risks and implement robust, aligned solutions.",
-        "Championed SOC2 compliance, implementing security controls and conducting regular assessments.",
-        "Collaborated on resilient infrastructure design, focusing on monitoring and disaster recovery.",
-        "Ensured system reliability and high availability through CI/CD best practices and proactive monitoring."
+        "Led the implementation of automated infrastructure solutions using Terraform and GitHub Actions, focusing on scalability and operational efficiency.",
+        "Championed SOC2 compliance by implementing security controls, conducting assessments, and addressing risks proactively.",
+        "Spearheaded sprint planning, code reviews, and technical consultation to deliver high-quality solutions aligned with business goals."
       ],
       "url": "https://www.linkedin.com/company/t-t-software-solution"
     },
@@ -52,7 +54,11 @@
       "endDate": "2022-06",
       "name": "T.T. Software Solution / WRM Software",
       "location": "Thailand",
-      "summary": "",
+      "summary": "Established DevOps processes and workflows from scratch, leveraging GitHub Actions, Terraform, and Azure.",
+     "highlights": [
+    "Built DevOps workflows and infrastructure as code from scratch using GitHub Actions, Terraform, and Azure, while creating automation tools in TypeScript to streamline processes.",
+    "Consulted and educated teams on DevOps practices, bringing legacy .NET applications into a modern CI/CD pipeline and promoting a culture of collaboration, alongside implementing robust development."
+  ],
       "url": "https://www.linkedin.com/company/t-t-software-solution"
     },
     {
@@ -61,13 +67,18 @@
       "endDate": "2021-05",
       "name": "Prince of Songkla University International College",
       "location": "Hatyai, Thailand",
+      "summary": "Taught a variety of courses, while fostering student engagement and practical skill development.",
+      "highlights": [
+        "Taught diverse courses such as Responsive Web Design, Cross-Platform Mobile Application Development (Flutter), and Game Design & Programming (Unity, C#), focusing on practical skills and industry-relevant tools.",
+        "Guided students in real-world projects across various disciplines, including digital photography, to foster creativity, technical proficiency, and career readiness."
+      ],
       "url": "https://www.psu.ac.th"
     }
   ],
   "education": [
     {
       "institution": "Prince of Songkla University",
-      "area": "Computer Engineering, A Cache Mechanism for Reducing Query Time for OpenTSDB Time Series Database",
+      "area": "Computer Engineering, Thesis: A Cache Mechanism for Reducing Query Time for OpenTSDB Time Series Database",
       "studyType": "Master's Degree",
       "startDate": "2016-08",
       "endDate": "2018-05",
@@ -76,7 +87,7 @@
     {
       "institution": "Prince of Songkla University",
       "area": "Computer Engineering",
-      "studyType": "Bachelor's Degree",
+      "studyType": "Bachelor's Degree (1st Class Honor)",
       "startDate": "2012-08",
       "endDate": "2016-05",
       "url": "https://www.psu.ac.th"
@@ -84,10 +95,10 @@
   ],
   "awards": [
     {
-      "title": "Digital Compression Pioneer Award",
-      "date": "2014-11-01",
-      "awarder": "Techcrunch",
-      "summary": "There is no spoon."
+      "title": "Microsoft MVP - Azure Cloud Native",
+      "date": "2014-09-01",
+      "awarder": "Microsoft",
+      "summary": "Awarded for contributions to the Azure Cloud Native community."
     }
   ],
   "publications": [
@@ -113,10 +124,11 @@
       ]
     },
     {
-      "name": "DevOps Tools",
+      "name": "Cloud / DevOps Tools",
       "keywords": [
         "GitHub Actions",
-        "Terraform"
+        "Terraform",
+        "Azure"
       ]
     },
     {
@@ -124,7 +136,6 @@
       "keywords": [
         "ASP.NET Core",
         "React (TypeScript)",
-        "Flutter",
         "NestJS",
         "NextJS"
       ]
@@ -133,10 +144,8 @@
       "name": "Databases",
       "keywords": [
         "MongoDB",
-        "MySQL",
-        "OpenTSDB",
-        "Firebase",
-        "Firestore"
+        "MS SQL Server",
+        "OpenTSDB"
       ]
     },
     {
@@ -161,42 +170,44 @@
   ],
   "interests": [
     {
-      "name": "Wildlife",
+      "name": "Board Game",
       "keywords": [
-        "Ferrets",
-        "Unicorns"
+        "Role-playing game",
+        "Bluffing",
+        "Strategy"
       ]
-    }
-  ],
-  "references": [
+    },
     {
-      "name": "Erlich Bachman",
-      "reference": "It is my pleasure to recommend Richard, his performance working as a consultant for Main St. Company proved that he will be a valuable addition to any company."
+      "name": "Travel",
+      "keywords": [
+        "Japan"
+      ]
     }
   ],
   "projects": [
     {
-      "name": "Miss Direction",
-      "description": "A mapping engine that misguides you",
+      "name": "Nammatham",
+      "description": "Azure Functions Framework",
       "highlights": [
-        "Won award at AIHacks 2016",
-        "Built by all women team of newbie programmers",
-        "Using modern technologies such as GoogleMaps, Chrome Extension and Javascript"
+        "Introduced v1 using the Decorator pattern to address challenges in Azure Functions Node.js v3.",
+        "Designed and developed a modular framework in v2 leveraging Azure Functions v4.",
+        "Successfully deployed the project in production, serving as the backbone of DevOps automation."
       ],
       "keywords": [
-        "GoogleMaps",
-        "Chrome Extension",
-        "Javascript"
+        "Node.js",
+        "TypeScript",
+        "Serverless",
+        "Azure Functions",
+        "FaaS",
+        "Nammatham"
       ],
-      "startDate": "2016-08-24",
-      "endDate": "2016-08-24",
-      "url": "http://missdirection.example.com",
+      "startDate": "2023-01-01",
+      "endDate": "present",
+      "url": "https://nammatham.thaitype.dev",
       "roles": [
-        "Team lead",
-        "Designer"
+        "Creator"
       ],
-      "entity": "Smoogle",
-      "type": "application"
+      "type": "framework"
     }
   ],
   "meta": {
