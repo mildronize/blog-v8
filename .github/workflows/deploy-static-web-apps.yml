@@ -88,9 +88,7 @@ jobs:
       - name: Build
         run: |
           ./zola build
-          make resume
-          make id-mapper
-          make clean-js-build
+          make post-build
 
       - name: Deploy to Azure Static Web Apps
         uses: nick-fields/retry@v2.8.3
