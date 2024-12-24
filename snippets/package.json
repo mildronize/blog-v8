@@ -10,7 +10,8 @@
     "add-id": "bun run src/scripts/add-id.ts",
     "build:watch": "nodemon --exec 'bun run build' --watch src --ext ts",
     "preview": "vite preview",
-    "resume:start": "mkdir -p  ../public/resume && resumed render --theme jsonresume-theme-onepage-updated --output ../public/resume/index.html"
+    "resume:watch": "nodemon --exec 'bun run resume:build' --watch . --ext json",
+    "resume:build": "mkdir -p  ../public/resume && resumed render --theme jsonresume-theme-onepage-web --output ../public/resume/index.html"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -25,7 +26,7 @@
     "@iarna/toml": "^2.2.5",
     "fs-extra": "^11.2.0",
     "gray-matter": "^4.0.3",
-    "jsonresume-theme-onepage-updated": "^1.0.3",
+    "jsonresume-theme-onepage-web": "^1.0.4",
     "pino": "^9.5.0",
     "pino-pretty": "^13.0.0",
     "resumed": "^4.0.0",
