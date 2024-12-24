@@ -1,0 +1,218 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Thada Wangthammang",
+    "label": "Technical Lead",
+    "email": "thada.wth@gmail.com",
+    "location": {
+      "city": "Hatyai",
+      "countryCode": "TH",
+      "country": "Thailand"
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "Thada Wangthammang",
+        "url": "https://www.linkedin.com/in/thada-wangthammang-281894a6/"
+      }
+    ],
+    "summary": "Experienced leader and technical consultant specializing in platform engineering, DevOps, and team management. Skilled in overseeing the development of automated infrastructure and pipelines using tools like Terraform and GitHub Actions to ensure secure, scalable, and high-performing solutions. Committed to ensuring system reliability, high availability, and operational excellence through best practices in CI/CD and infrastructure as code (IaC)."
+  },
+  "work": [
+    {
+      "position": "Technical Lead",
+      "startDate": "2024-11",
+      "endDate": "present",
+      "name": "T.T. Software Solution / WRM Software",
+      "location": "Thailand",
+      "summary": "As Technical Lead, I guide the team in delivering scalable, high-quality solutions by overseeing system architecture, infrastructure management, and DevOps workflows while driving strategic initiatives and fostering innovation.",
+      "highlights": [
+        "Lead and mentor the team to deliver scalable, high-quality solutions aligned with business objectives.",
+        "Oversee infrastructure management, system architecture, and DevOps workflows to ensure operational efficiency.",
+        "Drive the technology roadmap and foster innovation through strategic initiatives and technical consultation.",
+        "Collaborate with stakeholders to align technical goals with broader business objectives and ensure seamless delivery."
+      ],
+      "url": "https://www.linkedin.com/company/t-t-software-solution"
+    },
+    {
+      "position": "DevOps & SRE Team Lead",
+      "startDate": "2022-06",
+      "endDate": "2024-11",
+      "name": "T.T. Software Solution / WRM Software",
+      "location": "Thailand",
+      "summary": "Directed the delivery of secure, scalable infrastructure and system reliability while driving compliance and fostering team success through strategic leadership.",
+      "highlights": [
+        "Led the implementation of automated infrastructure solutions using Terraform and GitHub Actions, focusing on scalability and operational efficiency.",
+        "Championed SOC2 compliance by implementing security controls, conducting assessments, and addressing risks proactively.",
+        "Spearheaded sprint planning, code reviews, and technical consultation to deliver high-quality solutions aligned with business goals."
+      ],
+      "url": "https://www.linkedin.com/company/t-t-software-solution"
+    },
+    {
+      "position": "DevSecOps Engineer",
+      "startDate": "2021-09",
+      "endDate": "2022-06",
+      "name": "T.T. Software Solution / WRM Software",
+      "location": "Thailand",
+      "summary": "Established DevOps processes and workflows from scratch, leveraging GitHub Actions, Terraform, and Azure.",
+     "highlights": [
+    "Built DevOps workflows and infrastructure as code from scratch using GitHub Actions, Terraform, and Azure, while creating automation tools in TypeScript to streamline processes.",
+    "Consulted and educated teams on DevOps practices, bringing legacy .NET applications into a modern CI/CD pipeline and promoting a culture of collaboration, alongside implementing robust development."
+  ],
+      "url": "https://www.linkedin.com/company/t-t-software-solution"
+    },
+    {
+      "position": "Full-Time Lecturer",
+      "startDate": "2018-11",
+      "endDate": "2021-05",
+      "name": "Prince of Songkla University International College",
+      "location": "Hatyai, Thailand",
+      "summary": "Taught a variety of courses, while fostering student engagement and practical skill development.",
+      "highlights": [
+        "Taught diverse courses such as Responsive Web Design, Cross-Platform Mobile Application Development (Flutter), and Game Design & Programming (Unity, C#), focusing on practical skills and industry-relevant tools.",
+        "Guided students in real-world projects across various disciplines, including digital photography, to foster creativity, technical proficiency, and career readiness."
+      ],
+      "url": "https://www.psu.ac.th"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Prince of Songkla University",
+      "area": "Computer Engineering, Thesis: A Cache Mechanism for Reducing Query Time for OpenTSDB Time Series Database",
+      "studyType": "Master's Degree",
+      "startDate": "2016-08",
+      "endDate": "2018-05",
+      "url": "https://www.psu.ac.th"
+    },
+    {
+      "institution": "Prince of Songkla University",
+      "area": "Computer Engineering",
+      "studyType": "Bachelor's Degree (1st Class Honor)",
+      "startDate": "2012-08",
+      "endDate": "2016-05",
+      "url": "https://www.psu.ac.th"
+    }
+  ],
+  "awards": [
+    {
+      "title": "Microsoft MVP - Azure Cloud Native",
+      "date": "2014-09-01",
+      "awarder": "Microsoft",
+      "summary": "Awarded for contributions to the Azure Cloud Native community."
+    }
+  ],
+  "publications": [
+    {
+      "name": "A Software Cache Mechanism for Reducing the OpenTSDB Query Time",
+      "publisher": "The 18th International Symposium on Communications and Information Technologies (ISCIT 2018)",
+      "releaseDate": "2018-09",
+      "url": "https://ieeexplore.ieee.org/document/8587857/"
+    },
+    {
+      "name": "Registration Assistant Application using Local Search and Tabu List Technique",
+      "publisher": "Thaksin University Journal Special Edition for 28th National Conference of Thaksin University",
+      "releaseDate": "2018",
+      "url": "https://ph02.tci-thaijo.org/index.php/tsujournal/article/view/151824"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Programming Languages",
+      "keywords": [
+        "TypeScript",
+        "C#"
+      ]
+    },
+    {
+      "name": "Cloud / DevOps Tools",
+      "keywords": [
+        "GitHub Actions",
+        "Terraform",
+        "Azure"
+      ]
+    },
+    {
+      "name": "Platforms/Frameworks",
+      "keywords": [
+        "ASP.NET Core",
+        "React (TypeScript)",
+        "NestJS",
+        "NextJS"
+      ]
+    },
+    {
+      "name": "Databases",
+      "keywords": [
+        "MongoDB",
+        "MS SQL Server",
+        "OpenTSDB"
+      ]
+    },
+    {
+      "name": "Tools",
+      "keywords": [
+        "Docker",
+        "Memcached",
+        "Jenkins",
+        "Notion"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "Thai",
+      "fluency": "Native speaker"
+    },
+    {
+      "language": "English",
+      "fluency": "Communication level"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Board Game",
+      "keywords": [
+        "Role-playing game",
+        "Bluffing",
+        "Strategy"
+      ]
+    },
+    {
+      "name": "Travel",
+      "keywords": [
+        "Japan"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Nammatham",
+      "description": "Azure Functions Framework",
+      "highlights": [
+        "Introduced v1 using the Decorator pattern to address challenges in Azure Functions Node.js v3.",
+        "Designed and developed a modular framework in v2 leveraging Azure Functions v4.",
+        "Successfully deployed the project in production, serving as the backbone of DevOps automation."
+      ],
+      "keywords": [
+        "Node.js",
+        "TypeScript",
+        "Serverless",
+        "Azure Functions",
+        "FaaS",
+        "Nammatham"
+      ],
+      "startDate": "2023-01-01",
+      "endDate": "present",
+      "url": "https://nammatham.thaitype.dev",
+      "roles": [
+        "Creator"
+      ],
+      "type": "framework"
+    }
+  ],
+  "meta": {
+    "canonical": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/sample.resume.json",
+    "version": "v1.0.0",
+    "lastModified": "2017-12-24T15:53:00"
+  }
+}

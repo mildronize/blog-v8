@@ -9,7 +9,9 @@
     "generate-id-mapper": "bun run src/scripts/generate-id-mapper.ts",
     "add-id": "bun run src/scripts/add-id.ts",
     "build:watch": "nodemon --exec 'bun run build' --watch src --ext ts",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "resume:watch": "nodemon --exec 'bun run resume:build' --watch src --ext json",
+    "resume:build": "mkdir -p  ../public/resume && resumed render src/resume.json --theme jsonresume-theme-onepage-web --output ../public/resume/index.html"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -24,8 +26,10 @@
     "@iarna/toml": "^2.2.5",
     "fs-extra": "^11.2.0",
     "gray-matter": "^4.0.3",
+    "jsonresume-theme-onepage-web": "^1.0.4",
     "pino": "^9.5.0",
     "pino-pretty": "^13.0.0",
+    "resumed": "^4.0.0",
     "tiny-glob": "^0.2.9",
     "valibot": "^1.0.0-beta.9"
   }
