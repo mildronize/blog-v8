@@ -4,8 +4,12 @@ import { logTime } from "../../utils/utils";
 import { config } from "../config";
 
 async function buildSearchMetadata() {
-  await generateIdMapper(config.rootDir, config.idMapper.targetFile);
-  await executeBuildSearchIndex(config.rootDir, config.searchIndex.dir);
+  // await generateIdMapper(config.rootDir, config.postMetadata.idMapperFile);
+  await executeBuildSearchIndex(
+    config.rootDir,
+    config.postMetadata.targetFile,
+    config.searchIndex.dir
+  );
 }
 
 logTime(

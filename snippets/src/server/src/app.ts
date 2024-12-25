@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { initVariables, HonoEnv } from './env';
 import { secureHeaders } from 'hono/secure-headers';
 import { RawSearchResult, serializeSearchResult } from './lib';
+import { post } from '@azure/functions/types/app';
 
 const app = new Hono<HonoEnv>().basePath('/api');
 
@@ -24,13 +25,14 @@ app.get('/search', async c => {
   }
 
   const index = c.get('index');
+  const postMetadata = c.get('postMetadata');
   const results = await index.searchAsync(query, {
     limit: 10
   });
 
   return c.json({
     status: 'ok',
-    results: serializeSearchResult(results as RawSearchResult[])
+    results: serializeSearchResult(results as RawSearchResult[], postMetadata)
   });
 });
 
