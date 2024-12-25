@@ -6,7 +6,12 @@ export const config = {
     targetFile: "../public/api/post-metadata.json",
   },
   searchIndex: {
-    dir: "../public/api/search-index",
+    small: {
+      dir: "../public/api/search-index-small",
+    },
+    large: {
+      dir: "../public/api/search-index-large",
+    },
   },
   /**
    * This module is responsible for generating the blog id mapper.

@@ -3,12 +3,15 @@ import { logTime } from "../utils/utils";
 import { config } from "../_config";
 
 async function buildSearchMetadata() {
-  await executeBuildSearchIndex({
-    cwd: config.rootDir,
-    postMetadataFile: config.postMetadata.targetFile,
-    searchIndexPath: config.searchIndex.dir,
-    indexSize: 'small',
-  });
+  const indexSizes = ['small', 'large'] as const;
+  for (const indexSize of indexSizes) {
+    await executeBuildSearchIndex({
+      cwd: config.rootDir,
+      postMetadataFile: config.postMetadata.targetFile,
+      searchIndexPath: config.searchIndex[indexSize].dir,
+      indexSize,
+    });
+  }
 }
 
 logTime(
