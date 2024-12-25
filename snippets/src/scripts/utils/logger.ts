@@ -48,11 +48,11 @@ export class PinoLogger implements Logger {
 export const pinoLogBuilder = (name: string, level: pino.LevelWithSilentOrString) => {
   return pino({
     level,
-    name,
+    name,    
     transport: {
       target: 'pino-pretty',
       options: {
-        colorize: true
+        colorize: true,
       }
     }
   });

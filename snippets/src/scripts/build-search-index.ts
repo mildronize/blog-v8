@@ -2,40 +2,6 @@ import fs from 'fs-extra';
 import FlexSearch from 'flexsearch';
 import path from 'path';
 
-// Step 1: Example data this needs to be extracted from website in this form final result is shown here
-// const documents = [
-//   {
-//     id: '1',
-//     title: 'Introduction to AI',
-//     description: 'Artificial Intelligence (AI) is a field of computer science that focuses on creating intelligent machines.',
-//   },
-//   {
-//     id: '2',
-//     title: 'ความรู้เบื้องต้นเกี่ยวกับ AI',
-//     description: 'ปัญญาประดิษฐ์ (Artificial Intelligence หรือ AI) เป็นสาขาหนึ่งของวิทยาศาสตร์คอมพิวเตอร์ที่มุ่งเน้นการสร้างเครื่องจักรที่ฉลาด.',
-//   },
-//   {
-//     id: '3',
-//     title: 'การพัฒนาเว็บ',
-//     description: 'การพัฒนาเว็บไซต์เป็นกระบวนการของการสร้างและบำรุงรักษาเว็บไซต์โดยใช้ภาษา HTML, CSS และ JavaScript.',
-//   },
-//   {
-//     id: '4',
-//     title: 'Web Development Basics',
-//     description: 'Web development involves building and maintaining websites using HTML, CSS, and JavaScript.',
-//   },
-//   {
-//     id: '5',
-//     title: 'Machine Learning Basics',
-//     description: 'Machine learning is a subset of AI that focuses on building systems that learn from data.',
-//   },
-//   {
-//     id: '6',
-//     title: 'พื้นฐานของการเรียนรู้ของเครื่อง',
-//     description: 'การเรียนรู้ของเครื่องเป็นสาขาหนึ่งของ AI ที่มุ่งเน้นการสร้างระบบที่เรียนรู้จากข้อมูล.',
-//   },
-// ];
-
 import { MarkdownFileProcessor, processMarkdownDirectories } from "./libs/markdown-files";
 import { config } from "./_config";
 import { ConsoleLogger, Logger, pinoLogBuilder } from "./utils/logger";
@@ -87,25 +53,17 @@ function buildSearchIndex({ markdownData }: MarkdownFileProcessorOutput, logger:
   return index;
 }
 
-async function main(){
+async function main() {
   const postData = await readAllMarkdown(pinoLogBuilder('readAllMarkdown', 'info'));
   const index = buildSearchIndex(postData, pinoLogBuilder('buildSearchIndex', 'info'));
-  
+
   const searchIndexPath = './src/search-index';
   fs.removeSync(searchIndexPath);
   fs.ensureDirSync(searchIndexPath);
   index.export(
-    (key, data) => fs.writeFileSync(path.join(searchIndexPath, `${key}.json`), String(data))
+    (key, data) => fs.writeJSONSync(path.join(searchIndexPath, `${key}.json`), data ?? {}),
   )
+  return index;
 }
 
 logTime('build-search-index', main, pinoLogBuilder('main', 'info'));
-
-// // Step 3: Searching
-// const query = process.argv[2];
-// const results = index.search(query, {
-//   limit: 5,
-// });
-
-// // Step 4: Display search results
-// console.log(results);
