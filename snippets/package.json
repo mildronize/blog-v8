@@ -24,6 +24,8 @@
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@iarna/toml": "^2.2.5",
+    "@orama/orama": "^3.0.4",
+    "@orama/plugin-data-persistence": "^3.0.4",
     "flexsearch": "^0.7.43",
     "fs-extra": "^11.2.0",
     "gray-matter": "^4.0.3",
