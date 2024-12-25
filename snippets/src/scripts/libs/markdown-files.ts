@@ -13,9 +13,8 @@ export function extractMarkdownMetadata(dir: string, file: string, rawContent: s
     id: frontmatter?.extra?.id,
     path: generateZolaPostPath(dir, file, frontmatter.slug),
     content,
-    frontmatter
+    frontmatter: frontmatter as MarkdownMetadata['frontmatter'],
   }
-
 }
 
 export function cleanMarkdownContent(content: string): string {

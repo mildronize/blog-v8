@@ -6,20 +6,20 @@ import { ConsoleLogger, Logger } from "./utils/logger";
 import { logTime } from './utils/utils';
 import glob from 'tiny-glob';
 import { pinoLogBuilder } from './utils/pino-log';
+import { config } from './_config';
 
 const searchIndexPath = './src/search-index';
 
 async function importSearchIndex(logger: Logger = new ConsoleLogger()): Promise<FlexSearch.Document<unknown, string[]>> {
   const index = new FlexSearch.Document({
     preset: 'match',
-    tokenize: "full",
     cache: 100,
     document: {
       id: 'id',
       store: [
-        "title", "content"
+        "title", "tags", "categories", "content"
       ],
-      index: ["title", "content"]
+      index: ["title", "tags", "categories", "content"]
     }
   });
 
@@ -34,12 +34,22 @@ async function importSearchIndex(logger: Logger = new ConsoleLogger()): Promise<
 }
 
 async function main() {
+  const idStoreObject = (await fs.readJson(config.blogIdModule.targetFile)) as any;
   const index = await importSearchIndex(pinoLogBuilder('importSearchIndex', 'info'));
   const query = process.argv[2];
   const results = await index.searchAsync(query, {
     limit: 5,
   });
-  console.log(`Search results for "${query}":`, results);
+  console.log(`Search results for query "${query}":`, results);
+  const contentResult = results.filter((result) => result.field === 'content');
+  if(contentResult.length === 0) {
+    console.log('No content results found');
+    return;
+  }
+  for(const id of contentResult[0].result) {
+    const path = idStoreObject[id].path;
+    console.log(`[${id}] Found path: ${path}`);
+  }
 }
 
 await logTime('search', main, pinoLogBuilder('main', 'info'));

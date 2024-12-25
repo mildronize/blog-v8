@@ -4,7 +4,16 @@ export interface IdMapperMetadata {
 export interface MarkdownMetadata extends IdMapperMetadata {
   id: string | undefined;
   content?: string;
-  frontmatter: Record<string, unknown>;
+  frontmatter: {
+    title: string;
+    taxonomies?: {
+      tags?: string[];
+      categories?: string[];
+    }
+    extra?: {
+      id?: string;
+    }
+  } & Record<string, unknown>;
 }
 
 export type PostId = string;

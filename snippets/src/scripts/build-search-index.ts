@@ -28,27 +28,29 @@ export async function readAllMarkdown(logger: Logger = new ConsoleLogger(), debu
 function buildSearchIndex({ markdownData }: MarkdownFileProcessorOutput, logger: Logger = new ConsoleLogger()): FlexSearch.Document<unknown, string[]> {
   const index = new FlexSearch.Document({
     preset: 'match',
-    tokenize: "full",
+    tokenize: "forward",
     cache: 100,
     document: {
       id: 'id',
       store: [
-        "title", "content"
+        "title", "tags", "categories", "content"
       ],
-      index: ["title", "content"]
+      index: ["title", "tags", "categories", "content"]
     }
   });
 
   let indexCount = 0;
 
-  markdownData.forEach(item => {
+  for (const item of markdownData) {
     index.add({
       id: item.id,
       title: item.frontmatter.title,
-      content: item.content
+      content: item.content,
+      tags: (item.frontmatter.taxonomies?.tags ?? []).join(' '),
+      categories: (item.frontmatter.taxonomies?.categories ?? []).join(' '),
     });
     indexCount++;
-  });
+  }
 
   logger.info(`Indexed ${indexCount} documents`);
   return index;
