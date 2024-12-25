@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { initVariables, HonoEnv } from './env';
 import { secureHeaders } from 'hono/secure-headers';
-import { RawSearchResult, serializeSearchResult } from './lib';
+import { RawSearchResult, serializeSearchResult } from '../../libs/search';
 
 const app = new Hono<HonoEnv>().basePath('/api');
 
@@ -35,7 +35,5 @@ app.get('/search', async c => {
     results: serializeSearchResult(results as RawSearchResult[], postMetadata)
   });
 });
-
-
 
 export default app;

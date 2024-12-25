@@ -2,14 +2,12 @@ import fs from 'fs-extra';
 import FlexSearch from 'flexsearch';
 import path from 'path';
 
-import { MarkdownFileProcessor, processMarkdownDirectories } from "../markdown-files";
-import { config } from "../../_config";
 import { ConsoleLogger, Logger } from "../../utils/logger";
-import { MarkdownFileProcessorOutput, MarkdownMetadata } from './../type';
+import { MarkdownMetadata } from './../type';
 import { pinoLogBuilder } from '../../utils/pino-log';
 import glob from 'tiny-glob';
+import { readAllMarkdown } from './utils';
 
-const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 
 /**
  * Small Index: Suitable for browser search
@@ -22,16 +20,6 @@ export interface ExecuteBuildSearchIndexOptions {
   postMetadataFile: string;
   searchIndexPath: string;
   indexSize: IndexSize;
-}
-
-export async function readAllMarkdown(cwd: string = process.cwd(), targetFile: string, logger: Logger = new ConsoleLogger()): Promise<MarkdownFileProcessorOutput> {
-  const processor = new MarkdownFileProcessor('read', { ignoreMarkdownFiles, logger, isIncludeContent: true });
-  const processorOutput = await processMarkdownDirectories(sourceDirectories, processor, logger, cwd) ?? new Map();
-
-  // Ensure target directory exists
-  await fs.ensureDir(path.dirname(targetFile));
-  fs.writeJSON(targetFile, processorOutput.markdownData);
-  return processorOutput;
 }
 
 export const createFlexSearchIndex = (indexSize: IndexSize, _logger: Logger = new ConsoleLogger()) => new FlexSearch.Document({
