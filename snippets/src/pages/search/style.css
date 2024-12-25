@@ -14,10 +14,10 @@ body {
 
 .search-box {
   width: 100%;
-  max-width: 400px;
+  max-width: 800px;
   padding: 10px 15px;
   border: 1px solid #ccc;
-  border-radius: 25px;
+  border-radius: 20px;
   font-size: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   outline: none;
@@ -31,7 +31,7 @@ body {
 
 .results-container {
   margin-top: 20px;
-  max-width: 400px;
+  max-width: 800px;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -49,7 +49,17 @@ body {
 
 .result-item h3 {
   margin: 0 0 5px;
-  font-size: 18px;
+  font-size: 16pt;
+  color: #007bff;
+}
+
+.result-title {
+  text-decoration: none;
+}
+
+
+.result-title:hover {
+  text-decoration: underline; /* Adds underline on hover */
   color: #007bff;
 }
 

@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useCallback, createRef } from 'react';
-// @ts-ignore
-import { debounce } from "lodash";
+import React, { useState, useEffect, createRef } from 'react';
 import './style.css';
 
 const apiServer = 'http://localhost:7074';
@@ -12,16 +10,6 @@ interface SearchResult {
   title: string;
   score: number;
 }
-
-// const debounce = (func: (...args: any[]) => void, timeout: number) => {
-//   let timer: NodeJS.Timer;
-//   return (...args: any[]) => {
-//     clearTimeout(timer);
-//     timer = setTimeout(() => {
-//       func(...args);
-//     }, timeout);
-//   };
-// }
 
 export default () => {
   const [query, setQuery] = useState('');
@@ -89,8 +77,7 @@ export default () => {
         {error && <p className="error">{error}</p>}
         {results.map((result) => (
           <div key={result.id} className="result-item">
-            <h3>{result.title}</h3>
-            <p>{result.path}</p>
+            <a  className="result-title" href={result.path}><h3 >{result.title}</h3></a>
           </div>
         ))}
       </div>
