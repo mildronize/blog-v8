@@ -2,11 +2,11 @@ import fs from 'fs-extra';
 import FlexSearch from 'flexsearch';
 import path from 'path';
 
-import { ConsoleLogger, Logger } from "./utils/logger";
-import { logTime } from './utils/utils';
+import { ConsoleLogger, Logger } from "../utils/logger";
+import { logTime } from '../utils/utils';
 import glob from 'tiny-glob';
-import { pinoLogBuilder } from './utils/pino-log';
-import { config } from './_config';
+import { pinoLogBuilder } from '../utils/pino-log';
+import { config } from '../scripts/_config';
 
 const searchIndexPath = './src/search-index';
 

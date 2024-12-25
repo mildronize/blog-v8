@@ -2,11 +2,11 @@ import fs from 'fs-extra';
 import FlexSearch from 'flexsearch';
 import path from 'path';
 
-import { MarkdownFileProcessor, processMarkdownDirectories } from "./libs/markdown-files";
-import { config } from "./_config";
-import { ConsoleLogger, Logger } from "./utils/logger";
-import { MarkdownFileProcessorOutput } from './libs/type';
-import { pinoLogBuilder } from './utils/pino-log';
+import { MarkdownFileProcessor, processMarkdownDirectories } from "./markdown-files";
+import { config } from "../scripts/_config";
+import { ConsoleLogger, Logger } from "../utils/logger";
+import { MarkdownFileProcessorOutput } from './type';
+import { pinoLogBuilder } from '../utils/pino-log';
 
 const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 

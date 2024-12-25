@@ -1,10 +1,10 @@
 import fs from "fs-extra";
 import path from "path";
 
-import { MarkdownFileProcessor, processMarkdownDirectories, toIdMapperCollection } from "./libs/markdown-files";
+import { MarkdownFileProcessor, processMarkdownDirectories, toIdMapperCollection } from "../libs/markdown-files";
 import { config } from "./_config";
-import { ConsoleLogger, Logger } from "./utils/logger";
-import { pinoLogBuilder } from "./utils/pino-log";
+import { ConsoleLogger, Logger } from "../utils/logger";
+import { pinoLogBuilder } from "../utils/pino-log";
 
 const { sourceDirectories, targetFile, ignoreMarkdownFiles } = config.blogIdModule;
 
