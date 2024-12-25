@@ -1,10 +1,10 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-import { MarkdownFileProcessor, processMarkdownDirectories } from "../markdown-files";
+import { MarkdownFileProcessor, processMarkdownDirectories } from "../content";
 import { config } from "../../_config";
 import { ConsoleLogger, Logger } from "../../utils/logger";
-import { MarkdownFileProcessorOutput } from './../type';
+import { MarkdownFileProcessorOutput } from '../content';
 
 const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 

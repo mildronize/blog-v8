@@ -1,5 +1,5 @@
 import glob from "tiny-glob";
-import { Logger } from "../utils/logger";
+import { Logger } from "../../utils/logger";
 import path from "path";
 import fs from 'fs-extra';
 import { composeFrontMatter, extractFrontMatter, generateZolaPostPath } from "./zola";

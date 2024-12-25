@@ -1,2 +1,2 @@
-export * from './search-libs';
+export * from './search-index';
 export * from './search-result';

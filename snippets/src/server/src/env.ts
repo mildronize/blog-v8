@@ -4,7 +4,7 @@ import type { MiddlewareHandler } from 'hono/types';
 import { z } from 'zod';
 import 'dotenv/config';
 import { index, postMetadata } from './bootstrap';
-import { MarkdownMetadata } from '../../libs/type';
+import { MarkdownMetadata } from '../../libs/content';
 
 
 export const environmentSchema = z.object({});

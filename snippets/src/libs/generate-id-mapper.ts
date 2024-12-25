@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 
-import { MarkdownFileProcessor, processMarkdownDirectories, toIdMapperCollection } from "./markdown-files";
+import { MarkdownFileProcessor, processMarkdownDirectories, toIdMapperCollection } from "./content";
 import { config } from "../_config";
 import { ConsoleLogger, Logger } from "../utils/logger";
 

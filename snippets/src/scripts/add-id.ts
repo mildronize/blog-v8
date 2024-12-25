@@ -1,4 +1,4 @@
-import { MarkdownFileProcessor, processMarkdownDirectories } from "../libs/markdown-files";
+import { MarkdownFileProcessor, processMarkdownDirectories } from "../libs/content";
 import { config } from "../_config";
 import { generateIdMapper } from "../libs/generate-id-mapper";
 import fs from 'fs-extra';

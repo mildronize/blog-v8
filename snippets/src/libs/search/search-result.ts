@@ -1,4 +1,4 @@
-import { MarkdownMetadata } from '../type';
+import { MarkdownMetadata } from '../content';
 export interface RawSearchResult {
   field: string;
   result: string[];

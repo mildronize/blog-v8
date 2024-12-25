@@ -3,7 +3,7 @@ import FlexSearch from 'flexsearch';
 import path from 'path';
 
 import { ConsoleLogger, Logger } from "../../utils/logger";
-import { MarkdownMetadata } from './../type';
+import { MarkdownMetadata } from '../content';
 import { pinoLogBuilder } from '../../utils/pino-log';
 import glob from 'tiny-glob';
 import { readAllMarkdown } from './utils';

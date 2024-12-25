@@ -3,7 +3,7 @@ import { Document as FlexSearchDocument } from 'flexsearch';
 import { importSearchIndex } from "../../libs/search";
 import { config } from "../config";
 import fs from 'fs-extra';
-import { MarkdownMetadata } from '../../libs/type';
+import { MarkdownMetadata } from '../../libs/content';
 
 /**
  * Index for search, Singleton
