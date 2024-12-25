@@ -3,15 +3,12 @@ import FlexSearch from 'flexsearch';
 import path from 'path';
 
 import { ConsoleLogger, Logger } from "../utils/logger";
-import { logTime } from '../utils/utils';
 import glob from 'tiny-glob';
 import { pinoLogBuilder } from '../utils/pino-log';
 import { config } from '../_config';
 import { createFlexSearchIndex } from './search-libs';
 
-const searchIndexPath = './src/search-index';
-
-async function importSearchIndex(logger: Logger = new ConsoleLogger()): Promise<FlexSearch.Document<unknown, string[]>> {
+async function importSearchIndex(searchIndexPath: string, logger: Logger = new ConsoleLogger()): Promise<FlexSearch.Document<unknown, string[]>> {
   const index = createFlexSearchIndex(logger);
 
   const indexFiles = await glob(`${searchIndexPath}/*.json`);
@@ -24,9 +21,9 @@ async function importSearchIndex(logger: Logger = new ConsoleLogger()): Promise<
   return index;
 }
 
-async function main() {
+export async function searchViaCLI(searchIndexPath: string) {
   const idStoreObject = (await fs.readJson(config.blogIdModule.targetFile)) as any;
-  const index = await importSearchIndex(pinoLogBuilder('importSearchIndex', 'info'));
+  const index = await importSearchIndex(searchIndexPath, pinoLogBuilder('importSearchIndex', 'info'));
   const query = process.argv[2];
   const results = await index.searchAsync(query, {
     limit: 5,
@@ -42,5 +39,3 @@ async function main() {
     console.log(`[${id}] Found path: ${path}`);
   }
 }
-
-await logTime('search', main, pinoLogBuilder('main', 'info'));

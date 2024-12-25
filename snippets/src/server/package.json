@@ -5,11 +5,12 @@
   "main": "dist/main.js",
   "scripts": {
     "build": "esbuild src/main.ts --bundle --platform=node --external:@azure/functions-core --outfile=dist/main.js",
+    "build:prod": "run-p build:search-metadata build",
     "watch": "nodemon --watch src --ext ts --exec 'run-s build'",
     "clean": "rimraf dist",
-    "build:search-index": "bun run scripts/build-search-index.ts",
+    "build:search-metadata": "bun run scripts/build-search-metadata.ts",
     "start": "func start --port 7074 ",
-    "dev": "run-p watch start"
+    "dev": "run-s build:search-metadata && run-p watch start"
   },
   "dependencies": {
     "@azure/functions": "^4.6.0",

@@ -7,6 +7,7 @@ import { config } from "../_config";
 import { ConsoleLogger, Logger } from "../utils/logger";
 import { MarkdownFileProcessorOutput } from './type';
 import { pinoLogBuilder } from '../utils/pino-log';
+import glob from 'tiny-glob';
 
 const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 
@@ -68,5 +69,18 @@ export async function executeBuildSearchIndex(
   index.export(
     (key, data) => fs.writeJSONSync(path.join(searchIndexPath, `${key}.json`), data ?? {}),
   )
+  return index;
+}
+
+export async function importSearchIndex(searchIndexPath: string, logger: Logger = new ConsoleLogger()): Promise<FlexSearch.Document<unknown, string[]>> {
+  const index = createFlexSearchIndex(logger);
+
+  const indexFiles = await glob(`${searchIndexPath}/*.json`);
+  for (const indexFile of indexFiles) {
+    const data = await fs.readJSON(indexFile);
+    const key = path.basename(indexFile, '.json');
+    await index.import(key, data);
+    logger.info(`Imported index key: ${key}, file: ${indexFile}`);
+  }
   return index;
 }

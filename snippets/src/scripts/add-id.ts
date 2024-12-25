@@ -1,16 +1,16 @@
 import { MarkdownFileProcessor, processMarkdownDirectories } from "../libs/markdown-files";
 import { config } from "../_config";
-import { generateIdMapper } from "./generate-id-mapper";
+import { generateIdMapper } from "../libs/generate-id-mapper";
 import fs from 'fs-extra';
 import * as core from '@actions/core';
 import { pinoLogBuilder } from "../utils/pino-log";
 
-const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
+const { sourceDirectories, ignoreMarkdownFiles, targetFile} = config.blogIdModule;
 
 
 try {
   // Ensure target id mapper file exists
-  await generateIdMapper(pinoLogBuilder('gen-id-mapper', 'error'));
+  await generateIdMapper(process.cwd(), targetFile, pinoLogBuilder('gen-id-mapper', 'error'));
   // Add id to markdown files when missing
   const logger = pinoLogBuilder('add-id', 'info');
   const idStoreObject = (await fs.readJson(config.blogIdModule.targetFile)) as object;
