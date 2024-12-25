@@ -1,0 +1,29 @@
+{
+  "name": "reaction",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --platform=node --external:@azure/functions-core --outfile=dist/main.js",
+    "watch": "nodemon --watch src --ext ts --exec 'run-s build'",
+    "clean": "rimraf dist",
+    "start": "func start --port 7074 ",
+    "dev": "run-p watch start"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.6.0",
+    "@marplex/hono-azurefunc-adapter": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "hono": "^4.6.14",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "esbuild": "^0.21.3",
+    "nodemon": "^3.1.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^5.0.7",
+    "type-fest": "^4.30.2",
+    "typescript": "^5.4.5"
+  }
+}

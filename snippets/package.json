@@ -16,12 +16,21 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.10.1",
     "nodemon": "^3.1.7",
     "typescript": "~5.6.2",
-    "vite": "^6.0.2"
+    "vite": "^6.0.2",
+    "@types/node": "^20.12.12",
+    "esbuild": "^0.21.3",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^5.0.7",
+    "type-fest": "^4.30.2"
   },
   "dependencies": {
+    "@azure/functions": "^4.6.0",
+    "@marplex/hono-azurefunc-adapter": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "hono": "^4.6.14",
+    "zod": "^3.24.1",
     "@actions/core": "^1.11.1",
     "@iarna/toml": "^2.2.5",
     "flexsearch": "^0.7.43",
