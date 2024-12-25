@@ -1,5 +1,5 @@
 import { MarkdownFileProcessor, processMarkdownDirectories } from "../libs/markdown-files";
-import { config } from "./_config";
+import { config } from "../_config";
 import { generateIdMapper } from "./generate-id-mapper";
 import fs from 'fs-extra';
 import * as core from '@actions/core';

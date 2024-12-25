@@ -3,7 +3,7 @@ import FlexSearch from 'flexsearch';
 import path from 'path';
 
 import { MarkdownFileProcessor, processMarkdownDirectories } from "./markdown-files";
-import { config } from "../scripts/_config";
+import { config } from "../_config";
 import { ConsoleLogger, Logger } from "../utils/logger";
 import { MarkdownFileProcessorOutput } from './type';
 import { pinoLogBuilder } from '../utils/pino-log';

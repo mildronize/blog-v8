@@ -6,7 +6,7 @@ import { ConsoleLogger, Logger } from "../utils/logger";
 import { logTime } from '../utils/utils';
 import glob from 'tiny-glob';
 import { pinoLogBuilder } from '../utils/pino-log';
-import { config } from '../scripts/_config';
+import { config } from '../_config';
 
 const searchIndexPath = './src/search-index';
 
