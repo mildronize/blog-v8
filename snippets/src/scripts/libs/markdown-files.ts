@@ -3,14 +3,13 @@ import { Logger } from "../utils/logger";
 import path from "path";
 import fs from 'fs-extra';
 import { composeFrontMatter, extractFrontMatter, generateZolaPostPath } from "./zola";
-import { PostId, IdMapperMetadata, PostMetadata, MarkdownFileProcessorMode, MarkdownFileProcessorOutput, MarkdownMetadata } from "./type";
+import { PostId, IdMapperMetadata, MarkdownFileProcessorMode, MarkdownFileProcessorOutput, MarkdownMetadata } from "./type";
 import { retryNewId } from "./uuid";
 
-export function extractMarkdownMetadata(dir: string, file: string, content: string): PostMetadata | undefined {
+export function extractMarkdownMetadata(dir: string, file: string, content: string): MarkdownMetadata {
   const { data: frontmatter } = extractFrontMatter(content);
-  if (!frontmatter?.extra?.id) return;
   return {
-    id: frontmatter.extra.id,
+    id: frontmatter?.extra?.id,
     path: generateZolaPostPath(dir, file, frontmatter.slug),
   }
 
@@ -77,7 +76,7 @@ export class MarkdownFileProcessor implements FileProcessor {
       }
       const markdownContent = await fs.readFile(file, "utf8");
       const result = extractMarkdownMetadata(dir, file, markdownContent);
-      if (!result) {
+      if (!result.id) {
         if (this.mode === 'update') {
           const addedId = await this.updateId(file, markdownContent);
           if (addedId) addedIds.push(addedId);
@@ -117,5 +116,11 @@ export async function processMarkdownDirectories(sourceDirs: string[], processor
 }
 
 export function toIdMapperCollection(metadata: MarkdownMetadata[]): Map<PostId, IdMapperMetadata> {
-  return new Map(metadata.map(({ id, path }) => [id, { path }]));
+  return new Map(
+    metadata
+      .filter(({ id }) => id !== undefined)
+      .map(({ id, path }) => {
+        if (!id) throw new Error('Id is undefined');
+        return [id, { path }]
+      }));
 }
