@@ -2,9 +2,10 @@ import fs from 'fs-extra';
 import FlexSearch from 'flexsearch';
 import path from 'path';
 
-import { ConsoleLogger, Logger, pinoLogBuilder } from "./utils/logger";
+import { ConsoleLogger, Logger } from "./utils/logger";
 import { logTime } from './utils/utils';
 import glob from 'tiny-glob';
+import { pinoLogBuilder } from './utils/pino-log';
 
 const searchIndexPath = './src/search-index';
 
@@ -33,7 +34,7 @@ async function importSearchIndex(logger: Logger = new ConsoleLogger()): Promise<
 }
 
 async function main() {
-  const index = await importSearchIndex();
+  const index = await importSearchIndex(pinoLogBuilder('importSearchIndex', 'info'));
   const query = process.argv[2];
   const results = await index.searchAsync(query, {
     limit: 5,

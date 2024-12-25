@@ -4,9 +4,10 @@ import path from 'path';
 
 import { MarkdownFileProcessor, processMarkdownDirectories } from "./libs/markdown-files";
 import { config } from "./_config";
-import { ConsoleLogger, Logger, pinoLogBuilder } from "./utils/logger";
+import { ConsoleLogger, Logger } from "./utils/logger";
 import { MarkdownFileProcessorOutput } from './libs/type';
 import { logTime } from './utils/utils';
+import { pinoLogBuilder } from './utils/pino-log';
 
 const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 

@@ -44,16 +44,3 @@ export class PinoLogger implements Logger {
     this.logger.warn(message);
   }
 }
-
-export const pinoLogBuilder = (name: string, level: pino.LevelWithSilentOrString) => {
-  return pino({
-    level,
-    name,    
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        colorize: true,
-      }
-    }
-  });
-}

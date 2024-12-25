@@ -3,7 +3,8 @@ import path from "path";
 
 import { MarkdownFileProcessor, processMarkdownDirectories, toIdMapperCollection } from "./libs/markdown-files";
 import { config } from "./_config";
-import { ConsoleLogger, Logger, pinoLogBuilder } from "./utils/logger";
+import { ConsoleLogger, Logger } from "./utils/logger";
+import { pinoLogBuilder } from "./utils/pino-log";
 
 const { sourceDirectories, targetFile, ignoreMarkdownFiles } = config.blogIdModule;
 
