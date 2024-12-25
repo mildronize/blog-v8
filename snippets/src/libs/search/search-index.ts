@@ -22,6 +22,12 @@ export interface ExecuteBuildSearchIndexOptions {
   indexSize: IndexSize;
 }
 
+export async function searchIndex(index: FlexSearch.Document<unknown, string[]>, query: string) {
+  return index.searchAsync(query, {
+    limit: 10
+  });
+}
+
 export const createFlexSearchIndex = (indexSize: IndexSize, _logger: Logger = new ConsoleLogger()) => new FlexSearch.Document({
   preset: 'match',
   tokenize: indexSize === 'small' ? 'strict' : 'forward',
