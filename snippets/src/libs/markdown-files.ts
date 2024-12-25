@@ -43,6 +43,7 @@ export class MarkdownFileProcessor implements FileProcessor {
   private logger: Logger;
   private cleanContent: boolean;
   private isIncludeContent: boolean;
+  
   constructor(private mode: MarkdownFileProcessorMode, private options: {
     ignoreMarkdownFiles: string[]
     logger: Logger
@@ -55,7 +56,7 @@ export class MarkdownFileProcessor implements FileProcessor {
      * Include the content in the output
      */
     isIncludeContent?: boolean;
-  }) {
+    }) {
     this.logger = options.logger;
     this.cleanContent = options.cleanContent ?? true;
     this.isIncludeContent = options.isIncludeContent ?? false;
@@ -123,13 +124,13 @@ export class MarkdownFileProcessor implements FileProcessor {
   }
 }
 
-export async function processMarkdownDirectories(sourceDirs: string[], processor: FileProcessor, logger: Logger): Promise<MarkdownFileProcessorOutput> {
+export async function processMarkdownDirectories(sourceDirs: string[], processor: FileProcessor, logger: Logger, cwd: string = process.cwd()): Promise<MarkdownFileProcessorOutput> {
   const startTime = Date.now();
   let markdownData: MarkdownMetadata[] = [];
   let addedIds: string[] = [];
 
   for (const dir of sourceDirs) {
-    const processorOutput = await processor.process(dir);
+    const processorOutput = await processor.process(path.join(cwd, dir));
     markdownData = [...markdownData, ...processorOutput.markdownData];
     addedIds = [...addedIds, ...processorOutput.addedIds];
   }

@@ -7,6 +7,7 @@
     "build": "esbuild src/main.ts --bundle --platform=node --external:@azure/functions-core --outfile=dist/main.js",
     "watch": "nodemon --watch src --ext ts --exec 'run-s build'",
     "clean": "rimraf dist",
+    "build:search-index": "bun run scripts/build-search-index.ts",
     "start": "func start --port 7074 ",
     "dev": "run-p watch start"
   },

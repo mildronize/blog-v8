@@ -12,9 +12,9 @@ const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 
 const targetFile = './.tmp/content.json';
 
-export async function readAllMarkdown(logger: Logger = new ConsoleLogger(), debug = false): Promise<MarkdownFileProcessorOutput> {
+export async function readAllMarkdown(cwd: string = process.cwd(), logger: Logger = new ConsoleLogger(), debug = false): Promise<MarkdownFileProcessorOutput> {
   const processor = new MarkdownFileProcessor('read', { ignoreMarkdownFiles, logger, isIncludeContent: true });
-  const processorOutput = await processMarkdownDirectories(sourceDirectories, processor, logger) ?? new Map();
+  const processorOutput = await processMarkdownDirectories(sourceDirectories, processor, logger, cwd) ?? new Map();
 
   if (debug) {
     // Ensure target directory exists
@@ -24,20 +24,21 @@ export async function readAllMarkdown(logger: Logger = new ConsoleLogger(), debu
   return processorOutput;
 }
 
-function buildSearchIndex({ markdownData }: MarkdownFileProcessorOutput, logger: Logger = new ConsoleLogger()): FlexSearch.Document<unknown, string[]> {
-  const index = new FlexSearch.Document({
-    preset: 'match',
-    tokenize: "forward",
-    cache: 100,
-    document: {
-      id: 'id',
-      store: [
-        "title", "tags", "categories", "content"
-      ],
-      index: ["title", "tags", "categories", "content"]
-    }
-  });
+export const createFlexSearchIndex = (logger: Logger = new ConsoleLogger()) => new FlexSearch.Document({
+  preset: 'match',
+  tokenize: "forward",
+  cache: 100,
+  document: {
+    id: 'id',
+    store: [
+      "title", "tags", "categories", "content"
+    ],
+    index: ["title", "tags", "categories", "content"]
+  }
+});
 
+function buildSearchIndex({ markdownData }: MarkdownFileProcessorOutput, logger: Logger = new ConsoleLogger()): FlexSearch.Document<unknown, string[]> {
+  const index = createFlexSearchIndex(logger);
   let indexCount = 0;
 
   for (const item of markdownData) {
@@ -55,11 +56,13 @@ function buildSearchIndex({ markdownData }: MarkdownFileProcessorOutput, logger:
   return index;
 }
 
-export async function executeBuildSearchIndex() {
-  const postData = await readAllMarkdown(pinoLogBuilder('readAllMarkdown', 'info'));
+export async function executeBuildSearchIndex(
+  cwd: string = process.cwd(),
+  searchIndexPath: string = '.') {
+  const postData = await readAllMarkdown(cwd, pinoLogBuilder('readAllMarkdown', 'info'));
   const index = buildSearchIndex(postData, pinoLogBuilder('buildSearchIndex', 'info'));
 
-  const searchIndexPath = './src/search-index';
+  // const searchIndexPath = './src/search-index';
   fs.removeSync(searchIndexPath);
   fs.ensureDirSync(searchIndexPath);
   index.export(

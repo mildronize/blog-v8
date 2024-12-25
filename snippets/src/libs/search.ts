@@ -7,21 +7,12 @@ import { logTime } from '../utils/utils';
 import glob from 'tiny-glob';
 import { pinoLogBuilder } from '../utils/pino-log';
 import { config } from '../_config';
+import { createFlexSearchIndex } from './search-libs';
 
 const searchIndexPath = './src/search-index';
 
 async function importSearchIndex(logger: Logger = new ConsoleLogger()): Promise<FlexSearch.Document<unknown, string[]>> {
-  const index = new FlexSearch.Document({
-    preset: 'match',
-    cache: 100,
-    document: {
-      id: 'id',
-      store: [
-        "title", "tags", "categories", "content"
-      ],
-      index: ["title", "tags", "categories", "content"]
-    }
-  });
+  const index = createFlexSearchIndex(logger);
 
   const indexFiles = await glob(`${searchIndexPath}/*.json`);
   for (const indexFile of indexFiles) {
