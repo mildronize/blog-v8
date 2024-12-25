@@ -1,4 +1,4 @@
-import { executeBuildSearchIndex } from "../libs/search-libs";
+import { executeBuildSearchIndex } from "../libs/search";
 import { logTime } from "../utils/utils";
 import { config } from "../_config";
 

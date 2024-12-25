@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "tsc --noEmit && bun test",
     "build": "tsc && vite build",
     "generate-id-mapper": "bun run src/scripts/generate-id-mapper.ts",
     "add-id": "bun run src/scripts/add-id.ts",

@@ -2,11 +2,11 @@ import fs from 'fs-extra';
 import FlexSearch from 'flexsearch';
 import path from 'path';
 
-import { MarkdownFileProcessor, processMarkdownDirectories } from "./markdown-files";
-import { config } from "../_config";
-import { ConsoleLogger, Logger } from "../utils/logger";
-import { MarkdownFileProcessorOutput, MarkdownMetadata } from './type';
-import { pinoLogBuilder } from '../utils/pino-log';
+import { MarkdownFileProcessor, processMarkdownDirectories } from "../markdown-files";
+import { config } from "../../_config";
+import { ConsoleLogger, Logger } from "../../utils/logger";
+import { MarkdownFileProcessorOutput, MarkdownMetadata } from './../type';
+import { pinoLogBuilder } from '../../utils/pino-log';
 import glob from 'tiny-glob';
 
 const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
@@ -34,7 +34,7 @@ export async function readAllMarkdown(cwd: string = process.cwd(), targetFile: s
   return processorOutput;
 }
 
-export const createFlexSearchIndex = (indexSize: IndexSize, logger: Logger = new ConsoleLogger()) => new FlexSearch.Document({
+export const createFlexSearchIndex = (indexSize: IndexSize, _logger: Logger = new ConsoleLogger()) => new FlexSearch.Document({
   preset: 'match',
   tokenize: indexSize === 'small' ? 'strict' : 'forward',
   cache: 100,
