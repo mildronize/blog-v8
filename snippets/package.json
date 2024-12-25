@@ -24,11 +24,13 @@
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@iarna/toml": "^2.2.5",
+    "flexsearch": "^0.7.43",
     "fs-extra": "^11.2.0",
     "gray-matter": "^4.0.3",
     "jsonresume-theme-onepage-web": "^1.0.4",
     "pino": "^9.5.0",
     "pino-pretty": "^13.0.0",
+    "remove-markdown": "^0.6.0",
     "resumed": "^4.0.0",
     "tiny-glob": "^0.2.9",
     "valibot": "^1.0.0-beta.9"
