@@ -8,7 +8,12 @@ test('extractFrontMatter', () => {
     title = "Hello, World!"
     +++`;
   const result = extractFrontMatter(content);
-  expect(result).toEqual({ title: "Hello, World!" });
+  expect(result).toEqual({
+    data: {
+      title: 'Hello, World!',
+    },
+    content: '',
+  });
 });
 
 test('extractZolaSlug', () => {

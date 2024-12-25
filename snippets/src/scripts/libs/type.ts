@@ -1,6 +1,10 @@
 export interface IdMapperMetadata {
   path: string;
 }
+export interface MarkdownMetadata extends IdMapperMetadata {
+  id: string;
+}
+
 export type PostId = string;
 
 export interface PostMetadata extends IdMapperMetadata {
@@ -10,6 +14,6 @@ export interface PostMetadata extends IdMapperMetadata {
 export type MarkdownFileProcessorMode = 'read' | 'update';
 
 export interface MarkdownFileProcessorOutput {
-  idMapperCollection: Map<PostId, IdMapperMetadata>,
+  markdownData: MarkdownMetadata[],
   addedIds: string[],
 }

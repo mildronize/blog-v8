@@ -3,7 +3,7 @@ import { Logger } from "../utils/logger";
 import path from "path";
 import fs from 'fs-extra';
 import { composeFrontMatter, extractFrontMatter, generateZolaPostPath } from "./zola";
-import { PostId, IdMapperMetadata, PostMetadata, MarkdownFileProcessorMode, MarkdownFileProcessorOutput } from "./type";
+import { PostId, IdMapperMetadata, PostMetadata, MarkdownFileProcessorMode, MarkdownFileProcessorOutput, MarkdownMetadata } from "./type";
 import { retryNewId } from "./uuid";
 
 export function extractMarkdownMetadata(dir: string, file: string, content: string): PostMetadata | undefined {
@@ -65,7 +65,7 @@ export class MarkdownFileProcessor implements FileProcessor {
   }
 
   async process(dir: string): Promise<MarkdownFileProcessorOutput> {
-    const idMapper = new Map<PostId, IdMapperMetadata>();
+    const markdownData: MarkdownMetadata[] = [];
     const addedIds: string[] = [];
     // Find all markdown files in the directory
     const files = await glob(`${dir}/**/*.md`);
@@ -86,15 +86,13 @@ export class MarkdownFileProcessor implements FileProcessor {
         }
         continue;
       }
-      idMapper.set(result.id, {
-        path: result.path,
-      });
+      markdownData.push(result);
 
       this.logger.debug(`Processed: ${result.id} -> '${file}'`);
     }
 
     return {
-      idMapperCollection: idMapper,
+      markdownData: markdownData,
       addedIds,
     };
   }
@@ -102,18 +100,22 @@ export class MarkdownFileProcessor implements FileProcessor {
 
 export async function processMarkdownDirectories(sourceDirs: string[], processor: FileProcessor, logger: Logger): Promise<MarkdownFileProcessorOutput> {
   const startTime = Date.now();
-  let idMapperCollection = new Map<PostId, IdMapperMetadata>();
+  let markdownData: MarkdownMetadata[] = [];
   let addedIds: string[] = [];
 
   for (const dir of sourceDirs) {
     const processorOutput = await processor.process(dir);
-    idMapperCollection = new Map([...idMapperCollection, ...processorOutput.idMapperCollection]);
+    markdownData = [...markdownData, ...processorOutput.markdownData];
     addedIds = [...addedIds, ...processorOutput.addedIds];
   }
   const endTime = Date.now();
-  logger.info(`Processed ${idMapperCollection.size} files in ${endTime - startTime}ms`);
+  logger.info(`Processed ${markdownData.length} files in ${endTime - startTime}ms`);
   return {
-    idMapperCollection,
+    markdownData,
     addedIds,
   };
+}
+
+export function toIdMapperCollection(metadata: MarkdownMetadata[]): Map<PostId, IdMapperMetadata> {
+  return new Map(metadata.map(({ id, path }) => [id, { path }]));
 }

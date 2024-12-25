@@ -1,19 +1,21 @@
 import { test, expect } from 'bun:test';
 import { extractMarkdownMetadata, processMarkdownDirectories } from './markdown-files';
-import { PostId, IdMapperMetadata } from './type';
+import { PostId, IdMapperMetadata, MarkdownMetadata, MarkdownFileProcessorOutput } from './type';
 
 
 test('processMarkdownFiles', async () => {
   const sourceDirs = ['test'];
   const processor = {
-    process: async (_dir: string): Promise<Map<PostId, IdMapperMetadata>> => {
-      return new Map([['id1', { path: 'path1' }]]);
-    },
-  };
+    process: async (_dir: string): Promise<MarkdownFileProcessorOutput> => 
+      ({ markdownData: [{ id: 'id1', path: 'path1' }], addedIds: [] }),
+    }
 
-  const idMapper = await processMarkdownDirectories(sourceDirs, processor);
+  const idMapper = await processMarkdownDirectories(sourceDirs, processor, console);
 
-  expect(idMapper).toEqual(new Map([['id1', { path: 'path1' }]]));
+  expect(idMapper).toEqual({
+    markdownData: [{ id: 'id1', path: 'path1' }],
+    addedIds: [],
+  });
 });
 
 test('extractMarkdownMetadata', () => {
