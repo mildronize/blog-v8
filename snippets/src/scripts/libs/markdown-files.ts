@@ -5,14 +5,23 @@ import fs from 'fs-extra';
 import { composeFrontMatter, extractFrontMatter, generateZolaPostPath } from "./zola";
 import { PostId, IdMapperMetadata, MarkdownFileProcessorMode, MarkdownFileProcessorOutput, MarkdownMetadata } from "./type";
 import { retryNewId } from "./uuid";
+import removeMd from "remove-markdown";
 
-export function extractMarkdownMetadata(dir: string, file: string, content: string): MarkdownMetadata {
-  const { data: frontmatter } = extractFrontMatter(content);
+export function extractMarkdownMetadata(dir: string, file: string, rawContent: string): MarkdownMetadata {
+  const { data: frontmatter, content } = extractFrontMatter(rawContent);
   return {
     id: frontmatter?.extra?.id,
     path: generateZolaPostPath(dir, file, frontmatter.slug),
+    content,
+    frontmatter
   }
 
+}
+
+export function cleanMarkdownContent(content: string): string {
+  return removeMd(content)
+    // Remove new lines
+    .replace(/\n/g, ' ')
 }
 
 export interface FileProcessor {
@@ -33,12 +42,24 @@ export interface FileProcessor {
 
 export class MarkdownFileProcessor implements FileProcessor {
   private logger: Logger;
+  private cleanContent: boolean;
+  private isIncludeContent: boolean;
   constructor(private mode: MarkdownFileProcessorMode, private options: {
     ignoreMarkdownFiles: string[]
     logger: Logger
-    idStore?: Map<string, unknown>
+    idStore?: Map<string, unknown>,
+    /**
+     * Remove markdown syntax from the content
+     */
+    cleanContent?: boolean;
+    /**
+     * Include the content in the output
+     */
+    isIncludeContent?: boolean;
   }) {
     this.logger = options.logger;
+    this.cleanContent = options.cleanContent ?? true;
+    this.isIncludeContent = options.isIncludeContent ?? false;
     this.logger.info(`MarkdownFileProcessor: '${mode}' Mode`);
   }
 
@@ -85,7 +106,13 @@ export class MarkdownFileProcessor implements FileProcessor {
         }
         continue;
       }
-      markdownData.push(result);
+      let content: string | undefined;
+      content = this.isIncludeContent ? result.content : undefined;
+      content = content && this.cleanContent ? cleanMarkdownContent(content) : content;
+      markdownData.push({
+        ...result,
+        content,
+      });
 
       this.logger.debug(`Processed: ${result.id} -> '${file}'`);
     }
