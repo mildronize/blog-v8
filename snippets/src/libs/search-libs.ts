@@ -5,13 +5,24 @@ import path from 'path';
 import { MarkdownFileProcessor, processMarkdownDirectories } from "./markdown-files";
 import { config } from "../_config";
 import { ConsoleLogger, Logger } from "../utils/logger";
-import { MarkdownFileProcessorOutput } from './type';
+import { MarkdownFileProcessorOutput, MarkdownMetadata } from './type';
 import { pinoLogBuilder } from '../utils/pino-log';
 import glob from 'tiny-glob';
 
 const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 
-// const targetFile = './.tmp/content.json';
+/**
+ * Small Index: Suitable for browser search
+ * Large Index: Suitable for server search, more memory usage, for better full-text search e.g. Thai language
+ */
+export type IndexSize = 'small' | 'large';
+
+export interface ExecuteBuildSearchIndexOptions {
+  cwd?: string;
+  postMetadataFile: string;
+  searchIndexPath: string;
+  indexSize: IndexSize;
+}
 
 export async function readAllMarkdown(cwd: string = process.cwd(), targetFile: string, logger: Logger = new ConsoleLogger()): Promise<MarkdownFileProcessorOutput> {
   const processor = new MarkdownFileProcessor('read', { ignoreMarkdownFiles, logger, isIncludeContent: true });
@@ -23,9 +34,9 @@ export async function readAllMarkdown(cwd: string = process.cwd(), targetFile: s
   return processorOutput;
 }
 
-export const createFlexSearchIndex = (logger: Logger = new ConsoleLogger()) => new FlexSearch.Document({
+export const createFlexSearchIndex = (indexSize: IndexSize, logger: Logger = new ConsoleLogger()) => new FlexSearch.Document({
   preset: 'match',
-  tokenize: "forward",
+  tokenize: indexSize === 'small' ? 'strict' : 'forward',
   cache: 100,
   document: {
     id: 'id',
@@ -36,8 +47,15 @@ export const createFlexSearchIndex = (logger: Logger = new ConsoleLogger()) => n
   }
 });
 
-function buildSearchIndex({ markdownData }: MarkdownFileProcessorOutput, logger: Logger = new ConsoleLogger()): FlexSearch.Document<unknown, string[]> {
-  const index = createFlexSearchIndex(logger);
+export interface BuildSearchIndexOptions {
+  markdownData: MarkdownMetadata[];
+  logger?: Logger;
+  indexSize: IndexSize;
+}
+
+function buildSearchIndex(options: BuildSearchIndexOptions): FlexSearch.Document<unknown, string[]> {
+  const { indexSize, markdownData, logger = new ConsoleLogger() } = options;
+  const index = createFlexSearchIndex(indexSize, logger);
   let indexCount = 0;
 
   for (const item of markdownData) {
@@ -55,13 +73,14 @@ function buildSearchIndex({ markdownData }: MarkdownFileProcessorOutput, logger:
   return index;
 }
 
-export async function executeBuildSearchIndex(
-  cwd: string = process.cwd(),
-  postMetadataFile: string,
-  searchIndexPath: string
-) {
+export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOptions): Promise<FlexSearch.Document<unknown, string[]>> {
+  const { cwd = process.cwd(), postMetadataFile, searchIndexPath, indexSize } = options;
   const postData = await readAllMarkdown(cwd, postMetadataFile, pinoLogBuilder('readAllMarkdown', 'info'));
-  const index = buildSearchIndex(postData, pinoLogBuilder('buildSearchIndex', 'info'));
+  const index = buildSearchIndex({
+    markdownData: postData.markdownData,
+    indexSize,
+    logger: pinoLogBuilder('buildSearchIndex', 'info'),
+  });
 
   fs.removeSync(searchIndexPath);
   fs.ensureDirSync(searchIndexPath);
@@ -71,8 +90,15 @@ export async function executeBuildSearchIndex(
   return index;
 }
 
-export async function importSearchIndex(searchIndexPath: string, logger: Logger = new ConsoleLogger()): Promise<FlexSearch.Document<unknown, string[]>> {
-  const index = createFlexSearchIndex(logger);
+export interface ImportSearchIndexOptions {
+  searchIndexPath: string;
+  logger?: Logger;
+  indexSize: IndexSize;
+}
+
+export async function importSearchIndex(optios: ImportSearchIndexOptions): Promise<FlexSearch.Document<unknown, string[]>> {
+  const { indexSize, searchIndexPath, logger = new ConsoleLogger() } = optios;
+  const index = createFlexSearchIndex(indexSize, logger);
 
   const indexFiles = await glob(`${searchIndexPath}/*.json`);
   for (const indexFile of indexFiles) {
