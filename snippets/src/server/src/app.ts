@@ -19,6 +19,7 @@ app.get('/search', async c => {
   if (!query) {
     return c.json({
       status: 'error',
+      results: [],
       message: 'Query parameter "q" is required'
     });
   }

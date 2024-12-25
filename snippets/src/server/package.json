@@ -9,7 +9,7 @@
     "watch": "nodemon --watch src --ext ts --exec 'run-s build'",
     "clean": "rimraf dist",
     "build:search-metadata": "bun run scripts/build-search-metadata.ts",
-    "start": "func start --port 7074 ",
+    "start": "func start --port 7074 --cors http://localhost:5173",
     "dev": "run-s build:search-metadata && run-p watch start"
   },
   "dependencies": {
