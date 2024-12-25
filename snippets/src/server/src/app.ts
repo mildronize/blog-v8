@@ -2,7 +2,6 @@ import { Hono } from 'hono';
 import { initVariables, HonoEnv } from './env';
 import { secureHeaders } from 'hono/secure-headers';
 import { RawSearchResult, serializeSearchResult } from './lib';
-import { post } from '@azure/functions/types/app';
 
 const app = new Hono<HonoEnv>().basePath('/api');
 
