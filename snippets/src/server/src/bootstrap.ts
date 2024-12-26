@@ -1,6 +1,6 @@
 
 import { Document as FlexSearchDocument } from 'flexsearch';
-import { importSearchIndex } from "../../libs/search";
+import { importSearchIndexFromFile } from "../../libs/search";
 import { config } from "../config";
 import fs from 'fs-extra';
 import { MarkdownMetadata } from '../../libs/content';
@@ -14,7 +14,7 @@ export let postMetadata: MarkdownMetadata[];
  * Bootstrap the application start when the server starts
  */
 export async function bootstrap() {
-  index = await importSearchIndex({
+  index = await importSearchIndexFromFile({
     searchIndexPath: config.searchIndex.dir,
     indexSize: 'large'
   });

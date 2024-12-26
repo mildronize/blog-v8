@@ -11,6 +11,10 @@ export interface ExecuteBuildSearchIndexOptions {
   cwd?: string;
   postMetadataFile: string;
   searchIndexPath: string;
+  /**
+   * Search index SiteMap path, for loading search index in browser
+   */
+  searchIndexMetadataPath: string;
   indexSize: IndexSize;
 }
 

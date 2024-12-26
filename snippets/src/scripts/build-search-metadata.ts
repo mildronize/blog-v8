@@ -6,10 +6,11 @@ async function buildSearchMetadata() {
   const indexSizes = ['small', 'large'] as const;
   for (const indexSize of indexSizes) {
     await executeBuildSearchIndex({
-      cwd: config.rootDir,
+      indexSize,
+      cwd: config.snippetsDir,
       postMetadataFile: config.postMetadata.targetFile,
       searchIndexPath: config.searchIndex[indexSize].dir,
-      indexSize,
+      searchIndexMetadataPath: config.searchIndex[indexSize].metadataPath,
     });
   }
 }

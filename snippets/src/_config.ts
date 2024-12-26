@@ -1,16 +1,21 @@
 
 
+export const publicApiPath = "../public/api";
 export const config = {
-  rootDir: ".",
+  snippetsDir: ".",
+  rootDir: '..',
+  publicApiPath: publicApiPath,
   postMetadata: {
-    targetFile: "../public/api/post-metadata.json",
+    targetFile: `${publicApiPath}/post-metadata.json`,
   },
   searchIndex: {
     small: {
-      dir: "../public/api/search-index-small",
+      dir: `${publicApiPath}/search-index-small`,
+      metadataPath: `${publicApiPath}/search-index-metadata-small.json`,
     },
     large: {
-      dir: "../public/api/search-index-large",
+      dir: `${publicApiPath}/search-index-large`,
+      metadataPath: `${publicApiPath}/search-index-metadata-large.json`,
     },
   },
   /**
@@ -18,7 +23,7 @@ export const config = {
    */
   blogIdModule: {
     sourceDirectories: ["../content/posts"],
-    targetFile: "../public/api/id-mapper.json",
+    targetFile: `${publicApiPath}/id-mapper.json`,
     ignoreMarkdownFiles: ["_index.md"],
   }
 }

@@ -1,4 +1,4 @@
-import 'server-only';
+// import 'server-only';
 
 import FlexSearch from 'flexsearch';
 import fs from 'fs-extra';
@@ -11,6 +11,21 @@ import { readAllMarkdown } from './utils';
 import { ExecuteBuildSearchIndexOptions, ImportSearchIndexOptions } from './types';
 import { buildSearchIndex, createFlexSearchIndex } from './search-index';
 
+export async function waitForCounter(n: number, delay: number = 100): Promise<void> {
+  return new Promise((resolve) => {
+    let count = n + 1; // Prevent the last call, may exit before the last call
+    const interval = setInterval(() => {
+      count--;
+      if (count <= 0) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, delay);
+  });
+}
+
+export const totalIndexFiles = 15;
+
 export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOptions): Promise<FlexSearch.Document<unknown, string[]>> {
   const { cwd = process.cwd(), postMetadataFile, searchIndexPath, indexSize } = options;
   const postData = await readAllMarkdown(cwd, postMetadataFile, pinoLogBuilder('readAllMarkdown', 'info'));
@@ -20,15 +35,34 @@ export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOp
     logger: pinoLogBuilder('buildSearchIndex', 'info'),
   });
 
+  const targetIndexPath: string[] = [];
+
   fs.removeSync(searchIndexPath);
   fs.ensureDirSync(searchIndexPath);
+
+  let indexCount = totalIndexFiles + 1; // tmp
+  const functionCounter = (fn: () => any, count: number) => {
+    fn();
+    count--;
+  };
   index.export(
-    (key, data) => fs.writeJSONSync(path.join(searchIndexPath, `${key}.json`), data ?? {}),
-  )
+    (key, data) => functionCounter(
+      () => {
+        const targetIndex = path.join(searchIndexPath, `${key}.json`);
+        fs.writeJSONSync(targetIndex, data ?? {});
+        targetIndexPath.push(targetIndex);
+      }, indexCount)
+  );
+
+  // Wait for the last call
+  await waitForCounter(indexCount);
+
+  console.log('targetIndexPath', targetIndexPath);
+  await fs.writeJSON(options.searchIndexMetadataPath, { sitemap: targetIndexPath });
   return index;
 }
 
-export async function importSearchIndex(optios: ImportSearchIndexOptions): Promise<FlexSearch.Document<unknown, string[]>> {
+export async function importSearchIndexFromFile(optios: ImportSearchIndexOptions): Promise<FlexSearch.Document<unknown, string[]>> {
   const { indexSize, searchIndexPath, logger = new ConsoleLogger() } = optios;
   const index = createFlexSearchIndex(indexSize, logger);
 

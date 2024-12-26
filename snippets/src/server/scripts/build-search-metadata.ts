@@ -8,6 +8,7 @@ async function buildSearchMetadata() {
     postMetadataFile: config.postMetadata.targetFile,
     searchIndexPath: config.searchIndex.dir,
     indexSize: 'large',
+    searchIndexMetadataPath: config.searchIndex.siteMapPath,
   });
 }
 
