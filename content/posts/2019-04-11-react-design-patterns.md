@@ -65,7 +65,7 @@ Alternative, you can use MVC approach if you familiar, however, in my opinion us
 
 #### Full Feature (Stateful Component)
 
-```jsx
+```js
 class Person extends React.Component {
   constructor (props) {
     super(props);
@@ -118,7 +118,7 @@ Ref: https://github.com/chantastic/react-patterns#component-organization
 
 #### Stateless Component
 
-```jsx
+```js
 function StatelessComponent(){
   return (
     <div>
@@ -130,7 +130,7 @@ function StatelessComponent(){
 
 #### Stateless Component with props
 
-```jsx
+```js
 function StatelessComponent({ data }){
   return (
     <div>
@@ -144,7 +144,7 @@ function StatelessComponent({ data }){
 
 We can split our component into 2 types: Container component, Presentational component
 
-```jsx
+```js
 // CommentList.js
 
 class CommentList extends React.Component {
@@ -190,13 +190,13 @@ Read more for [Presentational and container components](https://krasimir.gitbook
 
 `if`
 
-```jsx
+```js
 {isActive && <p>Message</p>}
 ```
 
 `if-else`
 
-```jsx
+```js
 {
   isTrue ? (
     <span>Rendered when `TRUE`</span>
@@ -208,7 +208,7 @@ Read more for [Presentational and container components](https://krasimir.gitbook
 
 Loop items for JSX
 
-```jsx
+```js
 const todos = [
     {id: 1, text: 'Test'},
     {id: 1, text: 'Write a paper'}
@@ -226,7 +226,7 @@ function sampleComponent(){
 
 ### Two way binding
 
-```jsx
+```js
 class App extends React.Component {
 
   state = {
@@ -271,7 +271,7 @@ Todo Components
 
 Every React component has `children` props.
 
-```jsx
+```js
 const Title = function () {
   return <h1>Hello there!</h1>;
 }
@@ -296,7 +296,7 @@ ref: https://krasimir.gitbooks.io/react-in-patterns/content/chapter-04/#passing-
 
 ### Passing state through the props
 
-```jsx
+```js
 // Counter.jsx
 class Counter extends React.Component {
   state = {
@@ -332,7 +332,7 @@ function CounterView({ value, onAdd }) {
 
 ### Using top component for storing state
 
-```jsx
+```js
 // store.js
 export default {
   root: {},
@@ -405,7 +405,7 @@ Read more in [Airbnb's Style guide](https://github.com/airbnb/javascript/tree/ma
 
 ### Naming Events
 
-```jsx
+```js
 class Owner extends React.Component {
   handleClick () {
     // handle click event

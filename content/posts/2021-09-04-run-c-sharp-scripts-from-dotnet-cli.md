@@ -42,7 +42,7 @@ dotnet tool install -g dotnet-script
 
 ## 3. เขียนไฟล์ที่ต้องการรัน
 
-```csharp
+```c#
 // Filename: HelloWorld.csx
 public class HelloWorld {
     public string GetString() {
