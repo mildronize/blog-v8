@@ -5,7 +5,11 @@ date = "2024-12-26"
 [taxonomies]
 categories = [ "JavaScript" ]
 tags = [ "JavaScript", "Callback", "Promise", "Async", "TypeScript" ]
+
+[extra]
+id = "jwof8mf"
 +++
+
 
 สวัสดีครับ วันนี้เรามาจัดการเรื่องที่น่าปวดหัวของ JavaScript กัน ซึ่งถ้าใครเขียน Promise อยู่บ่อยๆ อยู่แล้ว ก็คงไม่ค่อยเจอกับปัญหาพวกนี้เท่าไหร่แล้วเนอะ แต่ถ้าคนที่เขียน JavaScript ยุคสมัยของ Callback อยู่ ก็คงเจอปัญหานี้บ่อยๆ แล้ว ซึ่งจะต้องเข้าใจการทำงานของ JavaScript Event Loop ก่อน
 
