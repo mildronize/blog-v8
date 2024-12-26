@@ -7,6 +7,11 @@ on:
       - main
     paths:
       - "content/posts/**.md"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "content/posts/**.md"
 
 env:
   repo: mildronize/blog-v8
@@ -16,16 +21,25 @@ env:
   # Ref: https://www.getzola.org/documentation/deployment/gitlab-pages/
   ZOLA_VERSION: "0.19.2"
 
-  base_branch: main
-
 jobs:
   add-post-id:
     name: Add Post ID
     runs-on: ubuntu-latest
     steps:
+      - name: Determine working branch name
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+              echo "BRANCH_NAME=${{ github.event.pull_request.head.ref  }}" >> $GITHUB_ENV
+          elif [[ "${{ github.event_name }}" == "push" ]]; then
+              echo "BRANCH_NAME=${{ github.ref_name  }}" >> $GITHUB_ENV
+          else
+              echo "Only push and pull_request events are supported"
+              exit 1
+          fi
+
       - name: Setup branch name
         run: |
-          echo "branch_name=main.auto-add-post-id-$(date +%s)" >> $GITHUB_ENV
+          echo "new_branch_name=$BRANCH_NAME.auto-add-post-id-$(date +%s)" >> $GITHUB_ENV
         shell: bash
 
       - name: Clone Project
@@ -34,7 +48,7 @@ jobs:
           cd ${{ env.working_directory }} && git submodule update --init --recursive
 
       - name: Checkout Branch
-        run: git checkout ${{ env.base_branch }}
+        run: git checkout ${{ env.BRANCH_NAME }}
         working-directory: ${{ env.working_directory }}
 
       - uses: oven-sh/setup-bun@v2
@@ -73,7 +87,7 @@ jobs:
         run: |
           git config --global user.email "${{ env.git_email }}"
           git config --global user.name "${{ env.git_name }}"
-          git checkout -b ${{ env.branch_name }}
+          git checkout -b ${{ env.new_branch_name }}
         working-directory: ${{ env.working_directory }}
         env:
           git_email: github-action-bot@thadaw.com
@@ -85,7 +99,7 @@ jobs:
           git add --all content
           git restore --staged snippets/bun.lockb
           git diff --quiet && git diff --staged --quiet || git commit -am "${{ env.git_message }}"
-          git push --set-upstream origin ${{ env.branch_name }}
+          git push --set-upstream origin ${{ env.new_branch_name }}
         working-directory: ${{ env.working_directory }}
 
       - name: Create Pull Request & Merge if possible
@@ -94,14 +108,14 @@ jobs:
           gh pr create \
             --title "${{ env.git_message }}" \
             --body "${{ steps.add-post-id.outputs.added-id-details }}" \
-            --base ${{ env.base_branch }} \
-            --head ${{ env.branch_name }} \
+            --base ${{ env.BRANCH_NAME }} \
+            --head ${{ env.new_branch_name }} \
             --repo "${{ env.repo }}"
 
           retry=1
           while [ $retry -lt 10 ]
           do
-              pr_number=`gh pr view ${{ env.branch_name }} --repo "${{ env.repo }}" --json number | jq '.number'`
+              pr_number=`gh pr view ${{ env.new_branch_name }} --repo "${{ env.repo }}" --json number | jq '.number'`
               if [ "$pr_number" != "" ]; then
                   break
               fi
