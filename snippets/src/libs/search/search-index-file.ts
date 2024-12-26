@@ -11,6 +11,30 @@ import { readAllMarkdown } from './utils';
 import { ExecuteBuildSearchIndexOptions, ImportSearchIndexOptions } from './types';
 import { buildSearchIndex, createFlexSearchIndex } from './search-index';
 
+export class CallbackWaiter {
+  private numberOfCallbackCalled: number;
+
+  constructor(totalCallback: number) {
+    this.numberOfCallbackCalled = totalCallback
+  }
+
+  public execute(fn: () => any) {
+    fn();
+    this.numberOfCallbackCalled--;
+  }
+
+  public async wait(delay: number = 100): Promise<void> {
+    return new Promise((resolve) => {
+      const interval = setInterval(() => {
+        if (this.numberOfCallbackCalled <= 0) {
+          clearInterval(interval);
+          resolve();
+        }
+      }, delay);
+    });
+  }
+}
+
 export async function waitForCounter(n: number, delay: number = 100): Promise<void> {
   return new Promise((resolve) => {
     let count = n + 1; // Prevent the last call, may exit before the last call
@@ -40,22 +64,17 @@ export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOp
   fs.removeSync(searchIndexPath);
   fs.ensureDirSync(searchIndexPath);
 
-  let indexCount = totalIndexFiles + 1; // tmp
-  const functionCounter = (fn: () => any, count: number) => {
-    fn();
-    count--;
-  };
+  const callbackWaiter = new CallbackWaiter(totalIndexFiles);
   index.export(
-    (key, data) => functionCounter(
+    (key, data) => callbackWaiter.execute(
       () => {
         const targetIndex = path.join(searchIndexPath, `${key}.json`);
         fs.writeJSONSync(targetIndex, data ?? {});
         targetIndexPath.push(targetIndex);
-      }, indexCount)
+      })
   );
-
   // Wait for the last call
-  await waitForCounter(indexCount);
+  await callbackWaiter.wait();
 
   console.log('targetIndexPath', targetIndexPath);
   await fs.writeJSON(options.searchIndexMetadataPath, { sitemap: targetIndexPath });
