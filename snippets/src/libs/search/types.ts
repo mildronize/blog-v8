@@ -50,6 +50,10 @@ export interface ImportSearchIndexFromRemoteOptions {
    * Index Size
    */
   indexSize: IndexSize;
+  /**
+   * Hostname of the server, empty string for relative path
+   */
+  hostname?: string;
   logger?: Logger;
 }
 
