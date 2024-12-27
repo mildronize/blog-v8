@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import { useState, useEffect, createRef } from 'react';
 import './style.css';
 import { BrowserSearch } from '../../libs/search/search-index-broswer';
 

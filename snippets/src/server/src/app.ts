@@ -30,7 +30,10 @@ app.get('/search', async c => {
 
   return c.json({
     status: 'ok',
-    results: serializeSearchResult(results as RawSearchResult[], postMetadata)
+    results: serializeSearchResult({
+      rawResult: results as RawSearchResult[],
+      postMetadata
+    })
   });
 });
 

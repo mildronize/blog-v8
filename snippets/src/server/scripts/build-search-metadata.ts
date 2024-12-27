@@ -9,6 +9,7 @@ async function buildSearchMetadata() {
     searchIndexPath: config.searchIndex.dir,
     indexSize: 'large',
     searchIndexMetadataPath: config.searchIndex.siteMapPath,
+    rootPublicDir: 'ADD YOUR ROOT PUBLIC DIR HERE',
   });
 }
 

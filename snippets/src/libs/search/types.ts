@@ -1,6 +1,5 @@
 import { Logger } from "pino";
 import { MarkdownMetadata } from "../content";
-import { index } from '../../server/src/bootstrap';
 
 /**
  * Small Index: Suitable for browser search
