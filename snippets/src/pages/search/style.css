@@ -74,3 +74,23 @@ body {
   font-size: 14px;
   padding: 10px;
 }
+
+.checkbox-container {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-label {
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}

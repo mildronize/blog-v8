@@ -18,7 +18,7 @@ const sharedOptions = {
 }
 
 // Initialize the BrowserSearch instance, make sure it's singleton
-const browserSearch = {
+const browserSearchCollection = {
   small: new BrowserSearch({
     indexSize: 'small',
     searchIndexMetadataPath: '/api/search-index-metadata-small.json',
@@ -30,18 +30,21 @@ const browserSearch = {
     ...sharedOptions,
   }),
 }
+// Use the small search index by default
+let browserSearch: BrowserSearch = browserSearchCollection.small;
 
-browserSearch.small.init();
+browserSearch.init();
 
 export default () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [enableFullTextSearch, setEnableFullTextSearch] = useState(false);
   const searchRef = createRef<HTMLInputElement>();
 
   const searchOnBrowser = async (query: string) => {
     try {
-      const results = await browserSearch.small.search(query);
+      const results = await browserSearch.search(query);
       setResults(results);
       setError(null);
     } catch (err: any) {
@@ -91,11 +94,24 @@ export default () => {
     // Do search when Enter key is pressed
   };
 
-  const handleTextFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTextFieldChange = () => {
     const query = searchRef.current?.value ?? '';
     console.log('Search query:', query);
     handleSearch(query);
   };
+
+  const handleEnableFullTextSearchChange = (value: boolean) => {
+    console.log('Enable full text search:', value);
+    if(value){
+      browserSearch = browserSearchCollection.large;
+      browserSearch.init();
+    } else {
+      browserSearch = browserSearchCollection.small;
+      browserSearch.init();
+    }
+    setEnableFullTextSearch(value);
+    handleTextFieldChange();
+  }
 
   return (
     <div className="app">
@@ -105,9 +121,19 @@ export default () => {
         placeholder="Search..."
         defaultValue={query}
         ref={searchRef}
-        // onKeyDown={handleKeyDown}
-        onChange={(e) => handleTextFieldChange(e)}
+        onChange={handleTextFieldChange}
       />
+       <div className="checkbox-container">
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            className="checkbox"
+            checked={enableFullTextSearch}
+            onChange={(e) => handleEnableFullTextSearchChange(e.target.checked)}
+          />
+          Enable Full Text Search
+        </label>
+      </div>
       <div className="results-container">
         {error && <p className="error">{error}</p>}
         {results.map((result) => (

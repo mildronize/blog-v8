@@ -54,6 +54,9 @@ export class BrowserSearch {
   }
 
   async init() {
+    if (this.isInitialized) {
+      return;
+    }
     this.isInitialized = true;
     this.index = await importSearchIndexFromRemote(this.options);
     this.postMetadata = await (await fetch(urlJoin(this.options.hostname ?? '', this.options.postMetadataPath))).json();
