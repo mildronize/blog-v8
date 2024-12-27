@@ -29,7 +29,7 @@ id = "hye03ea"
     rm -rf .terraform
     ```
 3. ให้ comment ส่วนของ block `cloud` ไว้ก่อน (Remote State) ยกตัวอย่าง Code ข้างล่างผมใช้ provide [azurerm](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
-    ```hcl
+    ```
     terraform {
       required_version = ">= 1.5.2"
       required_providers {
@@ -71,7 +71,7 @@ id = "hye03ea"
     terraform state list
     ```
 8. ให้เอา comment ออกในส่วนของ `cloud` (Remote State)
-    ```hcl
+    ```
     terraform {
       required_version = ">= 1.5.2"
       required_providers {

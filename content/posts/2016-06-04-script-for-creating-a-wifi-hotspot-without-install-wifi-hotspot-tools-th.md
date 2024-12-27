@@ -43,7 +43,7 @@ hospot restart # ปิดแล้วเปิดใหม่อีกครั
 ## โค๊ดการโปรแกรมเปิด Hotspot บน Windows
 <https://gist.github.com/mildronize/8d159d35497c56368914>
 
-```batch
+```bat
 @ECHO OFF
 echo Hotspot
 echo .

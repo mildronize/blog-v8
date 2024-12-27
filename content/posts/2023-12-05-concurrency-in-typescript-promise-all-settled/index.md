@@ -136,7 +136,7 @@ function longRunningTask(
 
 ## ตัวอย่างการทำงานของโปรแกรม
 
-```log
+```
 Task 1 started, will take 4 seconds
 Task 2 started, will take 4 seconds
 Task 3 started, will take 5 seconds
