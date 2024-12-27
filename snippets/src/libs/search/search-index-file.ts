@@ -11,8 +11,20 @@ import { readAllMarkdown } from './utils';
 import { ExecuteBuildSearchIndexOptions, ImportSearchIndexOptions } from './types';
 import { buildSearchIndex, createFlexSearchIndex } from './search-index';
 
+function getRelativePath(path: string, rootPath: string): string {
+  if (!path.startsWith(rootPath)) {
+    throw new Error("The provided path is not within the rootPath.");
+  }
+
+  // Remove the rootPath from the full path to get the relative path
+  const relativePath = path.replace(rootPath, "").replace(/^[\\/]+/, ""); // Remove leading slashes if any
+
+  return relativePath;
+}
+
+
 export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOptions): Promise<FlexSearch.Document<unknown, string[]>> {
-  const { cwd = process.cwd(), postMetadataFile, searchIndexPath, indexSize } = options;
+  const { cwd = process.cwd(), postMetadataFile, searchIndexPath, indexSize, rootPublicDir } = options;
   const postData = await readAllMarkdown(cwd, postMetadataFile, pinoLogBuilder('readAllMarkdown', 'info'));
   const index = buildSearchIndex({
     markdownData: postData.markdownData,
@@ -29,7 +41,7 @@ export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOp
     async (key, data) => {
       const targetIndex = path.join(searchIndexPath, `${key}.json`);
       await fs.writeJSON(targetIndex, data ?? {});
-      targetIndexPath.push(targetIndex);
+      targetIndexPath.push('/' + getRelativePath(targetIndex, rootPublicDir));
     }
   );
 

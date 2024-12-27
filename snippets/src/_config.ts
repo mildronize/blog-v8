@@ -1,10 +1,14 @@
 
 
-export const publicApiPath = "../public/api";
+const apiPath = "api";
+const rootPublicDir = "../public";
+const publicApiPath = `${rootPublicDir}/${apiPath}`;
+
 export const config = {
   snippetsDir: ".",
   rootDir: '..',
-  publicApiPath: publicApiPath,
+  rootPublicDir,
+  apiPath,
   postMetadata: {
     targetFile: `${publicApiPath}/post-metadata.json`,
   },

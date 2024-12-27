@@ -16,9 +16,9 @@ export interface ExecuteBuildSearchIndexOptions {
    */
   searchIndexMetadataPath: string;
   /**
-   * Public API Path
+   * Root public directory
    */
-  publicApiPath: string;
+  rootPublicDir: string;
   /**
    * Index Size
    */
