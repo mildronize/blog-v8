@@ -45,7 +45,7 @@ export class BrowserSearch {
   async init() {
     this.isInitialized = true;
     this.index = await importSearchIndexFromRemote(this.options);
-    this.postMetadata = await (await fetch(urlJoin(this.options.hostname ?? '', this.options.searchIndexMetadataPath))).json();
+    this.postMetadata = await (await fetch(urlJoin(this.options.hostname ?? '', this.options.postMetadataPath))).json();
   }
 
   async search(query: string) {
@@ -53,10 +53,12 @@ export class BrowserSearch {
       await this.init();
     }
     if (!this.index) {
-      throw new Error('Search index is not initialized');
+      console.warn('Search index is not initialized');
+      return [];
     }
     if (!this.postMetadata) {
-      throw new Error('Post metadata is not initialized');
+      console.warn('Post metadata is not initialized');
+      return [];
     }
     const searchResults = await searchIndex(this.index, query);
     return serializeSearchResult(searchResults as RawSearchResult[], this.postMetadata);

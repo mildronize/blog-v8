@@ -12,6 +12,15 @@ interface SearchResult {
   score: number;
 }
 
+// Initialize the BrowserSearch instance, make sure it's singleton
+const browserSearch = new BrowserSearch({
+  hostname: 'http://localhost:1111',
+  indexSize: 'small',
+  searchIndexMetadataPath: '/api/search-index-metadata-small.json',
+  postMetadataPath: '/api/post-metadata.json'
+});
+browserSearch.init();
+
 export default () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -20,14 +29,10 @@ export default () => {
 
   const searchOnBrowser = async (query: string) => {
     try {
-      const browserSearch = new BrowserSearch({
-        hostname: 'http://localhost:1111',
-        indexSize: 'small',
-        searchIndexMetadataPath: '/public/api/search-index-metadata-small.json',
-        postMetadataPath: '/public/api/post-metadata.json'
-      })
       const results = await browserSearch.search(query);
+      console.log('Results:', results);
       setResults(results);
+      setError(null);
     } catch (err: any) {
       setError(err.message);
       setResults([]);
@@ -49,19 +54,20 @@ export default () => {
     }
   };
 
-  // useEffect(() => {
-  //   // Set query from URL on initial load
-  //   const params = new URLSearchParams(window.location.search);
-  //   const initialQuery = params.get('q') || '';
-  //   setQuery(initialQuery);
-  //   if (initialQuery) {
-  //     handleSearch(initialQuery);
-  //   }
-  // }, []);
+  useEffect(() => {
+    // Set query from URL on initial load
+    const params = new URLSearchParams(window.location.search);
+    const initialQuery = params.get('q') || '';
+    setQuery(initialQuery);
+    if (initialQuery) {
+      handleSearch(initialQuery);
+    }
+  }, []);
 
   const handleSearch = (query: string) => {
     if (query) {
-      searchWithApiServer(query);
+      // searchWithApiServer(query);
+      searchOnBrowser(query);
       // Update the URL with the query parameter
       const params = new URLSearchParams(window.location.search);
       params.set('q', query);
@@ -71,14 +77,14 @@ export default () => {
     }
   };
 
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    searchOnBrowser(query);
-    if (e.key === 'Enter') {
-      const query = searchRef.current?.value ?? '';
-      console.log('Search query:', query);
-      handleSearch(query);
-    }
+    // Do search when Enter key is pressed
+  };
+
+  const handleTextFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = searchRef.current?.value ?? '';
+    console.log('Search query:', query);
+    handleSearch(query);
   };
 
   return (
@@ -89,7 +95,8 @@ export default () => {
         placeholder="Search..."
         defaultValue={query}
         ref={searchRef}
-        onKeyDown={handleKeyDown}
+        // onKeyDown={handleKeyDown}
+        onChange={(e) => handleTextFieldChange(e)}
       />
       <div className="results-container">
         {error && <p className="error">{error}</p>}
