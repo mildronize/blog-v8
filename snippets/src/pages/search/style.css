@@ -1,10 +1,10 @@
-body {
+/* body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 20px;
   background-color: #f9f9f9;
   color: #333;
-}
+} */
 
 .app {
   display: flex;
@@ -49,9 +49,10 @@ body {
 
 .result-item h3 {
   margin: 0 0 5px;
-  font-size: 16pt;
+  font-size: 14pt;
   color: #007bff;
 }
+
 
 .result-title {
   text-decoration: none;
