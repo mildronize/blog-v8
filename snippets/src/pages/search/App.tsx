@@ -12,14 +12,26 @@ interface SearchResult {
   score: number;
 }
 
-// Initialize the BrowserSearch instance, make sure it's singleton
-const browserSearch = new BrowserSearch({
+const sharedOptions = {
   hostname: 'http://localhost:1111',
-  indexSize: 'small',
-  searchIndexMetadataPath: '/api/search-index-metadata-small.json',
   postMetadataPath: '/api/post-metadata.json'
-});
-browserSearch.init();
+}
+
+// Initialize the BrowserSearch instance, make sure it's singleton
+const browserSearch = {
+  small: new BrowserSearch({
+    indexSize: 'small',
+    searchIndexMetadataPath: '/api/search-index-metadata-small.json',
+    ...sharedOptions
+  }),
+  large: new BrowserSearch({
+    indexSize: 'large',
+    searchIndexMetadataPath: '/api/search-index-metadata-large.json',
+    ...sharedOptions,
+  }),
+}
+
+browserSearch.small.init();
 
 export default () => {
   const [query, setQuery] = useState('');
@@ -29,13 +41,11 @@ export default () => {
 
   const searchOnBrowser = async (query: string) => {
     try {
-      const results = await browserSearch.search(query);
-      console.log('Results:', results);
+      const results = await browserSearch.small.search(query);
       setResults(results);
       setError(null);
     } catch (err: any) {
       setError(err.message);
-      setResults([]);
     }
   }
 
