@@ -1,21 +1,31 @@
 import 'client-only';
 
 import FlexSearch from 'flexsearch';
-import { ImportSearchIndexOptions } from './types';
+import { ImportSearchIndexFromRemoteOptions, SearchIndexMetadataResponse } from './types';
 import { ConsoleLogger } from '../../utils/logger';
 import { createFlexSearchIndex } from './search-index';
 
-// TODO: Implement this function
-// export async function importSearchIndexFromRemote(optios: ImportSearchIndexOptions): Promise<FlexSearch.Document<unknown, string[]>> {
-//   const { indexSize, searchIndexPath, logger = new ConsoleLogger() } = optios;
-//   const index = createFlexSearchIndex(indexSize, logger);
+/**
+ * Simple function to `path.basename` from Node.js
+ * @param path 
+ * @returns 
+ */
+export function getBasename(path: string, extension: string): string {
+  // Use regex or split to get the basename
+  const basename = path.split('/').pop() || "";
+  return basename.replace(extension, '');
+}
 
-//   const indexFiles = await glob(`${searchIndexPath}/*.json`);
-//   for (const indexFile of indexFiles) {
-//     const data = await fs.readJSON(indexFile);
-//     const key = path.basename(indexFile, '.json');
-//     await index.import(key, data);
-//     logger.info(`Imported index key: ${key}, file: ${indexFile}`);
-//   }
-//   return index;
-// }
+export async function importSearchIndexFromRemote(optios: ImportSearchIndexFromRemoteOptions): Promise<FlexSearch.Document<unknown, string[]>> {
+  const { indexSize, searchIndexMetadataPath, logger = new ConsoleLogger() } = optios;
+  const index = createFlexSearchIndex(indexSize, logger);
+
+  const indexFiles = (await (await fetch(searchIndexMetadataPath)).json() as SearchIndexMetadataResponse).sitemap;
+  for (const indexFile of indexFiles) {
+    const data = await (await fetch(indexFile)).json();
+    const key = getBasename(indexFile, '.json');
+    await index.import(key, data);
+    logger.info(`Imported index key: ${key}, file: ${indexFile}`);
+  }
+  return index;
+}

@@ -8,7 +8,7 @@ import glob from 'tiny-glob';
 import { ConsoleLogger } from "../../utils/logger";
 import { pinoLogBuilder } from '../../utils/pino-log';
 import { readAllMarkdown } from './utils';
-import { ExecuteBuildSearchIndexOptions, ImportSearchIndexOptions } from './types';
+import { ExecuteBuildSearchIndexOptions, ImportSearchIndexOptions, SearchIndexMetadataResponse } from './types';
 import { buildSearchIndex, createFlexSearchIndex } from './search-index';
 
 function getRelativePath(path: string, rootPath: string): string {
@@ -46,7 +46,7 @@ export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOp
   );
 
   console.log('targetIndexPath', targetIndexPath);
-  await fs.writeJSON(options.searchIndexMetadataPath, { sitemap: targetIndexPath });
+  await fs.writeJSON(options.searchIndexMetadataPath, { sitemap: targetIndexPath } satisfies SearchIndexMetadataResponse);
   return index;
 }
 
