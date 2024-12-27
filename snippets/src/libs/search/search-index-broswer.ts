@@ -71,7 +71,11 @@ export class BrowserSearch {
       throw new Error('Search index or post metadata is not initialized');
     }
     const searchResults = await searchIndex(this.index, query);
-    return serializeSearchResult(searchResults as RawSearchResult[], this.postMetadata);
+    return serializeSearchResult({
+      rawResult: searchResults as RawSearchResult[],
+      postMetadata: this.postMetadata,
+      hostname: this.options.hostname,
+    });
   }
 
 }

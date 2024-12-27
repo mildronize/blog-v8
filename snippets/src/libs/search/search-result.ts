@@ -1,4 +1,5 @@
 import { MarkdownMetadata } from '../content';
+import urlJoin from 'url-join';
 export interface RawSearchResult {
   field: string;
   result: string[];
@@ -32,6 +33,12 @@ export function calculateScore(searchResult: SearchResult[]): SearchResult[] {
   });
 }
 
+export interface SerializeSearchResultOptions {
+  rawResult: RawSearchResult[];
+  postMetadata: MarkdownMetadata[];
+  hostname?: string;
+}
+
 /**
  * Serialize the search result, add the score to the search result
  * 
@@ -39,11 +46,11 @@ export function calculateScore(searchResult: SearchResult[]): SearchResult[] {
  * @param postMetadata 
  * @returns 
  */
-export function serializeSearchResult(rawResult: RawSearchResult[], postMetadata: MarkdownMetadata[]): SearchResult[] {
+export function serializeSearchResult(options: SerializeSearchResultOptions): SearchResult[] {
   const result: SearchResult[] = [];
-  for (const raw of rawResult) {
+  for (const raw of options.rawResult) {
     for (const id of raw.result) {
-      const metadata = postMetadata.find((meta) => meta.id === id);
+      const metadata = options.postMetadata.find((meta) => meta.id === id);
       if (!metadata) continue;
       const foundResult = result.find((r) => r.id === id);
       if (foundResult) {
@@ -53,7 +60,7 @@ export function serializeSearchResult(rawResult: RawSearchResult[], postMetadata
       result.push({
         field: [raw.field],
         id,
-        path: metadata.path,
+        path: urlJoin(options.hostname ?? '', metadata.path),
         title: metadata.frontmatter.title,
         score: 0,
       });
