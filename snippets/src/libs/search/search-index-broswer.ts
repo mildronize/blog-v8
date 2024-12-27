@@ -5,7 +5,7 @@ import { ImportSearchIndexFromRemoteOptions, SearchIndexMetadataResponse } from 
 import { ConsoleLogger } from '../../utils/logger';
 import { createFlexSearchIndex, searchIndex } from './search-index';
 import urlJoin from 'url-join';
-import { RawSearchResult, serializeSearchResult } from './search-result';
+import { RawSearchResult, SearchResult, serializeSearchResult } from './search-result';
 import { MarkdownMetadata } from '../content/type';
 /**
  * Simple function to `path.basename` from Node.js
@@ -32,15 +32,26 @@ export async function importSearchIndexFromRemote(options: ImportSearchIndexFrom
   return index;
 }
 
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 interface BroswerSearchOptions extends ImportSearchIndexFromRemoteOptions {
   postMetadataPath: string;
+  /**
+   * Each time the search fails, it will wait for `waitTime` milliseconds before retrying
+   * 
+   * Default: 100;
+   */
+  waitTime?: number;
 }
 
 export class BrowserSearch {
+  private waitTime;
   isInitialized = false;
   index: FlexSearch.Document<unknown, string[]> | null = null;
   postMetadata: MarkdownMetadata[] | null = null;
-  constructor(public options: BroswerSearchOptions) { }
+  constructor(public options: BroswerSearchOptions) {
+    this.waitTime = options.waitTime ?? 100;
+  }
 
   async init() {
     this.isInitialized = true;
@@ -48,19 +59,19 @@ export class BrowserSearch {
     this.postMetadata = await (await fetch(urlJoin(this.options.hostname ?? '', this.options.postMetadataPath))).json();
   }
 
-  async search(query: string) {
+  async search(query: string, retried = 100): Promise<SearchResult[]> {
     if (!this.isInitialized) {
       await this.init();
     }
-    if (!this.index) {
-      console.warn('Search index is not initialized');
-      return [];
-    }
-    if (!this.postMetadata) {
-      console.warn('Post metadata is not initialized');
-      return [];
+    if (!this.index || !this.postMetadata) {
+      if (retried > 0) {
+        await delay(this.waitTime);
+        return this.search(query, retried - 1);
+      }
+      throw new Error('Search index or post metadata is not initialized');
     }
     const searchResults = await searchIndex(this.index, query);
     return serializeSearchResult(searchResults as RawSearchResult[], this.postMetadata);
   }
+
 }
