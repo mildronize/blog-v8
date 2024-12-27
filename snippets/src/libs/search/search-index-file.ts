@@ -11,45 +11,6 @@ import { readAllMarkdown } from './utils';
 import { ExecuteBuildSearchIndexOptions, ImportSearchIndexOptions } from './types';
 import { buildSearchIndex, createFlexSearchIndex } from './search-index';
 
-export class CallbackWaiter {
-  private numberOfCallbackCalled: number;
-
-  constructor(totalCallback: number) {
-    this.numberOfCallbackCalled = totalCallback
-  }
-
-  public execute(fn: () => any) {
-    fn();
-    this.numberOfCallbackCalled--;
-  }
-
-  public async wait(delay: number = 100): Promise<void> {
-    return new Promise((resolve) => {
-      const interval = setInterval(() => {
-        if (this.numberOfCallbackCalled <= 0) {
-          clearInterval(interval);
-          resolve();
-        }
-      }, delay);
-    });
-  }
-}
-
-export async function waitForCounter(n: number, delay: number = 100): Promise<void> {
-  return new Promise((resolve) => {
-    let count = n + 1; // Prevent the last call, may exit before the last call
-    const interval = setInterval(() => {
-      count--;
-      if (count <= 0) {
-        clearInterval(interval);
-        resolve();
-      }
-    }, delay);
-  });
-}
-
-export const totalIndexFiles = 15;
-
 export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOptions): Promise<FlexSearch.Document<unknown, string[]>> {
   const { cwd = process.cwd(), postMetadataFile, searchIndexPath, indexSize } = options;
   const postData = await readAllMarkdown(cwd, postMetadataFile, pinoLogBuilder('readAllMarkdown', 'info'));
@@ -64,17 +25,13 @@ export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOp
   fs.removeSync(searchIndexPath);
   fs.ensureDirSync(searchIndexPath);
 
-  const callbackWaiter = new CallbackWaiter(totalIndexFiles);
-  index.export(
-    (key, data) => callbackWaiter.execute(
-      () => {
-        const targetIndex = path.join(searchIndexPath, `${key}.json`);
-        fs.writeJSONSync(targetIndex, data ?? {});
-        targetIndexPath.push(targetIndex);
-      })
+  await index.export(
+    async (key, data) => {
+      const targetIndex = path.join(searchIndexPath, `${key}.json`);
+      await fs.writeJSON(targetIndex, data ?? {});
+      targetIndexPath.push(targetIndex);
+    }
   );
-  // Wait for the last call
-  await callbackWaiter.wait();
 
   console.log('targetIndexPath', targetIndexPath);
   await fs.writeJSON(options.searchIndexMetadataPath, { sitemap: targetIndexPath });

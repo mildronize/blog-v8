@@ -15,6 +15,13 @@ export interface ExecuteBuildSearchIndexOptions {
    * Search index SiteMap path, for loading search index in browser
    */
   searchIndexMetadataPath: string;
+  /**
+   * Public API Path
+   */
+  publicApiPath: string;
+  /**
+   * Index Size
+   */
   indexSize: IndexSize;
 }
 
