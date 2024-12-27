@@ -29,6 +29,21 @@ git submodule update --init --recursive
 make dev
 ```
 
+### How to Debug Frontend with Vite
+
+Start the server with cors allowed, then you can debug the frontend with Vite
+This will serve the search index file in the `/api` path
+
+```bash
+make serve 
+```
+
+Run the vite server
+
+```bash
+cd snippets && bun install && bun dev
+```
+
 ## 🔑 Generate Azure Credentials
 
 To enable the [Deploy to Azure Static Web App GitHub Action](https://www.notion.so/wrmsoftware/.github/workflows/deploy.yml) for preview environments, you need to generate Azure credentials:
