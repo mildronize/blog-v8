@@ -78,6 +78,7 @@ export class BrowserSearch {
       rawResult: searchResults as RawSearchResult[],
       postMetadata: this.postMetadata,
       hostname: this.options.hostname,
+      query,
     });
   }
 

@@ -2,14 +2,9 @@ import { useState, useEffect, createRef } from 'react';
 import './style.css';
 import { BrowserSearch } from '../../libs/search/search-index-broswer';
 import { useShortcut } from './useShortcut';
+import { SearchResult } from '../../libs/search/search-result';
 
-interface SearchResult {
-  field: string[];
-  id: string;
-  path: string;
-  title: string;
-  score: number;
-}
+
 
 export const localStorageKey = {
   enableFullTextSearch: 'enableFullTextSearch',
@@ -53,6 +48,7 @@ export default (props: SearchModalProps) => {
   const searchOnBrowser = async (query: string) => {
     try {
       const results = await browserSearch.search(query);
+      console.log('Search results:', results);
       setResults(results);
       setError(null);
     } catch (err: any) {
@@ -204,8 +200,11 @@ export default (props: SearchModalProps) => {
                 Lorem ipsum dolor sit amet, <i>molestie</i> adipiscing elit. Nulla nec purus feugiat, <i>molestie</i> ipsum et, fermentum nunc. Nulla facilisi. Nullam ac nisi non nisl posuere blandit. Nullam sit amet dui vel odio ultrices dictum. Nullam et orci nec nisl consectetur lacinia
               </p>
               <div className="result-tags">
-                <div className="tag matched">Tag 1</div>
-                <div className="tag">Tag 2</div>
+                {result.tags.map((tag) => (
+                  <div key={tag.name} className={`tag ${tag.matched ? 'matched' : ''}`}>{tag.name}</div>
+                ))}
+                {/* <div className="tag matched">Tag 1</div>
+                <div className="tag">Tag 2</div> */}
               </div>
             </div>
           ))}

@@ -5,13 +5,20 @@ export interface RawSearchResult {
   result: string[];
 }
 
+export interface MatchedTag {
+  name: string;
+  matched: boolean;
+}
+
 export interface SearchResult {
   field: string[];
   id: string;
   path: string;
   title: string;
   score: number;
+  tags: MatchedTag[];
 }
+
 
 /**
  * Calculate the score of the search result
@@ -21,12 +28,12 @@ export interface SearchResult {
 export function calculateScore(searchResult: SearchResult[]): SearchResult[] {
   // Preserving the original order from the search result as the score
   // the earlier the search result, the higher the score
-  for(let i = 0; i < searchResult.length; i++) {
+  for (let i = 0; i < searchResult.length; i++) {
     searchResult[i].score = searchResult.length - i;
   }
   // If found in the title, tags add 2 to the score'
   return searchResult.map((r) => {
-    if(r.field.includes('title') || r.field.includes('tags')) {
+    if (r.field.includes('title') || r.field.includes('tags')) {
       r.score += 2;
     }
     return r;
@@ -34,6 +41,7 @@ export function calculateScore(searchResult: SearchResult[]): SearchResult[] {
 }
 
 export interface SerializeSearchResultOptions {
+  query: string;
   rawResult: RawSearchResult[];
   postMetadata: MarkdownMetadata[];
   hostname?: string;
@@ -64,8 +72,20 @@ export function serializeSearchResult(options: SerializeSearchResultOptions): Se
         // title: metadata.frontmatter.title,
         title: `${metadata.frontmatter.title} <i>Found Text</i> Dummy Text`,
         score: 0,
+        tags: createMatchedTag(metadata.frontmatter.taxonomies?.tags ?? [], options.query),
       });
     }
   }
-  return calculateScore(result).toSorted((a, b) => b.score - a.score);
+  const calculatedResult = calculateScore(result).toSorted((a, b) => b.score - a.score);
+  return calculatedResult;
+}
+
+/**
+ * Create partial matched tag for the search result 
+ */
+export function createMatchedTag(tags: string[], query: string): MatchedTag[] {
+  return tags.map((tag) => ({
+    name: tag,
+    matched: tag.toLowerCase().includes(query.toLowerCase())
+  }));
 }
