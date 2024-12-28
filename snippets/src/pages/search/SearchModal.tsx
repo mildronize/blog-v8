@@ -196,15 +196,13 @@ export default (props: SearchModalProps) => {
           {results.map((result) => (
             <div key={result.id} className="result-item">
               <a className="result-title" href={result.path}><h4 dangerouslySetInnerHTML={{ __html: result.title }}></h4></a>
-              <p className="result-content">
-                Lorem ipsum dolor sit amet, <i>molestie</i> adipiscing elit. Nulla nec purus feugiat, <i>molestie</i> ipsum et, fermentum nunc. Nulla facilisi. Nullam ac nisi non nisl posuere blandit. Nullam sit amet dui vel odio ultrices dictum. Nullam et orci nec nisl consectetur lacinia
-              </p>
+              <p className="result-content" dangerouslySetInnerHTML={{ __html: result.excerpt.map(
+                (line) => `...${line}...` // Add ellipsis to the beginning and end of the line
+              ).join(' ') }}></p>
               <div className="result-tags">
                 {result.tags.map((tag) => (
                   <div key={tag.name} className={`tag ${tag.matched ? 'matched' : ''}`}>{tag.name}</div>
                 ))}
-                {/* <div className="tag matched">Tag 1</div>
-                <div className="tag">Tag 2</div> */}
               </div>
             </div>
           ))}

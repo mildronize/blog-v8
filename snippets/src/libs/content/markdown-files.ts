@@ -5,7 +5,10 @@ import fs from 'fs-extra';
 import { composeFrontMatter, extractFrontMatter, generateZolaPostPath } from "./zola";
 import { PostId, IdMapperMetadata, MarkdownFileProcessorMode, MarkdownFileProcessorOutput, MarkdownMetadata } from "./type";
 import { retryNewId } from "./uuid";
-import removeMd from "remove-markdown";
+// import removeMd from "remove-markdown";
+import { remark } from 'remark';
+import strip from 'strip-markdown';
+
 
 export function extractMarkdownMetadata(dir: string, file: string, rawContent: string): MarkdownMetadata {
   const { data: frontmatter, content } = extractFrontMatter(rawContent);
@@ -17,8 +20,11 @@ export function extractMarkdownMetadata(dir: string, file: string, rawContent: s
   }
 }
 
-export function cleanMarkdownContent(content: string): string {
-  return removeMd(content)
+export async function cleanMarkdownContent(content: string): Promise<string> {
+  // return removeMd(content)
+  return String(await remark()
+    .use(strip)
+    .process(content))
     // Remove new lines
     .replace(/\n/g, ' ')
 }
@@ -43,7 +49,7 @@ export class MarkdownFileProcessor implements FileProcessor {
   private logger: Logger;
   private cleanContent: boolean;
   private isIncludeContent: boolean;
-  
+
   constructor(private mode: MarkdownFileProcessorMode, private options: {
     ignoreMarkdownFiles: string[]
     logger: Logger
@@ -56,7 +62,7 @@ export class MarkdownFileProcessor implements FileProcessor {
      * Include the content in the output
      */
     isIncludeContent?: boolean;
-    }) {
+  }) {
     this.logger = options.logger;
     this.cleanContent = options.cleanContent ?? true;
     this.isIncludeContent = options.isIncludeContent ?? false;
@@ -108,7 +114,7 @@ export class MarkdownFileProcessor implements FileProcessor {
       }
       let content: string | undefined;
       content = this.isIncludeContent ? result.content : undefined;
-      content = content && this.cleanContent ? cleanMarkdownContent(content) : content;
+      content = content && this.cleanContent ? await cleanMarkdownContent(content) : content;
       markdownData.push({
         ...result,
         content,

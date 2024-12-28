@@ -17,6 +17,10 @@ export interface SearchResult {
   title: string;
   score: number;
   tags: MatchedTag[];
+  /**
+   * Excerpt of the search result, which added the highlight to the matched text before and after the matched text
+   */
+  excerpt: string[];
 }
 
 
@@ -72,6 +76,7 @@ export function serializeSearchResult(options: SerializeSearchResultOptions): Se
         title: createdMatchedTitle(metadata.frontmatter.title, options.query),
         score: 0,
         tags: createMatchedTag(metadata.frontmatter.taxonomies?.tags ?? [], options.query),
+        excerpt: createExcerpt(metadata.content ?? '', options.query, 30, 3)
       });
     }
   }
@@ -96,3 +101,47 @@ export function createMatchedTag(tags: string[], query: string): MatchedTag[] {
 export function createdMatchedTitle(title: string, query: string): string {
   return title.replace(new RegExp(query, 'gi'), (match) => `<i>${match}</i>`);
 }
+
+export function createExcerpt(content: string, query: string, contextSize: number, limit = 3): string[] {
+  const excerpts: string[] = [];
+
+  // Normalize content and query for case-insensitive search
+  const lowerContent = content.toLowerCase();
+  const lowerQuery = query.toLowerCase();
+
+  let startIndex = 0;
+
+  // Find all occurrences of the query in the content
+  while (startIndex < lowerContent.length) {
+    const matchIndex = lowerContent.indexOf(lowerQuery, startIndex);
+
+    // If no more matches are found, break out of the loop
+    if (matchIndex === -1) {
+      break;
+    }
+
+    // Calculate the context bounds
+    const contextStart = Math.max(0, matchIndex - contextSize);
+    const contextEnd = Math.min(content.length, matchIndex + lowerQuery.length + contextSize);
+
+    // Extract the context and wrap the matched text with <i></i>
+    const beforeMatch = content.slice(contextStart, matchIndex);
+    const matchedText = content.slice(matchIndex, matchIndex + query.length);
+    const afterMatch = content.slice(matchIndex + query.length, contextEnd);
+    const excerpt = `${beforeMatch}<i>${matchedText}</i>${afterMatch}`;
+
+    excerpts.push(excerpt);
+
+    // Check if the limit has been reached
+    if (excerpts.length >= limit) {
+      break;
+    }
+
+    // Move the start index forward to continue searching
+    startIndex = matchIndex + lowerQuery.length;
+  }
+
+  return excerpts;
+}
+
+
