@@ -110,7 +110,7 @@ export default (props: SearchModalProps) => {
   }
 
   const handleTextFieldChange = (query: string, isEnableFullTextSearch?: boolean) => {
-    if (query === '') { handleUrlChange(); }
+    if (query === '') { handleUrlChange(undefined, isEnableFullTextSearch); }
     setQuery(query);
     handleSearch(query, isEnableFullTextSearch);
   };
@@ -132,7 +132,6 @@ export default (props: SearchModalProps) => {
       browserSearch.init();
     }
     setEnableFullTextSearch(value);
-    // handleUrlChange(query, value);
     localStorage.setItem(localStorageKey.enableFullTextSearch, value.toString());
     handleTextFieldChange(query, value);
   }
@@ -141,6 +140,11 @@ export default (props: SearchModalProps) => {
     // When press the ESC key, clear the search box
     if (e.key === 'Escape') {
       handleClearTextField();
+    }
+
+    // When press the Enter key, enable full text search
+    if (e.key === 'Enter') {
+      handleEnableFullTextSearchChange(true);
     }
   }
 
