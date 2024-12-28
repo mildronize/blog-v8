@@ -6,7 +6,7 @@
   color: #333;
 } */
 
-.backdrop {
+#search-backdrop {
   position: fixed;
   top: 0;
   left: 0;
