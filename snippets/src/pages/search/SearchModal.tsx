@@ -37,6 +37,7 @@ let browserSearch: BrowserSearch = browserSearchCollection.small;
 
 interface SearchModalProps {
   isBackdropVisible: boolean;
+  setBackdropVisible: (visible: boolean) => void;
 }
 
 export default (props: SearchModalProps) => {
@@ -146,7 +147,11 @@ export default (props: SearchModalProps) => {
 
   return (
     <div className="search-modal-app">
-      <div id="search-backdrop" className={props.isBackdropVisible ? "active" : ""}/>
+      <div 
+        id="search-backdrop" 
+        className={props.isBackdropVisible ? "active" : ""}
+        onClick={() => props.setBackdropVisible(false)} // Hide the search modal when clicking the backdrop
+        />
       <div className="search-modal">
         <input
           type="text"

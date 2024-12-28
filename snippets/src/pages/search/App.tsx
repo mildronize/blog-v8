@@ -1,31 +1,18 @@
 import { createRef, useState } from 'react';
 import SearchModal from './SearchModal';
 import './style.css';
-// import { BrowserSearch } from '../../libs/search/search-index-broswer';
 import { useShortcut } from './useShortcut'
 
 export default () => {
   const searchRef = createRef<HTMLInputElement>();
   const [focus, setFocus] = useState<boolean>(false);
 
-  const handleFocus = (isFocus: boolean) => {
-    setFocus(isFocus);
-    // if (searchRef.current) {
-    //   if (isFocus) searchRef.current.focus(); // Focus the text field
-    //   else searchRef.current.blur(); // Remove focus from the input
-    // }
-  }
-
   const handleEnterSearchTextFields = () => {
-    // window.scrollTo({
-    //   top: 0,
-    //   behavior: "smooth", // Enables smooth scrolling
-    // });
-    handleFocus(true); // Focus the text field
+    setFocus(true);
   }
 
   const handleClearTextField = () => {
-    handleFocus(false); // Remove focus from the input
+    setFocus(false);
   }
 
   const shortcuts: Record<string, (e: KeyboardEvent) => void> = {
@@ -42,7 +29,7 @@ export default () => {
   })
 
   const handleClick = () => {
-    handleFocus(true);
+    setFocus(true);
     if(searchRef.current) {
       searchRef.current.blur();
     }
@@ -55,13 +42,11 @@ export default () => {
         type="text"
         className="search-box"
         ref={searchRef}
-        // onFocus={() => handleFocus(true)} // Detect when the field gains focus
-        // onBlur={() => handleFocus(false)}   // Detect when the field loses focus
         onClick={() => handleClick()}   // Detect when the field is clicked
         placeholder="Search post..."
       />
 
-      {focus && <SearchModal isBackdropVisible={focus} />}
+      {focus && <SearchModal isBackdropVisible={focus} setBackdropVisible={(focus) => setFocus(focus)} />}
     </div>
   );
 };
