@@ -69,8 +69,7 @@ export function serializeSearchResult(options: SerializeSearchResultOptions): Se
         field: [raw.field],
         id,
         path: urlJoin(options.hostname ?? '', metadata.path),
-        // title: metadata.frontmatter.title,
-        title: `${metadata.frontmatter.title} <i>Found Text</i> Dummy Text`,
+        title: createdMatchedTitle(metadata.frontmatter.title, options.query),
         score: 0,
         tags: createMatchedTag(metadata.frontmatter.taxonomies?.tags ?? [], options.query),
       });
@@ -88,4 +87,12 @@ export function createMatchedTag(tags: string[], query: string): MatchedTag[] {
     name: tag,
     matched: tag.toLowerCase().includes(query.toLowerCase())
   }));
+}
+
+/**
+ * Create matched title for the search result,
+ * highlight the matched text
+ */
+export function createdMatchedTitle(title: string, query: string): string {
+  return title.replace(new RegExp(query, 'gi'), (match) => `<i>${match}</i>`);
 }
