@@ -106,6 +106,10 @@
   padding: 10px;
 }
 
+/**
+  * Checkbox styles
+  */
+
 .checkbox-container {
   margin-top: 15px;
   display: flex;
@@ -120,9 +124,43 @@
   gap: 10px;
 }
 
+/* Hide the default checkbox */
 .checkbox {
+  display: none;
+}
+
+/* Custom checkbox */
+.custom-checkbox {
   width: 18px;
   height: 18px;
-  background-color: var(--bg-color);
+  background-color: var(--bg-color); /* Use your background color variable */
+  border: 2px solid var(--border-color, #ccc); /* Use var or default border color */
+  border-radius: 4px; /* Rounded corners */
+  position: relative;
   cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Change background and border color when checked */
+.checkbox:checked + .custom-checkbox {
+  background-color: var(--primary-color, #4caf50); /* Checked state background */
+  border-color: var(--primary-color, #4caf50);
+}
+
+/* Optional: Add a checkmark */
+.checkbox:checked + .custom-checkbox::after {
+  content: "";
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 6px;
+  height: 10px;
+  border: solid var(--bg-color, white); /* Checkmark color */
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* Hover effect */
+.custom-checkbox:hover {
+  border-color: var(--hover-color, #888); /* Add hover border effect */
 }

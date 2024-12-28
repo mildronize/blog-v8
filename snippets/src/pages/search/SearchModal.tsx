@@ -65,7 +65,7 @@ export default () => {
       localStorage.setItem(localStorageKey.enableFullTextSearch, paramFull);
     } else {
       setEnableFullTextSearch(localStorage.getItem(localStorageKey.enableFullTextSearch) === 'true');
-   
+
     }
     setQuery(initialQuery);
     if (initialQuery) {
@@ -100,7 +100,7 @@ export default () => {
     params.set('action', 'search'); // Define default action
     if (query) params.set('q', query);
     else params.delete('q');
-    if(isEnableFullTextSearch !== undefined) params.set('full', isEnableFullTextSearch.toString());
+    if (isEnableFullTextSearch !== undefined) params.set('full', isEnableFullTextSearch.toString());
     else params.set('full', enableFullTextSearch.toString());
     window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
   }
@@ -163,16 +163,17 @@ export default () => {
               checked={enableFullTextSearch}
               onChange={(e) => handleEnableFullTextSearchChange(e.target.checked)}
             />
+            <span className="custom-checkbox"></span>
             Enable Full Text Search
           </label>
         </div>
         <div className='results-container'>
-        {error && <p className="error">{error}</p>}
-        {results.map((result) => (
-          <div key={result.id} className="result-item">
-            <a className="result-title" href={result.path}><h4>{result.title}</h4></a>
-          </div>
-        ))}
+          {error && <p className="error">{error}</p>}
+          {results.map((result) => (
+            <div key={result.id} className="result-item">
+              <a className="result-title" href={result.path}><h4>{result.title}</h4></a>
+            </div>
+          ))}
         </div>
       </div>
     </div>
