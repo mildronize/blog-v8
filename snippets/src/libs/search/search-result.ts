@@ -25,7 +25,6 @@ export interface SearchResult {
   excerpt: string[];
 }
 
-
 /**
  * Calculate the score of the search result
  * @param searchResult 
@@ -64,8 +63,6 @@ export function serializeSearchResult(options: SerializeSearchResultOptions): Se
   const result: SearchResult[] = [];
   for (const raw of options.rawResult) {
     for (const id of raw.result) {
-      const metadata = options.postMetadata.find((meta) => meta.id === id);
-      if (!metadata) continue;
       const foundResult = result.find((r) => r.id === id);
       if (foundResult) {
         foundResult.field.push(raw.field);
@@ -74,18 +71,36 @@ export function serializeSearchResult(options: SerializeSearchResultOptions): Se
       result.push({
         field: [raw.field],
         id,
-        path: urlJoin(options.hostname ?? '', metadata.path),
-        title: createdMatchedTitle(metadata.frontmatter.title, options.query),
+        path: '',
+        title: '',
         score: 0,
-        tags: createMatchedTag(metadata.frontmatter.taxonomies?.tags ?? [], options.query),
-        excerpt: createExcerpt(metadata.content ?? '', options.query, 50, 3)
+        tags: [],
+        excerpt: []
       });
     }
   }
   const calculatedResult = calculateScore(result).toSorted((a, b) => b.score - a.score);
-  return calculatedResult;
+  return postProcessSearchResult(calculatedResult, options);
 }
 
+
+export function postProcessSearchResult(searchResult: SearchResult[], options: SerializeSearchResultOptions): SearchResult[] {
+  for (const result of searchResult) {
+    const metadata = options.postMetadata.find((meta) => meta.id === result.id);
+    if (!metadata) continue;
+    result.path = urlJoin(options.hostname ?? '', metadata.path);
+    if (result.field.includes('title')) {
+      result.title = createdMatchedTitle(metadata.frontmatter.title, options.query);
+    } else {
+      result.title = metadata.frontmatter.title;
+    }
+    result.tags = createMatchedTag(metadata.frontmatter.taxonomies?.tags ?? [], options.query);
+    if (result.field.includes('content')) {
+      result.excerpt = createExcerpt(metadata.content ?? '', options.query, 50, 3)
+    }
+  }
+  return searchResult;
+}
 /**
  * Create partial matched tag for the search result 
  */
@@ -104,6 +119,7 @@ export class UnicodeString {
 
   constructor(value: string | string[]) {
     if (typeof value === 'string') {
+      // TODO: Migrate to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter
       this.value = new GraphemeSplitter().splitGraphemes(value);
     } else {
       this.value = value;
