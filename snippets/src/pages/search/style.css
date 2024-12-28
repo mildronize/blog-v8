@@ -61,9 +61,17 @@
   align-items: center;
 }
 
+/* Responsive layout for smaller screens */
+@media (max-width: 600px) {
+  .search-modal {
+    width: 100%;
+    top: 100px;
+  }
+}
+
 .results-container {
   width: 100%;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .result-item {
@@ -116,12 +124,41 @@
   align-items: center;
 }
 
+.checkbox-container:hover {
+  cursor: pointer;
+}
+
+/* Explanation text style */
+.checkbox-info {
+  font-size: 0.7em; /* Smaller than the label */
+  color: var(--secondary-text-color, #888); /* Use a subtle color for the info text */
+  margin-left: 28px; /* Indent to align with the label text */
+  line-height: 1.4; /* Improve readability with line spacing */
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 600px) {
+  .checkbox-container {
+    flex-direction: column; /* Stack checkbox and label text */
+    align-items: flex-start;
+  }
+
+  .checkbox-info {
+    margin-left: 0; /* Remove margin to align naturally on a new line */
+    margin-top: 10px; /* Add spacing between label and info text */
+  }
+}
+
 .checkbox-label {
   font-size: 14px;
   color: var(--text-color);
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.checkbox-label:hover {
+  cursor: pointer;
 }
 
 /* Hide the default checkbox */

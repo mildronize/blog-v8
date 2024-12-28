@@ -166,6 +166,9 @@ export default () => {
             <span className="custom-checkbox"></span>
             Enable Full Text Search
           </label>
+          <p className="checkbox-info">
+            Note: Enabling full text search may consume approximately 5MB of additional traffic.
+          </p>
         </div>
         <div className='results-container'>
           {error && <p className="error">{error}</p>}
