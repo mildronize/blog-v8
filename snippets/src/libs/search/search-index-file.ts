@@ -45,7 +45,6 @@ export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOp
     }
   );
 
-  console.log('targetIndexPath', targetIndexPath);
   await fs.writeJSON(options.searchIndexMetadataPath, { sitemap: targetIndexPath } satisfies SearchIndexMetadataResponse);
   return index;
 }
