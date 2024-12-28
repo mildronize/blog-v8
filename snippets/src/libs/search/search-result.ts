@@ -61,7 +61,8 @@ export function serializeSearchResult(options: SerializeSearchResultOptions): Se
         field: [raw.field],
         id,
         path: urlJoin(options.hostname ?? '', metadata.path),
-        title: metadata.frontmatter.title,
+        // title: metadata.frontmatter.title,
+        title: `${metadata.frontmatter.title} <i>Found Text</i> Dummy Text`,
         score: 0,
       });
     }

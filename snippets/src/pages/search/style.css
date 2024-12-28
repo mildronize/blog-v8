@@ -277,8 +277,25 @@
 }
 
 /**
-  * Result Content styles
+  * Result Title & Content Highlight styles
   */
+
+.result-title i {
+    background-color: var(--text-highlight-color, #fffddb);
+    /* Soft yellow highlight */
+    color: var(--primary-color, #000);
+    /* Text color for contrast */
+    font-weight: bold;
+    font-style: italic;
+    /* Emphasize the highlighted word */
+    padding: 1px 3px;
+    /* Add some padding for better visibility */
+    border-radius: 4px;
+    /* Slightly rounded edges for modern style */
+    font-style: normal;
+    /* Override default italic style of <i> */
+  }
+
 .result-content {
   font-size: 0.8em;
   line-height: 1.6;
@@ -290,7 +307,7 @@
 .result-content i {
   background-color: var(--primary-pale-color, #fffddb);
   /* Soft yellow highlight */
-  color: var(--highlight-text-color, #000);
+  color: var(--text-color, #000);
   /* Text color for contrast */
   font-weight: bold;
   font-style: italic;
