@@ -35,7 +35,11 @@ const browserSearchCollection = {
 // Use the small search index by default
 let browserSearch: BrowserSearch = browserSearchCollection.small;
 
-export default () => {
+interface SearchModalProps {
+  isBackdropVisible: boolean;
+}
+
+export default (props: SearchModalProps) => {
   const [_focus, setFocus] = useState<boolean>(false);
   const [query, setQuery] = useState<string>('');
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -141,8 +145,8 @@ export default () => {
   }
 
   return (
-    <div className="app">
-      <div id="search-backdrop" />
+    <div className="search-modal-app">
+      <div id="search-backdrop" className={props.isBackdropVisible ? "active" : ""}/>
       <div className="search-modal">
         <input
           type="text"

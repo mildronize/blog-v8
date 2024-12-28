@@ -61,7 +61,7 @@ export default () => {
         placeholder="Search post..."
       />
 
-      {focus && <SearchModal />}
+      {focus && <SearchModal isBackdropVisible={focus} />}
     </div>
   );
 };
