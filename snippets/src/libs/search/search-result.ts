@@ -78,7 +78,7 @@ export function serializeSearchResult(options: SerializeSearchResultOptions): Se
         title: createdMatchedTitle(metadata.frontmatter.title, options.query),
         score: 0,
         tags: createMatchedTag(metadata.frontmatter.taxonomies?.tags ?? [], options.query),
-        excerpt: createExcerpt(metadata.content ?? '', options.query, 30, 3)
+        excerpt: createExcerpt(metadata.content ?? '', options.query, 50, 3)
       });
     }
   }

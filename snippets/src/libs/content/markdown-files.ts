@@ -20,13 +20,19 @@ export function extractMarkdownMetadata(dir: string, file: string, rawContent: s
   }
 }
 
+export function removeUrls(input: string) {
+  // Regular expression to match URLs
+  const urlPattern = /https?:\/\/[^\s]+|www\.[^\s]+/gi;
+  return input.replace(urlPattern, '').trim();
+}
+
 export async function cleanMarkdownContent(content: string): Promise<string> {
   // return removeMd(content)
-  return String(await remark()
+  return removeUrls(String(await remark()
     .use(strip)
     .process(content))
     // Remove new lines
-    .replace(/\n/g, ' ')
+    .replace(/\n/g, ' '))
 }
 
 export interface FileProcessor {
