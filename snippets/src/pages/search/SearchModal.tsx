@@ -1,7 +1,6 @@
 import { useState, useEffect, createRef } from 'react';
 import './style.css';
 import { BrowserSearch } from '../../libs/search/search-index-broswer';
-import { useShortcut } from './useShortcut'
 
 interface SearchResult {
   field: string[];
@@ -37,7 +36,7 @@ const browserSearchCollection = {
 let browserSearch: BrowserSearch = browserSearchCollection.small;
 
 export default () => {
-  const [focus, setFocus] = useState<boolean>(false);
+  const [_focus, setFocus] = useState<boolean>(false);
   const [query, setQuery] = useState<string>('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -69,6 +68,9 @@ export default () => {
     if (initialQuery) {
       handleSearch(initialQuery);
     }
+    if (searchRef.current) {
+      searchRef.current.focus();
+    }
   }, []);
 
   const handleSearch = (query: string) => {
@@ -90,49 +92,27 @@ export default () => {
   }
 
   const handleUrlChange = (query?: string) => {
-    // If query is not provided, use the current query state
-    if (!query) {
-      query = searchRef.current?.value ?? '';
-    }
     // Update the URL with the query parameter
     const params = new URLSearchParams(window.location.search);
     params.set('action', 'search'); // Define default action
-    params.set('q', query);
+    if (query) params.set('q', query);
+    else params.delete('q');
     params.set('full', enableFullTextSearch.toString());
     window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
   }
 
   const handleTextFieldChange = (query: string) => {
+    if (query === '') { handleUrlChange(); }
     setQuery(query);
     handleSearch(query);
   };
 
-  const handleEnterSearchTextFields = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Enables smooth scrolling
-    });
-    handleFocus(true); // Focus the text field
-  }
-
   const handleClearTextField = () => {
     setQuery(""); // Clear the input value
+    handleUrlChange(); // Clear the query parameter in the URL
     setResults([]); // Clear the search results
     handleFocus(false); // Remove focus from the input
   }
-
-  const shortcuts: Record<string, (e: KeyboardEvent) => void> = {
-    'Control+p': handleEnterSearchTextFields,
-    'Command+p': handleEnterSearchTextFields,
-    'Escape': handleClearTextField
-  }
-
-  Object.entries(shortcuts).forEach(([shortcut, callback]) => {
-    useShortcut(shortcut, (e: KeyboardEvent) => {
-      e.preventDefault();
-      callback(e);
-    })
-  })
 
   const handleEnableFullTextSearchChange = (value: boolean) => {
     console.log('Enable full text search:', value);
@@ -157,30 +137,30 @@ export default () => {
 
   return (
     <div className="app">
-      {focus && <div id="search-backdrop" /> }
+      <div id="search-backdrop" />
       <div className="results-container">
-      <input
-        type="text"
-        className="search-box"
-        placeholder="Search post..."
-        onFocus={() => handleFocus(true)} // Detect when the field gains focus
-        onBlur={() => handleFocus(false)}   // Detect when the field loses focus
-        value={query} // Bind state to the input
-        ref={searchRef}
-        onKeyDown={(e) => handleTextFieldKeyDown(e)}
-        onChange={(e) => handleTextFieldChange(e.target.value)}
-      />
-      <div className="checkbox-container">
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            className="checkbox"
-            checked={enableFullTextSearch}
-            onChange={(e) => handleEnableFullTextSearchChange(e.target.checked)}
-          />
-          Enable Full Text Search
-        </label>
-      </div>
+        <input
+          type="text"
+          className="search-box"
+          placeholder="Search post..."
+          onFocus={() => handleFocus(true)} // Detect when the field gains focus
+          onBlur={() => handleFocus(false)}   // Detect when the field loses focus
+          value={query} // Bind state to the input
+          ref={searchRef}
+          onKeyDown={(e) => handleTextFieldKeyDown(e)}
+          onChange={(e) => handleTextFieldChange(e.target.value)}
+        />
+        <div className="checkbox-container">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              className="checkbox"
+              checked={enableFullTextSearch}
+              onChange={(e) => handleEnableFullTextSearchChange(e.target.checked)}
+            />
+            Enable Full Text Search
+          </label>
+        </div>
         {error && <p className="error">{error}</p>}
         {results.map((result) => (
           <div key={result.id} className="result-item">
