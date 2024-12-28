@@ -39,6 +39,7 @@
     "dotenv": "^16.4.7",
     "flexsearch": "^0.7.43",
     "fs-extra": "^11.2.0",
+    "grapheme-splitter": "^1.0.4",
     "gray-matter": "^4.0.3",
     "hono": "^4.6.14",
     "jsonresume-theme-onepage-web": "^1.0.4",

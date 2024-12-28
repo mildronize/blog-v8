@@ -1,5 +1,7 @@
 import { MarkdownMetadata } from '../content';
 import urlJoin from 'url-join';
+import GraphemeSplitter from 'grapheme-splitter';
+
 export interface RawSearchResult {
   field: string;
   result: string[];
@@ -95,6 +97,71 @@ export function createMatchedTag(tags: string[], query: string): MatchedTag[] {
 }
 
 /**
+ * Reimplement string of JavaScript to handle Unicode characters
+ */
+export class UnicodeString {
+  private value: string[];
+
+  constructor(value: string | string[]) {
+    if (typeof value === 'string') {
+      this.value = new GraphemeSplitter().splitGraphemes(value);
+    } else {
+      this.value = value;
+    }
+  }
+
+  /**
+   * Convert the Unicode string to lower case
+   */
+  toLowerCase(): UnicodeString {
+    return new UnicodeString(this.value.map((char) => char.toLowerCase()));
+  }
+
+  get length(): number {
+    return this.value.length;
+  }
+
+  /**
+   * Find the index of the first occurrence of a substring
+   */
+  indexOf(substring: UnicodeString, startIndex: number): number {
+    const subLength = substring.length;
+
+    for (let i = startIndex; i <= this.length - subLength; i++) {
+      let match = true;
+
+      for (let j = 0; j < subLength; j++) {
+        if (this.value[i + j] !== substring.value[j]) {
+          match = false;
+          break;
+        }
+      }
+
+      if (match) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  /**
+   * Extract a substring from the Unicode string
+   */
+  slice(start: number, end: number): UnicodeString {
+    return new UnicodeString(this.value.slice(start, end));
+  }
+
+  /**
+   * Convert the Unicode string to a regular string
+   */
+  toString(): string {
+    return this.value.join('');
+  }
+
+}
+
+/**
  * Create matched title for the search result,
  * highlight the matched text
  */
@@ -103,11 +170,14 @@ export function createdMatchedTitle(title: string, query: string): string {
 }
 
 export function createExcerpt(content: string, query: string, contextSize: number, limit = 3): string[] {
+  // Split the content into graphemes to handle Unicode characters
+  const safeContent = new UnicodeString(content);
+  const safeQuery = new UnicodeString(query);
   const excerpts: string[] = [];
 
   // Normalize content and query for case-insensitive search
-  const lowerContent = content.toLowerCase();
-  const lowerQuery = query.toLowerCase();
+  const lowerContent = safeContent.toLowerCase();
+  const lowerQuery = safeQuery.toLowerCase();
 
   let startIndex = 0;
 
@@ -122,13 +192,13 @@ export function createExcerpt(content: string, query: string, contextSize: numbe
 
     // Calculate the context bounds
     const contextStart = Math.max(0, matchIndex - contextSize);
-    const contextEnd = Math.min(content.length, matchIndex + lowerQuery.length + contextSize);
+    const contextEnd = Math.min(safeContent.length, matchIndex + lowerQuery.length + contextSize);
 
     // Extract the context and wrap the matched text with <i></i>
-    const beforeMatch = content.slice(contextStart, matchIndex);
-    const matchedText = content.slice(matchIndex, matchIndex + query.length);
-    const afterMatch = content.slice(matchIndex + query.length, contextEnd);
-    const excerpt = `${beforeMatch}<i>${matchedText}</i>${afterMatch}`;
+    const beforeMatch = safeContent.slice(contextStart, matchIndex);
+    const matchedText = safeContent.slice(matchIndex, matchIndex + query.length);
+    const afterMatch = safeContent.slice(matchIndex + query.length, contextEnd);
+    const excerpt = `${beforeMatch.toString()}<i>${matchedText.toString()}</i>${afterMatch.toString()}`;
 
     excerpts.push(excerpt);
 
