@@ -49,6 +49,7 @@
     "resumed": "^4.0.0",
     "tiny-glob": "^0.2.9",
     "url-join": "^5.0.0",
+    "use-keyboard-shortcuts": "^2.2.3",
     "valibot": "^1.0.0-beta.9",
     "zod": "^3.24.1"
   }

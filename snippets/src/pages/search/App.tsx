@@ -1,8 +1,7 @@
 import { useState, useEffect, createRef } from 'react';
-// import debounce from 'debounce';
 import './style.css';
 import { BrowserSearch } from '../../libs/search/search-index-broswer';
-// import useDebounce from './useDebounce';
+import { useShortcut } from './useShortcut'
 
 interface SearchResult {
   field: string[];
@@ -73,8 +72,6 @@ export default () => {
     }
   }, []);
 
-  // const debounceSearch = (query: string) => debounce(() => handleSearch(query), 1000);
-
   const handleSearch = (query: string) => {
     if (query) {
       console.log('Search query:', query);
@@ -99,11 +96,40 @@ export default () => {
   }
 
   const handleTextFieldChange = (query: string) => {
-    // const query = searchRef.current?.value ?? '';
     setQuery(query);
-
     handleSearch(query);
   };
+
+  const handleEnterSearchTextFields = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Enables smooth scrolling
+    });
+    if (searchRef.current) {
+      searchRef.current.focus(); // Focus the text field
+    }
+  }
+
+  const handleClearTextField = () => {
+    setQuery(""); // Clear the input value
+    setResults([]); // Clear the search results
+    if (searchRef.current) {
+      searchRef.current.blur(); // Optional: Remove focus from the input
+    }
+  }
+
+  const shortcuts: Record<string, (e: KeyboardEvent) => void> = {
+    'Control+p': handleEnterSearchTextFields,
+    'Command+p': handleEnterSearchTextFields,
+    'Escape': handleClearTextField
+  }
+
+  Object.entries(shortcuts).forEach(([shortcut, callback]) => {
+    useShortcut(shortcut, (e: KeyboardEvent) => {
+      e.preventDefault();
+      callback(e);
+    })
+  })
 
   const handleEnableFullTextSearchChange = (value: boolean) => {
     console.log('Enable full text search:', value);
@@ -119,12 +145,10 @@ export default () => {
     handleTextFieldChange(query);
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleTextFieldKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // When press the ESC key, clear the search box
     if (e.key === 'Escape') {
-      // searchRef.current?.value = '';
-      setQuery('');
-      setResults([]);
+      handleClearTextField();
     }
   }
 
@@ -137,7 +161,7 @@ export default () => {
         // defaultValue={query}
         value={query} // Bind state to the input
         ref={searchRef}
-        onKeyDown={(e) => handleKeyDown(e)}
+        onKeyDown={(e) => handleTextFieldKeyDown(e)}
         onChange={(e) => handleTextFieldChange(e.target.value)}
       />
       <div className="checkbox-container">
