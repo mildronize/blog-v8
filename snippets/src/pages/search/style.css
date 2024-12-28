@@ -15,14 +15,19 @@
   background: var(--shadow-color-2);
   z-index: 5;
 
-  opacity: 0; /* Start as invisible */
-  visibility: hidden; /* Hide from view and interaction */
-  transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth fade animation */
+  opacity: 0;
+  /* Start as invisible */
+  visibility: hidden;
+  /* Hide from view and interaction */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  /* Smooth fade animation */
 }
 
 #search-backdrop.active {
-  opacity: 1; /* Fully visible */
-  visibility: visible; /* Allow interaction */
+  opacity: 1;
+  /* Fully visible */
+  visibility: visible;
+  /* Allow interaction */
 }
 
 .app {
@@ -67,7 +72,7 @@
   box-shadow: 0 2px 4px var(--shadow-color-5);
   overflow: hidden;
   position: absolute;
-  
+
   z-index: 10;
   top: 70px;
 
@@ -144,22 +149,29 @@
 
 /* Explanation text style */
 .checkbox-info {
-  font-size: 0.7em; /* Smaller than the label */
-  color: var(--secondary-text-color, #888); /* Use a subtle color for the info text */
-  margin-left: 28px; /* Indent to align with the label text */
-  line-height: 1.4; /* Improve readability with line spacing */
+  font-size: 0.7em;
+  /* Smaller than the label */
+  color: var(--secondary-text-color, #888);
+  /* Use a subtle color for the info text */
+  margin-left: 28px;
+  /* Indent to align with the label text */
+  line-height: 1.4;
+  /* Improve readability with line spacing */
 }
 
 /* Responsive layout for smaller screens */
 @media (max-width: 600px) {
   .checkbox-container {
-    flex-direction: column; /* Stack checkbox and label text */
+    flex-direction: column;
+    /* Stack checkbox and label text */
     align-items: flex-start;
   }
 
   .checkbox-info {
-    margin-left: 0; /* Remove margin to align naturally on a new line */
-    margin-top: 10px; /* Add spacing between label and info text */
+    margin-left: 0;
+    /* Remove margin to align naturally on a new line */
+    margin-top: 10px;
+    /* Add spacing between label and info text */
   }
 }
 
@@ -184,34 +196,84 @@
 .custom-checkbox {
   width: 18px;
   height: 18px;
-  background-color: var(--bg-color); /* Use your background color variable */
-  border: 2px solid var(--border-color, #ccc); /* Use var or default border color */
-  border-radius: 4px; /* Rounded corners */
+  background-color: var(--bg-color);
+  /* Use your background color variable */
+  border: 2px solid var(--border-color, #ccc);
+  /* Use var or default border color */
+  border-radius: 4px;
+  /* Rounded corners */
   position: relative;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
 }
 
 /* Change background and border color when checked */
-.checkbox:checked + .custom-checkbox {
-  background-color: var(--primary-color, #4caf50); /* Checked state background */
+.checkbox:checked+.custom-checkbox {
+  background-color: var(--primary-color, #4caf50);
+  /* Checked state background */
   border-color: var(--primary-color, #4caf50);
 }
 
 /* Optional: Add a checkmark */
-.checkbox:checked + .custom-checkbox::after {
+.checkbox:checked+.custom-checkbox::after {
   content: "";
   position: absolute;
   top: 40%;
   left: 50%;
   width: 6px;
   height: 10px;
-  border: solid var(--bg-color, white); /* Checkmark color */
+  border: solid var(--bg-color, white);
+  /* Checkmark color */
   border-width: 0 2px 2px 0;
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
 /* Hover effect */
 .custom-checkbox:hover {
-  border-color: var(--hover-color, #888); /* Add hover border effect */
+  border-color: var(--hover-color, #888);
+  /* Add hover border effect */
+}
+
+/**
+  * Tags styles
+  */
+
+.result-tags {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  /* Spacing between tags */
+  flex-wrap: wrap;
+  /* Wrap tags to the next line if necessary */
+}
+
+.result-tags .tag {
+  padding: 4px 8px;
+  /* Inner padding for the tag */
+  font-size: 0.7em;
+  /* Font size */
+  color: var(--text-color, #333);
+  /* Default text color */
+  background-color: var(--bg-color, #f0f0f0);
+  /* Default background color */
+  border: 1px solid var(--border-color, #ddd);
+  /* Subtle border */
+  border-radius: 10px;
+  /* Rounded corners for a pill shape */
+  transition: all 0.3s ease;
+  /* Smooth transition for hover and focus effects */
+}
+
+/* Special styling for matched tags */
+.result-tags .tag.matched {
+  color: var(--text-color, #fff);
+  /* White text for contrast */
+  background-color: var(--highlight-mark-color, #4caf50);
+  /* Modern green background */
+  border-color: var(--highlight-mark-color, #4caf50);
+  /* Border matches background */
+  font-weight: bold;
+  /* Emphasize matched tags */
+  /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); */
+  /* Add a modern shadow effect */
 }
