@@ -264,6 +264,12 @@
   /* Smooth transition for hover and focus effects */
 }
 
+.result-tags .tag:hover {
+  background-color: var(--hover-bg-color, #e0e0e0); /* Slightly darker background on hover */
+  border-color: var(--hover-border-color, #ccc); /* Change border color on hover */
+  cursor: pointer;
+}
+
 /* Special styling for matched tags */
 .result-tags .tag.matched {
   color: var(--text-color, #fff);

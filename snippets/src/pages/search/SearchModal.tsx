@@ -201,7 +201,13 @@ export default (props: SearchModalProps) => {
               ).join('') }}></p>
               <div className="result-tags">
                 {result.tags.map((tag) => (
-                  <div key={tag.name} className={`tag ${tag.matched ? 'matched' : ''}`}>{tag.name}</div>
+                  <div 
+                    key={tag.name} 
+                    className={`tag ${tag.matched ? 'matched' : ''}`}
+                    onClick={() => handleTextFieldChange(tag.name)}
+                  >
+                    {tag.name}
+                  </div>
                 ))}
               </div>
             </div>
