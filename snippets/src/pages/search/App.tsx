@@ -18,6 +18,7 @@ export default () => {
   const shortcuts: Record<string, (e: KeyboardEvent) => void> = {
     'Control+p': handleEnterSearchTextFields,
     'Command+p': handleEnterSearchTextFields,
+    'Enter': handleEnterSearchTextFields,
     'Escape': handleClearTextField
   }
 
