@@ -16,9 +16,9 @@ export const createFlexSearchIndex = (indexSize: IndexSize, _logger: Logger = ne
   document: {
     id: 'id',
     store: [
-      "title", "tags", "categories", "content"
+      "title", "tags", "content"
     ],
-    index: ["title", "tags", "categories", "content"]
+    index: ["title", "tags", "content"]
   }
 });
 
@@ -34,7 +34,7 @@ export function buildSearchIndex(options: BuildSearchIndexOptions): FlexSearch.D
       title: item.frontmatter.title,
       content: item.content,
       tags: (item.frontmatter.taxonomies?.tags ?? []).join(' '),
-      categories: (item.frontmatter.taxonomies?.categories ?? []).join(' '),
+      // categories: (item.frontmatter.taxonomies?.categories ?? []).join(' '),
     });
     indexCount++;
   }
