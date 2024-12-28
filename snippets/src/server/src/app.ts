@@ -32,7 +32,9 @@ app.get('/search', async c => {
     status: 'ok',
     results: serializeSearchResult({
       rawResult: results as RawSearchResult[],
-      postMetadata
+      postMetadata,
+      hostname: 'https://example.com',
+      query,
     })
   });
 });

@@ -1,5 +1,4 @@
-import { createRef, useEffect, useState } from "react";
-import { SearchResult } from "../../libs/search/search-result";
+import { useEffect, useState } from "react";
 import { BrowserSearch } from "../../libs/search/search-index-broswer";
 
 /**
