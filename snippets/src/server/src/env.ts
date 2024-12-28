@@ -1,34 +1,26 @@
 import { createMiddleware } from 'hono/factory';
+import { Document as FlexSearchDocument } from 'flexsearch';
 import type { MiddlewareHandler } from 'hono/types';
 import { z } from 'zod';
 import 'dotenv/config';
+import { index, postMetadata } from './bootstrap';
+import { MarkdownMetadata } from '../../libs/content';
 
-function validateStringArray(name: string, value: unknown): string[] {
-  if (typeof value !== 'string') throw new Error(`${name} is required`);
-  const result = z.array(z.string()).parse(JSON.parse(value as string));
-  return result;
-}
 
-export const environmentSchema = z.object({
-  // ORIGINS: z.preprocess((value: unknown) => validateStringArray('ORIGINS', value), z.array(z.string())),
-  // EMOJIS: z.preprocess((value: unknown) => validateStringArray('EMOJIS', value), z.array(z.string())),
-  // AZURE_TABLE_CONNECTION_STRING: z.string(),
-  // /**
-  //  * Use for share multiple app in one Azure Storage Account
-  //  */
-  // AZURE_TABLE_PREFIX: z.string().default('Reaction'),
-});
-
-const env = environmentSchema.parse(process.env);
-
+export const environmentSchema = z.object({});
+// const env = environmentSchema.parse(process.env);
 
 export type HonoEnv = {
-  Variables: z.infer<typeof environmentSchema>;
+  Variables: z.infer<typeof environmentSchema> & {
+    index: FlexSearchDocument<unknown, string[]>;
+    postMetadata: MarkdownMetadata[];
+  }
 };
 
-export const parseEnvToVariables = (): MiddlewareHandler => {
+export const initVariables = (): MiddlewareHandler => {
   return createMiddleware<HonoEnv>(async (c, next) => {
-
+    c.set('index', index);
+    c.set('postMetadata', postMetadata);
     await next();
   });
 };

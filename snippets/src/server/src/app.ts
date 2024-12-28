@@ -1,23 +1,40 @@
 import { Hono } from 'hono';
-// import { cors } from "hono/cors";
-import { parseEnvToVariables, HonoEnv } from './env';
+import { initVariables, HonoEnv } from './env';
 import { secureHeaders } from 'hono/secure-headers';
+import { RawSearchResult, searchIndex, serializeSearchResult } from '../../libs/search';
 
 const app = new Hono<HonoEnv>().basePath('/api');
 
-app.use(parseEnvToVariables());
-// app.use("*", (c, next) => {
-//   const corsMiddlewareHandler = cors({ origin: c.var.ORIGINS });
-//   return corsMiddlewareHandler(c, next);
-// });
-
+app.use(initVariables());
 app.use('*', secureHeaders());
-app.get('/', async c => {
+app.get('/health', async c => {
 
   return c.json({
-    message: 'Hello, World!',
+    status: 'ok'
   });
 });
 
+app.get('/search', async c => {
+  const query = c.req.query('q');
+  if (!query) {
+    return c.json({
+      status: 'error',
+      results: [],
+      message: 'Query parameter "q" is required'
+    });
+  }
+
+  const index = c.get('index');
+  const postMetadata = c.get('postMetadata');
+  const results = await searchIndex(index, query);
+
+  return c.json({
+    status: 'ok',
+    results: serializeSearchResult({
+      rawResult: results as RawSearchResult[],
+      postMetadata
+    })
+  });
+});
 
 export default app;
