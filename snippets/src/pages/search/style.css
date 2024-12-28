@@ -12,7 +12,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--shadow-color-5);
+  background: var(--shadow-color-2);
   z-index: 5;
 }
 
@@ -43,16 +43,27 @@
   border-color: var(--primary-color);
 }
 
-.results-container {
+.search-modal {
   width: 95%;
+  padding: 30px 15px;
   max-width: 800px;
   background: var(--bg-color);
   border-radius: 10px;
   box-shadow: 0 2px 4px var(--shadow-color-5);
   overflow: hidden;
   position: absolute;
+  
   z-index: 10;
   top: 170px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.results-container {
+  width: 100%;
+  margin-top: 30px;
 }
 
 .result-item {
