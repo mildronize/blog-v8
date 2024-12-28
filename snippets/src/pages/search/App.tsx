@@ -1,4 +1,4 @@
-import { createRef, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import SearchModal from './SearchModal';
 import './style.css';
 import { useShortcut } from './useShortcut'
@@ -30,11 +30,18 @@ export default () => {
 
   const handleClick = () => {
     setFocus(true);
-    if(searchRef.current) {
+    if (searchRef.current) {
       searchRef.current.blur();
     }
   }
 
+  useEffect(() => {
+    // Set query from URL on initial load
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('q') !== null) {
+      setFocus(true);
+    }
+  }, []);
 
   return (
     <div className="app">
