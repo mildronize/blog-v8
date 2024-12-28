@@ -201,7 +201,7 @@ export default (props: SearchModalProps) => {
             <div key={result.id} className="result-item">
               <a className="result-title" href={result.path}><h4>{result.title}</h4></a>
               <p className="result-content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, fermentum nunc. Nulla facilisi. Nullam ac nisi non nisl posuere blandit. Nullam sit amet dui vel odio ultrices dictum. Nullam et orci nec nisl consectetur lacinia
+                Lorem ipsum dolor sit amet, <i>molestie</i> adipiscing elit. Nulla nec purus feugiat, <i>molestie</i> ipsum et, fermentum nunc. Nulla facilisi. Nullam ac nisi non nisl posuere blandit. Nullam sit amet dui vel odio ultrices dictum. Nullam et orci nec nisl consectetur lacinia
               </p>
               <div className="result-tags">
                 <div className="tag matched">Tag 1</div>

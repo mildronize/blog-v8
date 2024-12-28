@@ -274,6 +274,31 @@
   /* Border matches background */
   font-weight: bold;
   /* Emphasize matched tags */
-  /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); */
-  /* Add a modern shadow effect */
+}
+
+/**
+  * Result Content styles
+  */
+.result-content {
+  font-size: 0.8em;
+  line-height: 1.6;
+  color: var(--text-color, #333);
+  /* Use consistent text color */
+}
+
+/* Style all <i> tags within .result-content */
+.result-content i {
+  background-color: var(--primary-pale-color, #fffddb);
+  /* Soft yellow highlight */
+  color: var(--highlight-text-color, #000);
+  /* Text color for contrast */
+  font-weight: bold;
+  font-style: italic;
+  /* Emphasize the highlighted word */
+  padding: 1px 3px;
+  /* Add some padding for better visibility */
+  border-radius: 4px;
+  /* Slightly rounded edges for modern style */
+  font-style: normal;
+  /* Override default italic style of <i> */
 }
