@@ -62,8 +62,11 @@ export default () => {
     const paramFull = params.get('full');
     if (paramFull) {
       setEnableFullTextSearch(paramFull === 'true');
+      localStorage.setItem(localStorageKey.enableFullTextSearch, paramFull);
+    } else {
+      setEnableFullTextSearch(localStorage.getItem(localStorageKey.enableFullTextSearch) === 'true');
+   
     }
-    setEnableFullTextSearch(localStorage.getItem(localStorageKey.enableFullTextSearch) === 'true');
     setQuery(initialQuery);
     if (initialQuery) {
       handleSearch(initialQuery);
@@ -73,11 +76,11 @@ export default () => {
     }
   }, []);
 
-  const handleSearch = (query: string) => {
+  const handleSearch = (query: string, isEnableFullTextSearch?: boolean) => {
     if (query) {
       console.log('Search query:', query);
       searchOnBrowser(query);
-      handleUrlChange(query);
+      handleUrlChange(query, isEnableFullTextSearch);
     } else {
       setResults([]);
     }
@@ -91,20 +94,21 @@ export default () => {
     }
   }
 
-  const handleUrlChange = (query?: string) => {
+  const handleUrlChange = (query?: string, isEnableFullTextSearch?: boolean) => {
     // Update the URL with the query parameter
     const params = new URLSearchParams(window.location.search);
     params.set('action', 'search'); // Define default action
     if (query) params.set('q', query);
     else params.delete('q');
-    params.set('full', enableFullTextSearch.toString());
+    if(isEnableFullTextSearch !== undefined) params.set('full', isEnableFullTextSearch.toString());
+    else params.set('full', enableFullTextSearch.toString());
     window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
   }
 
-  const handleTextFieldChange = (query: string) => {
+  const handleTextFieldChange = (query: string, isEnableFullTextSearch?: boolean) => {
     if (query === '') { handleUrlChange(); }
     setQuery(query);
-    handleSearch(query);
+    handleSearch(query, isEnableFullTextSearch);
   };
 
   const handleClearTextField = () => {
@@ -124,8 +128,9 @@ export default () => {
       browserSearch.init();
     }
     setEnableFullTextSearch(value);
+    // handleUrlChange(query, value);
     localStorage.setItem(localStorageKey.enableFullTextSearch, value.toString());
-    handleTextFieldChange(query);
+    handleTextFieldChange(query, value);
   }
 
   const handleTextFieldKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -138,7 +143,7 @@ export default () => {
   return (
     <div className="app">
       <div id="search-backdrop" />
-      <div className="results-container">
+      <div className="search-modal">
         <input
           type="text"
           className="search-box"
@@ -161,12 +166,14 @@ export default () => {
             Enable Full Text Search
           </label>
         </div>
+        <div className='results-container'>
         {error && <p className="error">{error}</p>}
         {results.map((result) => (
           <div key={result.id} className="result-item">
             <a className="result-title" href={result.path}><h4>{result.title}</h4></a>
           </div>
         ))}
+        </div>
       </div>
     </div>
   );
