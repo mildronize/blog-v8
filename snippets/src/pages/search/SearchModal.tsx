@@ -1,6 +1,7 @@
 import { useState, useEffect, createRef } from 'react';
 import './style.css';
 import { BrowserSearch } from '../../libs/search/search-index-broswer';
+import { useShortcut } from './useShortcut';
 
 interface SearchResult {
   field: string[];
@@ -15,7 +16,7 @@ export const localStorageKey = {
 }
 
 const sharedOptions = {
-  hostname: 'http://localhost:1111',
+  // hostname: 'http://localhost:1111', // For local development
   postMetadataPath: '/api/post-metadata.json'
 }
 
@@ -147,6 +148,18 @@ export default (props: SearchModalProps) => {
       handleEnableFullTextSearchChange(true);
     }
   }
+
+  const shortcuts: Record<string, (e: KeyboardEvent) => void> = {
+    'Enter': () => handleFocus(true),
+    'Escape': () => handleFocus(false),
+  }
+
+  Object.entries(shortcuts).forEach(([shortcut, callback]) => {
+    useShortcut(shortcut, (e: KeyboardEvent) => {
+      e.preventDefault();
+      callback(e);
+    })
+  })
 
   return (
     <div className="search-modal-app">
