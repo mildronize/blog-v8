@@ -3,6 +3,7 @@ import './style.css';
 import { BrowserSearch } from '../../libs/search/search-index-broswer';
 import { useShortcut } from './useShortcut';
 import { SearchResult } from '../../libs/search/search-result';
+import { useSearchBrowser } from './useSearchBrowser';
 
 
 
@@ -42,6 +43,8 @@ export default (props: SearchModalProps) => {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [enableFullTextSearch, setEnableFullTextSearch] = useState(false);
+
+  const indexLoaded = useSearchBrowser(browserSearch);
 
   const searchRef = createRef<HTMLInputElement>();
 
@@ -192,17 +195,24 @@ export default (props: SearchModalProps) => {
           </p>
         </div>
         <div className='results-container'>
+          {indexLoaded === false && results.length === 0 &&
+            <p className="no-results">
+              <div className="loader"></div><div>Importing Search Index...</div>
+            </p>
+          }
           {error && <p className="error">{error}</p>}
           {results.map((result) => (
             <div key={result.id} className="result-item">
               <a className="result-title" href={result.path}><h4 dangerouslySetInnerHTML={{ __html: result.title }}></h4></a>
-              <p className="result-content" dangerouslySetInnerHTML={{ __html: result.excerpt.map(
-                (line) => `..${line}.` // Add ellipsis to the beginning and end of the line
-              ).join('') }}></p>
+              <p className="result-content" dangerouslySetInnerHTML={{
+                __html: result.excerpt.map(
+                  (line) => `..${line}.` // Add ellipsis to the beginning and end of the line
+                ).join('')
+              }}></p>
               <div className="result-tags">
                 {result.tags.map((tag) => (
-                  <div 
-                    key={tag.name} 
+                  <div
+                    key={tag.name}
                     className={`tag ${tag.matched ? 'matched' : ''}`}
                     onClick={() => handleTextFieldChange(tag.name)}
                   >

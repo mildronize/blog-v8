@@ -265,8 +265,10 @@
 }
 
 .result-tags .tag:hover {
-  background-color: var(--hover-bg-color, #e0e0e0); /* Slightly darker background on hover */
-  border-color: var(--hover-border-color, #ccc); /* Change border color on hover */
+  background-color: var(--hover-bg-color, #e0e0e0);
+  /* Slightly darker background on hover */
+  border-color: var(--hover-border-color, #ccc);
+  /* Change border color on hover */
   cursor: pointer;
 }
 
@@ -287,20 +289,20 @@
   */
 
 .result-title i {
-    background-color: var(--text-highlight-color, #fffddb);
-    /* Soft yellow highlight */
-    color: var(--primary-color, #000);
-    /* Text color for contrast */
-    font-weight: bold;
-    font-style: italic;
-    /* Emphasize the highlighted word */
-    padding: 1px 3px;
-    /* Add some padding for better visibility */
-    border-radius: 4px;
-    /* Slightly rounded edges for modern style */
-    font-style: normal;
-    /* Override default italic style of <i> */
-  }
+  background-color: var(--text-highlight-color, #fffddb);
+  /* Soft yellow highlight */
+  color: var(--primary-color, #000);
+  /* Text color for contrast */
+  font-weight: bold;
+  font-style: italic;
+  /* Emphasize the highlighted word */
+  padding: 1px 3px;
+  /* Add some padding for better visibility */
+  border-radius: 4px;
+  /* Slightly rounded edges for modern style */
+  font-style: normal;
+  /* Override default italic style of <i> */
+}
 
 .result-content {
   font-size: 0.8em;
@@ -324,4 +326,43 @@
   /* Slightly rounded edges for modern style */
   font-style: normal;
   /* Override default italic style of <i> */
+}
+/**
+  * No result
+  */
+.no-results {
+  font-size: 0.7em;
+  color: var(--blockquote-color);
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.no-results div {
+  margin-top: 10px;
+}
+
+/**
+  * Loading spinner styles
+  */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  --b: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--primary-color);
+  -webkit-mask:
+    repeating-conic-gradient(#0000 0deg, #000 1deg 70deg, #0000 71deg 90deg),
+    radial-gradient(farthest-side, #0000 calc(100% - var(--b) - 1px), #000 calc(100% - var(--b)));
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+  animation: l5 1s infinite;
+}
+
+@keyframes l5 {
+  to {
+    transform: rotate(.5turn)
+  }
 }

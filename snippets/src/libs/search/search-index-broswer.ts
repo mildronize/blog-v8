@@ -82,4 +82,8 @@ export class BrowserSearch {
     });
   }
 
+  get isReady() {
+    return this.isInitialized && !!this.index && !!this.postMetadata;
+  }
+
 }
