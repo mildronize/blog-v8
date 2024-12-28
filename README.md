@@ -31,6 +31,8 @@ make dev
 
 ### How to Debug Frontend with Vite
 
+#### Frontend Centric
+
 Start the server with cors allowed, then you can debug the frontend with Vite
 This will serve the search index file in the `/api` path
 
@@ -42,6 +44,19 @@ Run the vite server
 
 ```bash
 cd snippets && bun install && bun dev
+```
+
+#### Zola Theme Centric
+
+If you want to debug the theme, you can run the Zola server with the following command
+
+```bash
+make dev
+```
+and open another terminal and run the vite server
+
+```bash
+cd snippets && bun install && bun run build:watch
 ```
 
 ## 🔑 Generate Azure Credentials
