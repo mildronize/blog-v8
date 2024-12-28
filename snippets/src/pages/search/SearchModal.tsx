@@ -65,16 +65,15 @@ export default (props: SearchModalProps) => {
     const params = new URLSearchParams(window.location.search);
     const initialQuery = params.get('q') || '';
     const paramFull = params.get('full');
-    if (paramFull) {
+    if (paramFull !== null) {
       setEnableFullTextSearch(paramFull === 'true');
       localStorage.setItem(localStorageKey.enableFullTextSearch, paramFull);
     } else {
       setEnableFullTextSearch(localStorage.getItem(localStorageKey.enableFullTextSearch) === 'true');
-
     }
     setQuery(initialQuery);
     if (initialQuery) {
-      handleSearch(initialQuery);
+      handleSearch(initialQuery, paramFull === 'true');
     }
     if (searchRef.current) {
       searchRef.current.focus();
@@ -147,11 +146,11 @@ export default (props: SearchModalProps) => {
 
   return (
     <div className="search-modal-app">
-      <div 
-        id="search-backdrop" 
+      <div
+        id="search-backdrop"
         className={props.isBackdropVisible ? "active" : ""}
         onClick={() => props.setBackdropVisible(false)} // Hide the search modal when clicking the backdrop
-        />
+      />
       <div className="search-modal">
         <input
           type="text"
@@ -176,7 +175,7 @@ export default (props: SearchModalProps) => {
             Enable Full Text Search
           </label>
           <p className="checkbox-info">
-            Note: Enabling full text search may consume approximately 5MB of additional traffic.
+            Press Enter to enable full text search. Note: This may consume approximately 5MB of additional traffic.
           </p>
         </div>
         <div className='results-container'>
