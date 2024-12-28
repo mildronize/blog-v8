@@ -10,7 +10,7 @@
     "generate-id-mapper": "bun run src/scripts/generate-id-mapper.ts",
     "build:search-metadata": "bun run src/scripts/build-search-metadata.ts",
     "add-id": "bun run src/scripts/add-id.ts",
-    "build:watch": "nodemon --exec 'bun run build' --watch src --ext ts",
+    "build:watch": "nodemon --exec 'bun run build' --watch src --ext ts,tsx,css,html",
     "preview": "vite preview",
     "resume:watch": "nodemon --exec 'bun run resume:build' --watch src --ext json",
     "resume:build": "mkdir -p  ../public/resume && resumed render src/resume.json --theme jsonresume-theme-onepage-web --output ../public/resume/index.html"

@@ -7,50 +7,58 @@
 } */
 
 .app {
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .search-box {
-  width: 100%;
+  width: 95%;
   max-width: 800px;
+  margin: 0px 10px;
   padding: 10px 15px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--text-pale-color);
   border-radius: 20px;
   font-size: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--shadow-color-1);
   outline: none;
   transition: box-shadow 0.3s;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 .search-box:focus {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-color: #007bff;
+  box-shadow: 0 4px 8px var(--shadow-color-2);
+  border-color: var(--primary-color);
 }
 
 .results-container {
-  margin-top: 20px;
+  width: 95%;
   max-width: 800px;
-  background: #fff;
+  background: var(--bg-color);
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--shadow-color-5);
   overflow: hidden;
+  position: absolute;
+  z-index: 10;
+  top: 170px;
 }
 
 .result-item {
   padding: 15px;
-  border-bottom: 1px solid #f1f1f1;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .result-item:last-child {
   border-bottom: none;
 }
 
-.result-item h3 {
+.result-item h4 {
   margin: 0 0 5px;
-  font-size: 14pt;
-  color: #007bff;
+  font-size: 1em;
+  font-weight: normal;
+  color: var(--primary-color);
 }
 
 
@@ -60,18 +68,19 @@
 
 
 .result-title:hover {
-  text-decoration: underline; /* Adds underline on hover */
-  color: #007bff;
+  text-decoration: underline;
+  /* Adds underline on hover */
+  color: var(--primary-color);
 }
 
 .result-item p {
   margin: 0;
   font-size: 14px;
-  color: #555;
+  color: var(--text-color);
 }
 
 .error {
-  color: red;
+  color: var(--callout-alert-color);
   font-size: 14px;
   padding: 10px;
 }
@@ -84,7 +93,7 @@
 
 .checkbox-label {
   font-size: 14px;
-  color: #555;
+  color: var(--text-color);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -93,5 +102,6 @@
 .checkbox {
   width: 18px;
   height: 18px;
+  background-color: var(--bg-color);
   cursor: pointer;
 }
