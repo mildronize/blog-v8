@@ -1,8 +1,7 @@
-import { lazy, Suspense, useEffect, useState } from "react";
-import { searchModalEvent } from "./event";
+import { useEffect, useState } from "react";
+import { searchModalEvent } from "../search-modal-event.js";
 import { useShortcut } from "./useShortcut";
-
-const SearchModal = lazy(() => import('./SearchModal.js'));
+import SearchModal from "./SearchModal.js";
 
 /**
  * SearchModalShell component, responsible for receiving commands from the commander
@@ -55,23 +54,7 @@ export function SearchModalShell() {
 
   return (
     <div>
-      {isShow &&
-        <Suspense fallback={<Loading />}>
-          <SearchModal />
-        </Suspense>}
+      {isShow && <SearchModal />}
     </div>
-  );
-}
-
-export function Loading() {
-  return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100px',
-      fontSize: '0.8rem',
-      color: 'var(--text-pale-color, #666)',
-    }}>Loading Search Modal Component...</div>
   );
 }

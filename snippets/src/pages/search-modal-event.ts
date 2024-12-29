@@ -1,4 +1,4 @@
-import { createBrowserEvent } from "../../libs/browser-event";
+import { createBrowserEvent } from "../libs/browser-event";
 
 export interface SearchModalEventDetail {
   action: 'open' | 'close';

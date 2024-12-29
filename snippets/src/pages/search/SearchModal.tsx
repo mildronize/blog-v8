@@ -1,10 +1,11 @@
 import { useState, useEffect, createRef } from 'react';
-import './style.css';
+import '../search-placeholder/search-placeholder.css';
+import './search.css';
 import { BrowserSearch } from '../../libs/search/search-index-broswer';
 import { useShortcut } from './useShortcut';
 import { SearchResult } from '../../libs/search/search-result';
 import { useSearchBrowser } from './useSearchBrowser';
-import { searchModalEvent } from './event';
+import { searchModalEvent } from '../search-modal-event';
 
 export const localStorageKey = {
   enableFullTextSearch: 'enableFullTextSearch',
@@ -172,6 +173,7 @@ export default () => {
       <div className="search-modal">
         <input
           type="text"
+          id="search-box-react"
           className="search-box"
           placeholder="Search post..."
           onFocus={() => handleFocus(true)} // Detect when the field gains focus
