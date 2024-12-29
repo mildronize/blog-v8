@@ -66,6 +66,7 @@
     height: 100%;
     padding-left: 10px;
     padding-right: 10px;
+    overflow-y: auto;
   }
 
 }
@@ -389,7 +390,7 @@
 /* Fixed-bottom message styling */
 .close-message.fixed {
   position: fixed;
-  top: 20px;
+  bottom: 20px;
   /* Adjust space from the bottom of the viewport */
   left: 50%;
   transform: translateX(-50%);
