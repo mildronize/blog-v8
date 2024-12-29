@@ -25,8 +25,8 @@ export async function waitUntilHtmlElementExists(selector: string, timeout = 500
   }
 }
 
-export function getHTMLElement(selector: string): HTMLElement {
-  const element = document.querySelector<HTMLElement>(selector);
+export function getHTMLElement<T extends HTMLElement>(selector: string): T {
+  const element = document.querySelector<T>(selector);
   if (!element) {
     throw new Error(`Element not found: ${selector}`);
   }

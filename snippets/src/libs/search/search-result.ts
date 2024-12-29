@@ -1,6 +1,6 @@
 import { MarkdownMetadata } from '../content';
-import urlJoin from 'url-join';
 import GraphemeSplitter from 'grapheme-splitter';
+import { joinUrl } from './browser-utils';
 
 export interface RawSearchResult {
   field: string;
@@ -88,7 +88,7 @@ export function postProcessSearchResult(searchResult: SearchResult[], options: S
   for (const result of searchResult) {
     const metadata = options.postMetadata.find((meta) => meta.id === result.id);
     if (!metadata) continue;
-    result.path = urlJoin(options.hostname ?? '', metadata.path);
+    result.path = joinUrl(options.hostname, metadata.path);
     if (result.field.includes('title')) {
       result.title = createdMatchedTitle(metadata.frontmatter.title, options.query);
     } else {

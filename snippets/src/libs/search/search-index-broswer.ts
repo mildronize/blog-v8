@@ -4,9 +4,9 @@ import FlexSearch from 'flexsearch';
 import { ImportSearchIndexFromRemoteOptions, SearchIndexMetadataResponse } from './types';
 import { ConsoleLogger } from '../../utils/logger';
 import { createFlexSearchIndex, searchIndex } from './search-index';
-import urlJoin from 'url-join';
 import { RawSearchResult, SearchResult, serializeSearchResult } from './search-result';
 import { MarkdownMetadata } from '../content/type';
+import { joinUrl } from './browser-utils';
 /**
  * Simple function to `path.basename` from Node.js
  * @param path 
@@ -22,9 +22,9 @@ export async function importSearchIndexFromRemote(options: ImportSearchIndexFrom
   const { indexSize, searchIndexMetadataPath, logger = new ConsoleLogger(), hostname } = options;
   const index = createFlexSearchIndex(indexSize, logger);
 
-  const indexFiles = (await (await fetch(urlJoin(hostname ?? '', searchIndexMetadataPath))).json() as SearchIndexMetadataResponse).sitemap;
+  const indexFiles = (await (await fetch(joinUrl(hostname, searchIndexMetadataPath))).json() as SearchIndexMetadataResponse).sitemap;
   for (const indexFile of indexFiles) {
-    const data = await (await fetch(urlJoin(hostname ?? '', indexFile))).json();
+    const data = await (await fetch(joinUrl(hostname, indexFile))).json();
     const key = getBasename(indexFile, '.json');
     await index.import(key, data);
     logger.info(`Imported index key: ${key}, file: ${indexFile}`);
@@ -59,7 +59,7 @@ export class BrowserSearch {
     }
     this.isInitialized = true;
     this.index = await importSearchIndexFromRemote(this.options);
-    this.postMetadata = await (await fetch(urlJoin(this.options.hostname ?? '', this.options.postMetadataPath))).json();
+    this.postMetadata = await (await fetch(joinUrl(this.options.hostname, this.options.postMetadataPath))).json();
   }
 
   async search(query: string, retried = 100): Promise<SearchResult[]> {

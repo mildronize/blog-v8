@@ -1,10 +1,10 @@
 
-import { openSearchModal } from '../libs';
+import { getHTMLElement, openSearchModal } from '../libs';
 import { registerShortcut } from '../register-shortcut';
 import { searchModalEvent } from '../search-modal-event';
 import '../search-placeholder/search-placeholder.css';
 
-function handleSearchModal() {
+function _openSearchModal() {
   const searchBox = document.querySelector<HTMLElement>('#placeholder-search-box');
   openSearchModal(searchBox, searchModalEvent);
 }
@@ -12,8 +12,8 @@ function handleSearchModal() {
 function commander() {
 
   const shortcuts: Record<string, (e: KeyboardEvent) => void> = {
-    'Control+p': handleSearchModal,
-    'Command+p': handleSearchModal,
+    'Control+p': _openSearchModal,
+    'Command+p': _openSearchModal,
   }
 
   Object.entries(shortcuts).forEach(([shortcut, callback]) => {
@@ -22,6 +22,9 @@ function commander() {
       callback(e);
     });
   });
+
+  const searchIcon = getHTMLElement<HTMLButtonElement>('#search-header');
+  searchIcon.addEventListener('click', _openSearchModal);
 
   console.log('Commander: Initialized');
 
