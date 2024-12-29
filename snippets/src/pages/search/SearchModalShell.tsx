@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { searchModalEvent } from "./event";
-import SearchModal from "./SearchModal";
 import { useShortcut } from "./useShortcut";
+
+const SearchModal = lazy(() => import('./SearchModal.js'));
 
 /**
  * SearchModalShell component, responsible for receiving commands from the commander
@@ -22,13 +23,13 @@ export function SearchModalShell() {
     }
   }, []);
 
-    useEffect(() => {
-      // Set query from URL on initial load
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('q') !== null) {
-        setIsShow(true);
-      }
-    }, []);
+  useEffect(() => {
+    // Set query from URL on initial load
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('q') !== null) {
+      setIsShow(true);
+    }
+  }, []);
 
   const handleEnterSearchTextFields = () => {
     setIsShow(true);
@@ -54,8 +55,23 @@ export function SearchModalShell() {
 
   return (
     <div>
-      <h1>SearchModalShell</h1>
-      {isShow && <SearchModal />}
+      {isShow &&
+        <Suspense fallback={<Loading />}>
+          <SearchModal />
+        </Suspense>}
     </div>
+  );
+}
+
+export function Loading() {
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100px',
+      fontSize: '0.8rem',
+      color: 'var(--text-pale-color, #666)',
+    }}>Loading Search Modal Component...</div>
   );
 }

@@ -1,6 +1,6 @@
 import { createRef } from "react";
 import { searchModalEvent } from "./event";
-
+import './style.css';
 /**
  * SearchModalCommander component, responsible for emitting commands the the shell,
  * 
