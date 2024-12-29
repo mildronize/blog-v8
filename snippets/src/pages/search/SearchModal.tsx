@@ -4,8 +4,7 @@ import { BrowserSearch } from '../../libs/search/search-index-broswer';
 import { useShortcut } from './useShortcut';
 import { SearchResult } from '../../libs/search/search-result';
 import { useSearchBrowser } from './useSearchBrowser';
-
-
+import { useSwipeable } from 'react-swipeable';
 
 export const localStorageKey = {
   enableFullTextSearch: 'enableFullTextSearch',
@@ -43,6 +42,13 @@ export default (props: SearchModalProps) => {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [enableFullTextSearch, setEnableFullTextSearch] = useState(false);
+
+  const handlers = useSwipeable({
+    onSwiped: (_eventData) => props.setBackdropVisible(false),
+    swipeDuration: 500,
+    preventScrollOnSwipe: true,
+    trackMouse: true
+  });
 
   const smallIndexLoaded = useSearchBrowser(browserSearchCollection.small);
   const largeIndexLoaded = useSearchBrowser(browserSearchCollection.large);
@@ -162,7 +168,7 @@ export default (props: SearchModalProps) => {
   })
 
   return (
-    <div className="search-modal-app">
+    <div className="search-modal-app" {...handlers}>
       <div
         id="search-backdrop"
         className={props.isBackdropVisible ? "active" : ""}
@@ -208,8 +214,8 @@ export default (props: SearchModalProps) => {
           }
           {smallIndexLoaded === true && results.length === 0 && enableFullTextSearch === false &&
             <div className="no-results">
-              <p style={{ textAlign: 'center'}}>No results found <br/>
-              <a href="#" onClick={() => handleEnableFullTextSearchChange(true)}>Enable Full Text Search</a> may find your result</p>
+              <p style={{ textAlign: 'center' }}>No results found <br />
+                <a href="#" onClick={() => handleEnableFullTextSearchChange(true)}>Enable Full Text Search</a> may find your result</p>
             </div>
           }
           {largeIndexLoaded === true && results.length === 0 && enableFullTextSearch === true &&
@@ -237,6 +243,7 @@ export default (props: SearchModalProps) => {
               </div>
             </div>
           ))}
+           <p className="swipe-message fixed-bottom">Swipe down to close</p>
         </div>
       </div>
     </div>

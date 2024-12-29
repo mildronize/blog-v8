@@ -47,6 +47,7 @@
     "pino-pretty": "^13.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-swipeable": "^7.0.2",
     "remark": "^15.0.1",
     "resumed": "^4.0.0",
     "strip-markdown": "^6.0.0",
