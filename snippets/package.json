@@ -37,6 +37,7 @@
     "@azure/functions": "^4.6.0",
     "@iarna/toml": "^2.2.5",
     "@marplex/hono-azurefunc-adapter": "^1.0.1",
+    "@preact/preset-vite": "^2.9.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "flexsearch": "^0.7.43",

@@ -15,10 +15,8 @@ lang %}
     <div id="search-placeholder-root">
       <div id="placeholder-search-box-wrapper">
         <input id="placeholder-search-box" type="text" class="search-box" placeholder="Search post..." />
-        <div class="search-modal-loading">Loading Search Modal Component... </div>
       </div>
     </div>
-    <div id="search-root"></div>
     {% if config.extra.blog_categorized %}
     {% for category,posts in section.pages | sort(attribute="taxonomies.categories.0") |
     group_by(attribute="taxonomies.categories.0") %}
@@ -52,6 +50,4 @@ lang %}
 
 <link rel="modulepreload" crossorigin href="/js/modulepreload-polyfill.js">
 <script type="module" crossorigin src="/js/search-placeholder.js"></script>
-<link rel="stylesheet" crossorigin href="/js/search-placeholder.css">
-<link rel="stylesheet" crossorigin href="/js/search.css">
 {% endblock content %}

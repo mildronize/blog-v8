@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { searchModalEvent } from "../search-modal-event.js";
-import { useShortcut } from "./useShortcut";
+import { searchModalEvent } from "../search-modal-event";
+import { useShortcut } from "./useShortcut.js";
 import SearchModal from "./SearchModal.js";
 
 /**
@@ -31,9 +31,6 @@ export function SearchModalShell() {
   }
 
   const shortcuts: Record<string, (e: KeyboardEvent) => void> = {
-    // TODO: This will handle by global commander
-    // 'Control+p': handleEnterSearchTextFields,
-    // 'Command+p': handleEnterSearchTextFields,
     'Enter': handleEnterSearchTextFields,
     'Escape': handleClearTextField
   }

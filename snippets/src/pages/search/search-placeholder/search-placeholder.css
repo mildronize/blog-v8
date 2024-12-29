@@ -41,15 +41,23 @@
 }
 
 .search-modal-loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 30px 30px;
   font-size: 0.8rem;
   color: var(--text-pale-color, #666);
-  display: none;
+  visibility: hidden;
 }
 
 .search-modal-loading.show {
-  display: block;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center horizontally and vertically */
+  background-color: var(--bg-color); /* White background for the popup */
+  border: 1px solid var(--border-color); /* Subtle border */
+  box-shadow: 0px 4px 6px  var(--shadow-color-1); /* Modern shadow for depth */
+  padding: 20px 30px; /* Add space inside the popup */
+  max-width: 300px;;
+  border-radius: 8px; /* Rounded corners for a modern look */
+  z-index: 100; /* Ensure it appears above other content */
+  text-align: center; /* Center-align the text inside the popup */
+  visibility: visible;
 }

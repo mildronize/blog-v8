@@ -15,8 +15,9 @@ export default defineConfig({
       input: {
         "404": resolve(__dirname, 'src/pages/404/index.html'),
         "post": resolve(__dirname, 'src/pages/post/index.html'),
-        "search": resolve(__dirname, 'src/pages/search/index.html'),
-        "search-placeholder": resolve(__dirname, 'src/pages/search-placeholder/index.html'),
+        "search-modal": resolve(__dirname, 'src/pages/search/search-modal/index.html'),
+        "search-placeholder": resolve(__dirname, 'src/pages/search/search-placeholder/index.html'),
+        "commander": resolve(__dirname, 'src/pages/search/commander/index.html'),
       },
       output: {
         entryFileNames: `[name].js`,

@@ -1,3 +1,20 @@
+import type { BrowserEvent } from "../../libs/browser-event";
+import type { SearchModalEventDetail } from "./search-modal-event";
+
+export async function openSearchModal(targetElement: HTMLElement | null, searchModalEvent: BrowserEvent<'SearchModalEvent', SearchModalEventDetail>) {
+  targetElement?.blur();
+  const action = 'open';
+  console.log(`SearchPlaceholder: Injecting Script for Search Modal Component (React)`);
+  injectScript('/js/search-modal.js');
+  const loading = new ElementController('.search-modal-loading');
+  loading.show();
+  await waitUntilHtmlElementExists('#search-root');
+  console.log(`SearchPlaceholder: Loaded Search Modal Component (React)`);
+  loading.hide();
+  console.log(`SearchPlaceholder: Emitting "${searchModalEvent.name}" event, action: "${action}"`);
+  searchModalEvent.dispatch({ action });
+}
+
 export async function waitUntilHtmlElementExists(selector: string, timeout = 5000) {
   const start = Date.now();
   while (!document.querySelector(selector)?.innerHTML) {

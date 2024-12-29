@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserSearch } from "../../libs/search/search-index-broswer";
+import { BrowserSearch } from "../../../libs/search/search-index-broswer";
 
 /**
  * Interval to check if the search index is loaded, by using SearchBrowser.isReady

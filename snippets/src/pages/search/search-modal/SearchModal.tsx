@@ -1,9 +1,9 @@
 import { useState, useEffect, createRef } from 'react';
 import '../search-placeholder/search-placeholder.css';
 import './search.css';
-import { BrowserSearch } from '../../libs/search/search-index-broswer';
+import { BrowserSearch } from '../../../libs/search/search-index-broswer';
 import { useShortcut } from './useShortcut';
-import { SearchResult } from '../../libs/search/search-result';
+import { SearchResult } from '../../../libs/search/search-result';
 import { useSearchBrowser } from './useSearchBrowser';
 import { searchModalEvent } from '../search-modal-event';
 
@@ -48,7 +48,6 @@ export default () => {
   const searchOnBrowser = async (query: string) => {
     try {
       const results = await browserSearch.search(query);
-      console.log('Search results:', results);
       setResults(results);
       setError(null);
     } catch (err: any) {
