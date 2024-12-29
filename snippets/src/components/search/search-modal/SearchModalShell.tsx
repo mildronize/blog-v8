@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { searchModalEvent } from "../search-modal-event";
+import { searchModalEvent } from "../search-modal-event.js";
 import { useShortcut } from "./useShortcut.js";
 import SearchModal from "./SearchModal.js";
 
