@@ -12,10 +12,6 @@ export function useSearchBrowser(browserSearch: BrowserSearch) {
   const [indexLoaded, setIndexLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    browserSearch.init();
-  }, []);
-
-  useEffect(() => {
     const interval = setInterval(() => {
       if (browserSearch.isReady) {
         setIndexLoaded(true);
