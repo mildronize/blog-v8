@@ -47,6 +47,7 @@ export default () => {
   return (
     <div className="app">
       <input
+        id="dummy-search-box"
         type="text"
         className="search-box"
         ref={searchRef}
