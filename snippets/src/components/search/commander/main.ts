@@ -9,7 +9,17 @@ function _openSearchModal() {
   openSearchModal(searchBox, searchModalEvent);
 }
 
+function handleSearchUrl(targetElement: HTMLElement | null) {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('q') !== null) {
+    openSearchModal(targetElement, searchModalEvent);
+  }
+}
+
 function commander() {
+
+  const searchBox = document.querySelector<HTMLElement>('#placeholder-search-box');
+  handleSearchUrl(searchBox);
 
   const shortcuts: Record<string, (e: KeyboardEvent) => void> = {
     'Control+p': _openSearchModal,

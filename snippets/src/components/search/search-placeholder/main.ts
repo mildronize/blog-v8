@@ -17,15 +17,7 @@ import './search-placeholder.css';
 function initSearchPlaceholder() {
   loadPlaceholder('#search-placeholder-root');
   const searchBox = getHTMLElement('#placeholder-search-box');
-  handleSearchUrl(searchBox);
   searchBox.addEventListener('click', () => openSearchModal(searchBox, searchModalEvent));
-}
-
-function handleSearchUrl(targetElement: HTMLElement) {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('q') !== null) {
-    openSearchModal(targetElement, searchModalEvent);
-  }
 }
 
 initSearchPlaceholder();
