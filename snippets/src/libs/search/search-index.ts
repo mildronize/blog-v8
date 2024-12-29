@@ -11,7 +11,7 @@ export async function searchIndex(index: FlexSearch.Document<unknown, string[]>,
 
 export const createFlexSearchIndex = (indexSize: IndexSize, _logger: Logger = new ConsoleLogger()) => new FlexSearch.Document({
   preset: 'match',
-  tokenize: indexSize === 'small' ? 'strict' : 'forward',
+  tokenize: indexSize === 'small' ? 'strict' : 'reverse',
   cache: 100,
   document: {
     id: 'id',
