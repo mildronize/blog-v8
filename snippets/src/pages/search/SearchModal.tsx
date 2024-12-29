@@ -44,7 +44,8 @@ export default (props: SearchModalProps) => {
   const [error, setError] = useState<string | null>(null);
   const [enableFullTextSearch, setEnableFullTextSearch] = useState(false);
 
-  const indexLoaded = useSearchBrowser(browserSearch);
+  const smallIndexLoaded = useSearchBrowser(browserSearchCollection.small);
+  const largeIndexLoaded = useSearchBrowser(browserSearchCollection.large);
 
   const searchRef = createRef<HTMLInputElement>();
 
@@ -195,10 +196,24 @@ export default (props: SearchModalProps) => {
           </p>
         </div>
         <div className='results-container'>
-          {indexLoaded === false && results.length === 0 &&
+          {smallIndexLoaded === false && results.length === 0 && enableFullTextSearch === false &&
             <p className="no-results">
-              <div className="loader"></div><div>Importing Search Index...</div>
+              <div className="loader"></div><div>Importing Small Search Index...</div>
             </p>
+          }
+          {largeIndexLoaded === false && results.length === 0 && enableFullTextSearch === true &&
+            <p className="no-results">
+              <div className="loader"></div><div>Importing Large Search Index...</div>
+            </p>
+          }
+          {smallIndexLoaded === true && results.length === 0 && enableFullTextSearch === false &&
+            <div className="no-results">
+              <p style={{ textAlign: 'center'}}>No results found <br/>
+              <a href="#" onClick={() => handleEnableFullTextSearchChange(true)}>Enable Full Text Search</a> may find your result</p>
+            </div>
+          }
+          {largeIndexLoaded === true && results.length === 0 && enableFullTextSearch === true &&
+            <div className="no-results">No results found.</div>
           }
           {error && <p className="error">{error}</p>}
           {results.map((result) => (

@@ -65,7 +65,8 @@
 
 .search-modal {
   width: 95%;
-  padding: 5px 15px;
+  /* padding: 5px 15px; */
+  padding: 5px 15px 30px 15px;
   max-width: 800px;
   background: var(--bg-color);
   border-radius: 10px;
@@ -341,6 +342,15 @@
 
 .no-results div {
   margin-top: 10px;
+}
+
+.no-results a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.no-results a:hover {
+  text-decoration: underline;
 }
 
 /**
