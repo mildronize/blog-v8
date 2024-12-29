@@ -394,30 +394,37 @@
 }
 
 /**
-  * Swipe
+  * Close message on mobile
   */
 
-.swipe-message {
-  font-size: 14px;
+.close-message {
+  font-size: 0.8em;
   /* Adjust text size */
   color: var(--bg-color);
   /* Subtle text color */
-  background: var(--text-color);
+  background: var(--text-pale-color);
   /* Semi-transparent background for readability */
-  padding: 8px 16px;
+  padding: 10px 11px 8px 11px;
   /* Padding for the text */
-  border-radius: 16px;
+  border-radius: 50%;
   /* Rounded corners for a modern look */
-  box-shadow: 0 4px 8px var(--shadow-color-5);
+  box-shadow: 0 2px 4px var(--shadow-color-1);
   /* Soft shadow for a floating effect */
   text-align: center;
   cursor: pointer;
 }
 
+.close-message:hover {
+  background: var(--primary-color);
+  /* Change background color on hover */
+  color: var(--bg-color);
+  /* Change text color on hover */
+}
+
 /* Fixed-bottom message styling */
-.swipe-message.fixed-bottom {
+.close-message.fixed {
   position: fixed;
-  bottom: 20px;
+  top: 20px;
   /* Adjust space from the bottom of the viewport */
   left: 50%;
   transform: translateX(-50%);
@@ -426,12 +433,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .swipe-message.fixed-bottom {
-    font-size: 12px;
-    /* Adjust text size */
-    padding: 6px 12px;
-    /* Padding for the text */
-    border-radius: 12px;
+  .close-message.fixed {
     /* Rounded corners for a modern look */
     visibility: visible;
   }

@@ -4,7 +4,6 @@ import { BrowserSearch } from '../../libs/search/search-index-broswer';
 import { useShortcut } from './useShortcut';
 import { SearchResult } from '../../libs/search/search-result';
 import { useSearchBrowser } from './useSearchBrowser';
-import { useSwipeable } from 'react-swipeable';
 
 export const localStorageKey = {
   enableFullTextSearch: 'enableFullTextSearch',
@@ -42,13 +41,6 @@ export default (props: SearchModalProps) => {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [enableFullTextSearch, setEnableFullTextSearch] = useState(false);
-
-  const handlers = useSwipeable({
-    onSwiped: (_eventData) => props.setBackdropVisible(false),
-    swipeDuration: 500,
-    preventScrollOnSwipe: true,
-    trackMouse: true
-  });
 
   const smallIndexLoaded = useSearchBrowser(browserSearchCollection.small);
   const largeIndexLoaded = useSearchBrowser(browserSearchCollection.large);
@@ -168,7 +160,7 @@ export default (props: SearchModalProps) => {
   })
 
   return (
-    <div className="search-modal-app" {...handlers}>
+    <div className="search-modal-app">
       <div
         id="search-backdrop"
         className={props.isBackdropVisible ? "active" : ""}
@@ -243,9 +235,14 @@ export default (props: SearchModalProps) => {
               </div>
             </div>
           ))}
-          <p className="swipe-message fixed-bottom"
+          <p className="close-message fixed"
             onClick={() => props.setBackdropVisible(false)}
-          >Swipe down to close</p>
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </p>
         </div>
       </div>
     </div>
