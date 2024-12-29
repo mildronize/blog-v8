@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "cross-env VITE_SEARCH_METADATA_HOSTNAME=http://localhost:1111 vite",
+    "dev": "run-p dev:*",
+    "dev:vite": "cross-env VITE_SEARCH_METADATA_HOSTNAME=http://localhost:1111 vite",
+    "dev:search-metadata": "cd ../ && make serve",
     "test": "tsc --noEmit && bun test",
     "build": "tsc && vite build",
     "generate-id-mapper": "bun run src/scripts/generate-id-mapper.ts",

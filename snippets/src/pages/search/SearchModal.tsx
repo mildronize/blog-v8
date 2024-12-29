@@ -243,7 +243,9 @@ export default (props: SearchModalProps) => {
               </div>
             </div>
           ))}
-           <p className="swipe-message fixed-bottom">Swipe down to close</p>
+          <p className="swipe-message fixed-bottom"
+            onClick={() => props.setBackdropVisible(false)}
+          >Swipe down to close</p>
         </div>
       </div>
     </div>
