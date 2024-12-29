@@ -39,6 +39,8 @@ export default () => {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [enableFullTextSearch, setEnableFullTextSearch] = useState(false);
+  // For Full Text Search only
+  const [totalIndexFileSize, setTotalIndexFileSize] = useState<number>(5);
 
   const smallIndexLoaded = useSearchBrowser(browserSearchCollection.small);
   const largeIndexLoaded = useSearchBrowser(browserSearchCollection.large);
@@ -55,7 +57,19 @@ export default () => {
     }
   }
 
+  /**
+   * Only For Full Text Search
+   * 
+   * Get the total file size of the search index in megabytes
+   * No need to load the index yet, simply read the metadata
+  */
+  const handleTotalIndexFileSize = async () => {
+    const searchMetadata = await browserSearchCollection.large.getSearchMetadata();
+    setTotalIndexFileSize(Math.ceil(searchMetadata.totalFileSizeInMegabytes));
+  }
+
   useEffect(() => {
+    handleTotalIndexFileSize();
     browserSearch.init();
     // Set query from URL on initial load
     const params = new URLSearchParams(window.location.search);
@@ -194,7 +208,7 @@ export default () => {
             Enable Full Text Search
           </label>
           <p className="checkbox-info">
-            Press Enter to enable full text search. Note: This may consume approximately 5MB of additional traffic.
+            Press Enter to enable full text search. Note: This may consume approximately {totalIndexFileSize} MB of additional traffic.
           </p>
         </div>
         <div className='results-container'>

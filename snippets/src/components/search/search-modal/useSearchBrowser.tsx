@@ -7,7 +7,7 @@ import { BrowserSearch } from "../../../libs/search/search-index-broswer";
  */
 export function useSearchBrowser(browserSearch: BrowserSearch) {
 
-  const intervalDuration = 100;
+  const intervalDuration = 50;
 
   const [indexLoaded, setIndexLoaded] = useState<boolean>(false);
 

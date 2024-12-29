@@ -32,7 +32,7 @@ export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOp
     logger: pinoLogBuilder('buildSearchIndex', 'info'),
   });
 
-  const targetIndexPath: string[] = [];
+  let targetIndexPath: string[] = [];
 
   fs.removeSync(searchIndexPath);
   fs.ensureDirSync(searchIndexPath);
@@ -41,11 +41,19 @@ export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOp
     async (key, data) => {
       const targetIndex = path.join(searchIndexPath, `${key}.json`);
       await fs.writeJSON(targetIndex, data ?? {});
-      targetIndexPath.push('/' + getRelativePath(targetIndex, rootPublicDir));
+      targetIndexPath.push(targetIndex);
     }
   );
-
-  await fs.writeJSON(options.searchIndexMetadataPath, { sitemap: targetIndexPath } satisfies SearchIndexMetadataResponse);
+  let totalFileSizeInMegabytes = 0;
+  targetIndexPath.forEach((p) => {
+    const stats = fs.statSync(p);
+    totalFileSizeInMegabytes += stats.size / 1024 / 1024;
+  });
+  targetIndexPath = targetIndexPath.map((p) => '/' + getRelativePath(p, rootPublicDir));
+  await fs.writeJSON(options.searchIndexMetadataPath, {
+    sitemap: targetIndexPath,
+    totalFileSizeInMegabytes: parseFloat(totalFileSizeInMegabytes.toFixed(2)),
+  } as SearchIndexMetadataResponse);
   return index;
 }
 
