@@ -51,6 +51,12 @@ export interface ImportSearchIndexFromRemoteOptions {
    */
   hostname?: string;
   logger?: Logger;
+  /**
+   * Concurrency of the import process
+   * 
+   * @default 6
+   */
+  concurrency? : number;
 }
 
 export interface SearchIndexMetadataResponse {

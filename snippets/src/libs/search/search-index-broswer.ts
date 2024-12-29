@@ -1,12 +1,15 @@
 import 'client-only';
 
 import FlexSearch from 'flexsearch';
+import pAll from 'p-all';
 import { ImportSearchIndexFromRemoteOptions, IndexSize, SearchIndexMetadataResponse } from './types';
 import { ConsoleLogger } from '../../utils/logger';
 import { createFlexSearchIndex, searchIndex } from './search-index';
 import { RawSearchResult, SearchResult, serializeSearchResult } from './search-result';
 import { MarkdownMetadata } from '../content/type';
 import { joinUrl } from './browser-utils';
+
+export type WorkerFunction<T = any> = () => Promise<T>;
 /**
  * Simple function to `path.basename` from Node.js
  * @param path 
@@ -19,14 +22,19 @@ export function getBasename(path: string, extension: string): string {
 }
 
 export async function importSearchIndexFromRemote(options: ImportSearchIndexFromRemoteOptions): Promise<FlexSearch.Document<unknown, string[]>> {
-  const { indexSize, logger = new ConsoleLogger(), hostname } = options;
+  const { indexSize, logger = new ConsoleLogger(), hostname, concurrency = 6 } = options;
   const index = createFlexSearchIndex(indexSize, logger);
+  const workers: WorkerFunction[] = [];
+
   for (const indexFile of options.indexFiles) {
-    const data = await (await fetch(joinUrl(hostname, indexFile))).json();
-    const key = getBasename(indexFile, '.json');
-    await index.import(key, data);
-    logger.info(`Imported index key: ${key}, file: ${indexFile}`);
+    workers.push(async () => {
+      const data = await (await fetch(joinUrl(hostname, indexFile))).json();
+      const key = getBasename(indexFile, '.json');
+      await index.import(key, data);
+      logger.info(`Imported index key: ${key}, file: ${indexFile}`);
+    });
   }
+  await pAll(workers, { concurrency });
   return index;
 }
 
@@ -73,13 +81,22 @@ export class BrowserSearch {
       return;
     }
     this.isInitialized = true;
-    const searchMetadata = await this.getSearchMetadata();
-    this.index = await importSearchIndexFromRemote({
-      ...this.options,
-      indexFiles: searchMetadata.sitemap,
-    });
-    this.postMetadata = await (await fetch(joinUrl(this.options.hostname, this.options.postMetadataPath))).json();
-  }
+    const workers: [WorkerFunction<FlexSearch.Document<unknown, string[]>>, WorkerFunction<MarkdownMetadata[]>]= [
+      async () => {
+        const searchMetadata = await this.getSearchMetadata();
+        return importSearchIndexFromRemote({
+          ...this.options,
+          indexFiles: searchMetadata.sitemap,
+        });
+      },
+      async () => {
+        return await (await fetch(joinUrl(this.options.hostname, this.options.postMetadataPath))).json();
+      },
+    ];
+    const [index, postMetadata] = await pAll(workers);
+    this.index = index;
+    this.postMetadata = postMetadata;
+    }
 
   async getSearchMetadata(): Promise<SearchIndexMetadataResponse> {
     return (await fetch(joinUrl(this.options.hostname, this.options.searchIndexMetadataPath))).json();
