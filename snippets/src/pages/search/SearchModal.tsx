@@ -159,7 +159,7 @@ export default () => {
 
   const handleSearchModal = (isModalOpen: boolean) => {
     const action = isModalOpen ? 'open' : 'close';
-    console.log(`SearchModal: ${action} search modal`);
+    console.log(`SearchModal: Emitting "${searchModalEvent.name}" event, action: "${action}"`);
     searchModalEvent.dispatch({ action });
   }
 

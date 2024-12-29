@@ -14,7 +14,7 @@ export function SearchModalShell() {
 
   useEffect(() => {
     searchModalEvent.listen((event) => {
-      console.log(`SearchModalShell: ${event.detail.action} search modal`);
+      console.log(`SearchModalShell: Received "${searchModalEvent.name}" event, action: "${event.detail.action}"`);
       setIsShow(event.detail.action === 'open');
     });
     return () => {

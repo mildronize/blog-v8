@@ -32,6 +32,10 @@ export class BrowserEvent<EventName extends string, Detail extends object> {
         callback(event as CustomEvent<Detail>);
     });
   }
+
+  get name() {
+    return this.eventName;
+  }
 }
 
 
