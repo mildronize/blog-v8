@@ -204,13 +204,13 @@ export default (props: SearchModalProps) => {
               <div className="loader"></div><div>Importing Large Search Index...</div>
             </p>
           }
-          {smallIndexLoaded === true && results.length === 0 && enableFullTextSearch === false &&
+          {smallIndexLoaded === true && results.length === 0 && enableFullTextSearch === false && query !== '' &&
             <div className="no-results">
               <p style={{ textAlign: 'center' }}>No results found <br />
                 <a href="#" onClick={() => handleEnableFullTextSearchChange(true)}>Enable Full Text Search</a> may find your result</p>
             </div>
           }
-          {largeIndexLoaded === true && results.length === 0 && enableFullTextSearch === true &&
+          {largeIndexLoaded === true && results.length === 0 && enableFullTextSearch === true && query !== '' &&
             <div className="no-results">No results found.</div>
           }
           {error && <p className="error">{error}</p>}
