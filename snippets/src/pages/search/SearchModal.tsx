@@ -4,6 +4,7 @@ import { BrowserSearch } from '../../libs/search/search-index-broswer';
 import { useShortcut } from './useShortcut';
 import { SearchResult } from '../../libs/search/search-result';
 import { useSearchBrowser } from './useSearchBrowser';
+import { searchModalEvent } from './event';
 
 export const localStorageKey = {
   enableFullTextSearch: 'enableFullTextSearch',
@@ -30,12 +31,8 @@ const browserSearchCollection = {
 // Use the small search index by default
 let browserSearch: BrowserSearch = browserSearchCollection.small;
 
-interface SearchModalProps {
-  isBackdropVisible: boolean;
-  setBackdropVisible: (visible: boolean) => void;
-}
 
-export default (props: SearchModalProps) => {
+export default () => {
   const [_focus, setFocus] = useState<boolean>(false);
   const [query, setQuery] = useState<string>('');
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -159,12 +156,18 @@ export default (props: SearchModalProps) => {
     })
   })
 
+  const handleSearchModal = (isModalOpen: boolean) => {
+    const action = isModalOpen ? 'open' : 'close';
+    console.log(`SearchModal: ${action} search modal`);
+    searchModalEvent.dispatch({ action });
+  }
+
   return (
     <div className="search-modal-app">
       <div
         id="search-backdrop"
-        className={props.isBackdropVisible ? "active" : ""}
-        onClick={() => props.setBackdropVisible(false)} // Hide the search modal when clicking the backdrop
+        className="active"
+        onClick={() => handleSearchModal(false)}
       />
       <div className="search-modal">
         <input
@@ -195,14 +198,14 @@ export default (props: SearchModalProps) => {
         </div>
         <div className='results-container'>
           {smallIndexLoaded === false && results.length === 0 && enableFullTextSearch === false &&
-            <p className="no-results">
+            <div className="no-results">
               <div className="loader"></div><div>Importing Small Search Index...</div>
-            </p>
+            </div>
           }
           {largeIndexLoaded === false && results.length === 0 && enableFullTextSearch === true &&
-            <p className="no-results">
+            <div className="no-results">
               <div className="loader"></div><div>Importing Large Search Index...</div>
-            </p>
+            </div>
           }
           {smallIndexLoaded === true && results.length === 0 && enableFullTextSearch === false && query !== '' &&
             <div className="no-results">
@@ -236,9 +239,9 @@ export default (props: SearchModalProps) => {
             </div>
           ))}
           <p className="close-message fixed"
-            onClick={() => props.setBackdropVisible(false)}
+            onClick={() => handleSearchModal(false)}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
