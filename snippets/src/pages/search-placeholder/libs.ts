@@ -8,6 +8,14 @@ export async function waitUntilHtmlElementExists(selector: string, timeout = 500
   }
 }
 
+export function getHTMLElement(selector: string): HTMLElement {
+  const element = document.querySelector<HTMLElement>(selector);
+  if (!element) {
+    throw new Error(`Element not found: ${selector}`);
+  }
+  return element;
+}
+
 
 /**
  * Dynamic Script Injection,
@@ -37,7 +45,7 @@ export function loadPlaceholder(selector: string) {
       placeholder="Search post..."
     />
     <div class="search-modal-loading">Loading Search Modal Component... </div>
-    </div>
+  </div>
 `}
 
 export const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));

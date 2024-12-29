@@ -22,14 +22,6 @@ export function SearchModalShell() {
     }
   }, []);
 
-  useEffect(() => {
-    // Set query from URL on initial load
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('q') !== null) {
-      setIsShow(true);
-    }
-  }, []);
-
   const handleEnterSearchTextFields = () => {
     setIsShow(true);
   }
@@ -39,8 +31,9 @@ export function SearchModalShell() {
   }
 
   const shortcuts: Record<string, (e: KeyboardEvent) => void> = {
-    'Control+p': handleEnterSearchTextFields,
-    'Command+p': handleEnterSearchTextFields,
+    // TODO: This will handle by global commander
+    // 'Control+p': handleEnterSearchTextFields,
+    // 'Command+p': handleEnterSearchTextFields,
     'Enter': handleEnterSearchTextFields,
     'Escape': handleClearTextField
   }

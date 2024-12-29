@@ -1,5 +1,5 @@
 import { searchModalEvent } from "../search-modal-event";
-import { ElementController, loadPlaceholder, injectScript, waitUntilHtmlElementExists } from "./libs";
+import { ElementController, loadPlaceholder, injectScript, waitUntilHtmlElementExists, getHTMLElement } from "./libs";
 import './search-placeholder.css';
 
 /**
@@ -16,23 +16,29 @@ import './search-placeholder.css';
  */
 function initSearchPlaceholder() {
   loadPlaceholder('#search-placeholder-root');
-  const searchBox = document.querySelector<HTMLInputElement>('#placeholder-search-box');
-  if (!searchBox) {
-    console.error('SearchPlaceholder: Search box not found');
-    return;
+  const searchBox = getHTMLElement('#placeholder-search-box');
+  handleSearchUrl(searchBox);
+  searchBox.addEventListener('click', () => openSearchModal(searchBox));
+}
+
+async function openSearchModal(targetElement: HTMLElement) {
+  targetElement.blur();
+  const action = 'open';
+  console.log(`SeachPlaceholder: ${action} search modal`);
+  // Load React Search Modal Component
+  injectScript('/js/search.js');
+  const loading = new ElementController('.search-modal-loading');
+  loading.show();
+  await waitUntilHtmlElementExists('#search-root');
+  loading.hide();
+  searchModalEvent.dispatch({ action });
+}
+
+function handleSearchUrl(targetElement: HTMLElement) {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('q') !== null) {
+    openSearchModal(targetElement);
   }
-  searchBox.addEventListener('click', async () => {
-    searchBox.blur();
-    const action = 'open';
-    console.log(`SeachPlaceholder: ${action} search modal`);
-    // Load React Search Modal Component
-    injectScript('/js/search.js');
-    const loading = new ElementController('.search-modal-loading');
-    loading.show();
-    await waitUntilHtmlElementExists('#search-root');
-    loading.hide();
-    searchModalEvent.dispatch({ action });
-  });
 }
 
 initSearchPlaceholder();

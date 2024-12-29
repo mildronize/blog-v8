@@ -1,9 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App';
+import { SearchModalShell } from './SearchModalShell';
 
 createRoot(document.getElementById('search-root')!).render(
   <StrictMode>
-    <App />
+    <SearchModalShell />
   </StrictMode>,
 )
