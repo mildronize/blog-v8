@@ -90,13 +90,13 @@ export function postProcessSearchResult(searchResult: SearchResult[], options: S
     if (!metadata) continue;
     result.path = joinUrl(options.hostname, metadata.path);
     if (result.field.includes('title')) {
-      result.title = createdMatchedTitle(metadata.frontmatter.title, options.query);
+      result.title = createdMatchedTitleWithMultiplesQuery(metadata.frontmatter.title, options.query);
     } else {
       result.title = metadata.frontmatter.title;
     }
     result.tags = createMatchedTag(metadata.frontmatter.taxonomies?.tags ?? [], options.query);
     if (result.field.includes('content')) {
-      result.excerpt = createExcerpt(metadata.content ?? '', options.query, 50, 3)
+      result.excerpt = createExcerptWithMultiplesQuery(metadata.content ?? '', options.query, 50, 3)
     }
   }
   return searchResult;
@@ -179,11 +179,44 @@ export class UnicodeString {
 
 /**
  * Create matched title for the search result,
- * highlight the matched text
+ * highlight the matched text,
+ * 
+ * This also support query with spaces
  */
+export function createdMatchedTitleWithMultiplesQuery(title: string, query: string): string {
+  const splitQuery = query.split(' ').map((q) => q.trim()).filter((q) => q.length > 0);
+  let result: string = title;
+  for (const q of splitQuery) {
+    console.log(`Created matched title for ${q}`);
+    result = createdMatchedTitle(result, q);
+  }
+  return result;
+}
+
 export function createdMatchedTitle(title: string, query: string): string {
   return title.replace(new RegExp(query, 'gi'), (match) => `<i>${match}</i>`);
 }
+
+/**
+ * Support creating excerpt for the search result, highlight the matched text
+ * also add context before and after the matched text,
+ * 
+ * This also support query with spaces
+ * @returns 
+ */
+export function createExcerptWithMultiplesQuery(content: string, query: string, contextSize: number, limit = 3): string[] {
+  const splitQuery = query.split(' ').map((q) => q.trim()).filter((q) => q.length > 0);
+  // If there are multiple queries, limit the excerpt to 2, prevent too many excerpts
+  const newLimit = splitQuery.length > 1 ? 2 : limit;
+  let result: string[] = [];
+  for (const q of splitQuery) {
+    console.log(`Created excerpt for ${q}`);
+    result.push(createExcerpt(content, q, contextSize, newLimit).join(''));
+    console.log(`Created excerpt for ${q} result: ${result}`);
+  }
+  return result
+}
+
 
 export function createExcerpt(content: string, query: string, contextSize: number, limit = 3): string[] {
   // Split the content into graphemes to handle Unicode characters
@@ -216,7 +249,7 @@ export function createExcerpt(content: string, query: string, contextSize: numbe
     const afterMatch = safeContent.slice(matchIndex + query.length, contextEnd);
     const excerpt = `${beforeMatch.toString()}<i>${matchedText.toString()}</i>${afterMatch.toString()}`;
 
-    excerpts.push(excerpt);
+    excerpts.push(excerpt.trim());
 
     // Check if the limit has been reached
     if (excerpts.length >= limit) {

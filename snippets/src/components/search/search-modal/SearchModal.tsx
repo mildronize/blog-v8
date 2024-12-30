@@ -50,6 +50,7 @@ export default () => {
   const searchOnBrowser = async (query: string) => {
     try {
       const results = await browserSearch.search(query);
+      console.log('Search results:', results);
       setResults(results);
       setError(null);
     } catch (err: any) {
@@ -237,7 +238,7 @@ export default () => {
               <a className="result-title" href={result.path}><h4 dangerouslySetInnerHTML={{ __html: result.title }}></h4></a>
               <p className="result-content" dangerouslySetInnerHTML={{
                 __html: result.excerpt.map(
-                  (line) => `..${line}.` // Add ellipsis to the beginning and end of the line
+                  (line) => `..${line}..` // Add ellipsis to the beginning and end of the line
                 ).join('')
               }}></p>
               <div className="result-tags">
