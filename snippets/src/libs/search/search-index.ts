@@ -1,7 +1,8 @@
 import FlexSearch from 'flexsearch';
 
-import { ConsoleLogger, Logger } from "../../utils/logger";
+import { Logger } from "../../utils/logger";
 import { BuildSearchIndexOptions, IndexSize } from './types';
+import { ConsoleLogger } from '../../utils/console-logger';
 
 export async function searchIndex(index: FlexSearch.Document<unknown, string[]>, query: string) {
   return index.searchAsync(query, {

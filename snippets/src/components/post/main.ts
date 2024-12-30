@@ -1,3 +1,5 @@
+
+
 /**
  * Post Template Extension, It is as entry point for the post template.
  * @param id Page ID

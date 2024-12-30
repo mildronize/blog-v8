@@ -1,11 +1,12 @@
 import FlexSearch from 'flexsearch';
 import pAll from 'p-all';
 import { ImportSearchIndexFromRemoteOptions, IndexSize, SearchIndexMetadataResponse } from './types';
-import { ConsoleLogger } from '../../utils/logger';
 import { createFlexSearchIndex, searchIndex } from './search-index';
 import { RawSearchResult, SearchResult, serializeSearchResult } from './search-result';
 import { MarkdownMetadata } from '../content/type';
 import { joinUrl } from './browser-utils';
+
+// const 
 
 export type WorkerFunction<T = any> = () => Promise<T>;
 /**
@@ -20,7 +21,7 @@ export function getBasename(path: string, extension: string): string {
 }
 
 export async function importSearchIndexFromRemote(options: ImportSearchIndexFromRemoteOptions): Promise<FlexSearch.Document<unknown, string[]>> {
-  const { indexSize, logger = new ConsoleLogger(), hostname, concurrency = 6 } = options;
+  const { indexSize, logger , hostname, concurrency = 6 } = options;
   const index = createFlexSearchIndex(indexSize, logger);
   const workers: WorkerFunction[] = [];
 
@@ -29,7 +30,7 @@ export async function importSearchIndexFromRemote(options: ImportSearchIndexFrom
       const data = await (await fetch(joinUrl(hostname, indexFile))).json();
       const key = getBasename(indexFile, '.json');
       await index.import(key, data);
-      logger.info(`Imported index key: ${key}, file: ${indexFile}`);
+      logger?.info(`Imported index key: ${key}, file: ${indexFile}`);
     });
   }
   await pAll(workers, { concurrency });

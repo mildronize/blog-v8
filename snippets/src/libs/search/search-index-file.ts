@@ -5,11 +5,11 @@ import fs from 'fs-extra';
 import path from 'path';
 import glob from 'tiny-glob';
 
-import { ConsoleLogger } from "../../utils/logger";
 import { pinoLogBuilder } from '../../utils/pino-log';
 import { readAllMarkdown } from './utils';
 import { ExecuteBuildSearchIndexOptions, ImportSearchIndexOptions, SearchIndexMetadataResponse } from './types';
 import { buildSearchIndex, createFlexSearchIndex } from './search-index';
+import { ConsoleLogger } from '../../utils/console-logger';
 
 function getRelativePath(path: string, rootPath: string): string {
   if (!path.startsWith(rootPath)) {

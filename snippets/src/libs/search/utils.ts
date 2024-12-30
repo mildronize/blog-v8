@@ -3,8 +3,9 @@ import path from 'path';
 
 import { MarkdownFileProcessor, processMarkdownDirectories } from "../content";
 import { config } from "../../_config";
-import { ConsoleLogger, Logger } from "../../utils/logger";
+import { Logger } from "../../utils/logger";
 import { MarkdownFileProcessorOutput } from '../content';
+import { ConsoleLogger } from '../../utils/console-logger';
 
 const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 

@@ -2,6 +2,7 @@
 
 import pino from "pino";
 import PinoPretty from "pino-pretty";
+import { Logger } from "./logger";
 
 /**
  * Create a pino logger with the given name and level
@@ -14,7 +15,7 @@ import PinoPretty from "pino-pretty";
  * @returns 
  */
 export const pinoLogBuilder = (name: string, level: pino.LevelWithSilentOrString) => {
-  return pino({
+  return new PinoLogger(pino({
     name,
     // Set the global log level to the lowest level
     // We adjust the level per transport
@@ -49,5 +50,31 @@ export const pinoLogBuilder = (name: string, level: pino.LevelWithSilentOrString
     //     target: 'pino-opentelemetry-transport',
     //   })
     // }
-  ]));
+  ])));
+}
+
+
+// ----------------------------
+// pino logger
+// ----------------------------
+
+export class PinoLogger implements Logger {
+  constructor(private logger: pino.Logger) { }
+
+  info(...messages: string[]) {
+    this.logger.info(messages);
+  }
+  debug(...messages: string[]) {
+    this.logger.debug(messages);
+  }
+  error(...messages: string[]) {
+    this.logger.error(messages);
+  }
+  warn(...messages: string[]) {
+    this.logger.warn(messages);
+  }
+  fatal(...messages: string[]) {
+    this.logger.fatal(messages);
+    return new Error(messages.join(" "));
+  }
 }

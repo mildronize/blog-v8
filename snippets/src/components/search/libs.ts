@@ -1,17 +1,20 @@
 import type { BrowserEvent } from "../../libs/browser-event";
+import { createLogger } from "../../utils/browser-logger";
 import type { SearchModalEventDetail } from "./search-modal-event";
+
+const logger = createLogger('search/libs');
 
 export async function openSearchModal(targetElement: HTMLElement | null, searchModalEvent: BrowserEvent<'SearchModalEvent', SearchModalEventDetail>) {
   targetElement?.blur();
   const action = 'open';
-  console.log(`SearchPlaceholder: Injecting Script for Search Modal Component (React)`);
+  logger?.info(`openSearchModal: Injecting Script for Search Modal Component (React)`);
   injectScript('/js/search-modal.js');
   const loading = new ElementController('.search-modal-loading');
   loading.show();
   await waitUntilHtmlElementExists('#search-root');
-  console.log(`SearchPlaceholder: Loaded Search Modal Component (React)`);
+  logger?.info(`openSearchModal: Loaded Search Modal Component (React)`);
   loading.hide();
-  console.log(`SearchPlaceholder: Emitting "${searchModalEvent.name}" event, action: "${action}"`);
+  logger?.info(`openSearchModal: Emitting "${searchModalEvent.name}" event, action: "${action}"`);
   searchModalEvent.dispatch({ action });
 }
 
@@ -19,7 +22,7 @@ export async function waitUntilHtmlElementExists(selector: string, timeout = 500
   const start = Date.now();
   while (!document.querySelector(selector)?.innerHTML) {
     if (Date.now() - start > timeout) {
-      throw new Error(`Element with selector ${selector} not found or not loaded`);
+      throw logger?.fatal(`Element with selector ${selector} not found or not loaded`);
     }
     await delay(100);
   }
@@ -28,7 +31,7 @@ export async function waitUntilHtmlElementExists(selector: string, timeout = 500
 export function getHTMLElement<T extends HTMLElement>(selector: string): T {
   const element = document.querySelector<T>(selector);
   if (!element) {
-    throw new Error(`Element not found: ${selector}`);
+    throw logger?.fatal(`Element not found: ${selector}`);
   }
   return element;
 }
@@ -50,7 +53,7 @@ export function injectScript(src: string, type = 'module') {
 export function loadPlaceholder(selector: string) {
   const placeholderRoot = document.querySelector<HTMLDivElement>(selector)!;
   if (placeholderRoot.innerHTML) {
-    console.log('SearchPlaceholder: Placeholder already loaded');
+    logger?.info('loadPlaceholder: Placeholder already loaded');
     return;
   }
   placeholderRoot.innerHTML = `

@@ -6,6 +6,9 @@ import { useShortcut } from './useShortcut';
 import { SearchResult } from '../../../libs/search/search-result';
 import { useSearchBrowser } from './useSearchBrowser';
 import { searchModalEvent } from '../search-modal-event';
+import { createLogger } from '../../../utils/browser-logger';
+
+const logger = createLogger('react/search-modal');
 
 export const localStorageKey = {
   enableFullTextSearch: 'enableFullTextSearch',
@@ -50,7 +53,7 @@ export default () => {
   const searchOnBrowser = async (query: string) => {
     try {
       const results = await browserSearch.search(query);
-      console.log('Search results:', results);
+      logger?.debug('Search results:', results);
       setResults(results);
       setError(null);
     } catch (err: any) {

@@ -1,8 +1,11 @@
 
+import { createLogger } from '../../../utils/browser-logger';
 import { getHTMLElement, openSearchModal } from '../libs';
 import { registerShortcut } from '../register-shortcut';
 import { searchModalEvent } from '../search-modal-event';
 import '../search-placeholder/search-placeholder.css';
+
+const logger = createLogger('commander');
 
 function _openSearchModal() {
   const searchBox = document.querySelector<HTMLElement>('#placeholder-search-box');
@@ -36,7 +39,7 @@ function commander() {
   const searchIcon = getHTMLElement<HTMLButtonElement>('#search-header');
   searchIcon.addEventListener('click', _openSearchModal);
 
-  console.log('Commander: Initialized');
+  logger?.info('Initialized');
 
 }
 

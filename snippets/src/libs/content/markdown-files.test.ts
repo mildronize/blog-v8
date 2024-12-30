@@ -1,6 +1,7 @@
 import { test, expect } from 'bun:test';
 import { extractMarkdownMetadata, processMarkdownDirectories } from './markdown-files';
 import { MarkdownFileProcessorOutput } from './type';
+import { ConsoleLogger } from '../../utils/console-logger';
 
 
 test('processMarkdownFiles', async () => {
@@ -15,7 +16,7 @@ test('processMarkdownFiles', async () => {
     }),
   }
 
-  const idMapper = await processMarkdownDirectories(sourceDirs, processor, console);
+  const idMapper = await processMarkdownDirectories(sourceDirs, processor, new ConsoleLogger());
 
   expect(idMapper).toEqual({
     markdownData: [{

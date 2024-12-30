@@ -1,4 +1,4 @@
-import { Logger } from "pino";
+import { Logger } from "../../utils/logger";
 import { MarkdownMetadata } from "../content";
 
 /**

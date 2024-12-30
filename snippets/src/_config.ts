@@ -1,3 +1,4 @@
+import { LogLevel } from "./utils/logger";
 
 
 const apiPath = "api";
@@ -5,6 +6,13 @@ const rootPublicDir = "../public";
 const publicApiPath = `${rootPublicDir}/${apiPath}`;
 
 export const config = {
+  /**
+   * Log level for the application
+   * 
+   * - Local development uses "debug" log level
+   * - Production uses "info" log level
+   */
+  logLevel: "debug" as LogLevel,
   snippetsDir: ".",
   rootDir: '..',
   rootPublicDir,

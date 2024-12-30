@@ -3,7 +3,8 @@ import path from "path";
 
 import { MarkdownFileProcessor, processMarkdownDirectories, toIdMapperCollection } from "./content";
 import { config } from "../_config";
-import { ConsoleLogger, Logger } from "../utils/logger";
+import { Logger } from "../utils/logger";
+import { ConsoleLogger } from "../utils/console-logger";
 
 const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 
