@@ -71,17 +71,15 @@ export default () => {
 
   useEffect(() => {
     handleTotalIndexFileSize();
-    browserSearch.init();
     // Set query from URL on initial load
     const params = new URLSearchParams(window.location.search);
     const initialQuery = params.get('q') || '';
     const paramFull = params.get('full');
-    if (paramFull !== null) {
-      setEnableFullTextSearch(paramFull === 'true');
-      localStorage.setItem(localStorageKey.enableFullTextSearch, paramFull);
-    } else {
-      setEnableFullTextSearch(localStorage.getItem(localStorageKey.enableFullTextSearch) === 'true');
-    }
+
+    const isEnableFullTextSearch = paramFull !== null ? paramFull === 'true' : localStorage.getItem(localStorageKey.enableFullTextSearch) === 'true';
+    localStorage.setItem(localStorageKey.enableFullTextSearch, String(isEnableFullTextSearch));
+    handleEnableFullTextSearchChange(isEnableFullTextSearch);
+
     setQuery(initialQuery);
     if (initialQuery) {
       handleSearch(initialQuery, paramFull === 'true');

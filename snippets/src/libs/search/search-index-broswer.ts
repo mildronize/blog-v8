@@ -1,5 +1,3 @@
-import 'client-only';
-
 import FlexSearch from 'flexsearch';
 import pAll from 'p-all';
 import { ImportSearchIndexFromRemoteOptions, IndexSize, SearchIndexMetadataResponse } from './types';
@@ -81,7 +79,7 @@ export class BrowserSearch {
       return;
     }
     this.isInitialized = true;
-    const workers: [WorkerFunction<FlexSearch.Document<unknown, string[]>>, WorkerFunction<MarkdownMetadata[]>]= [
+    const workers: [WorkerFunction<FlexSearch.Document<unknown, string[]>>, WorkerFunction<MarkdownMetadata[]>] = [
       async () => {
         const searchMetadata = await this.getSearchMetadata();
         return importSearchIndexFromRemote({
@@ -96,7 +94,7 @@ export class BrowserSearch {
     const [index, postMetadata] = await pAll(workers);
     this.index = index;
     this.postMetadata = postMetadata;
-    }
+  }
 
   async getSearchMetadata(): Promise<SearchIndexMetadataResponse> {
     return (await fetch(joinUrl(this.options.hostname, this.options.searchIndexMetadataPath))).json();
