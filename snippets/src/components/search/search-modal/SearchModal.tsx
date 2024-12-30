@@ -8,7 +8,7 @@ import { useSearchBrowser } from './useSearchBrowser';
 import { searchModalEvent } from '../search-modal-event';
 import { createLogger } from '../../../utils/browser-logger';
 
-const logger = createLogger('react/search-modal');
+const logger = createLogger('search/modal-react');
 
 export const localStorageKey = {
   enableFullTextSearch: 'enableFullTextSearch',
@@ -94,7 +94,7 @@ export default () => {
 
   const handleSearch = (query: string, isEnableFullTextSearch?: boolean) => {
     if (query) {
-      console.log('Search query:', query);
+      logger?.info(`Searching for "${query}"`);
       searchOnBrowser(query);
       handleUrlChange(query, isEnableFullTextSearch);
     } else {
@@ -135,7 +135,7 @@ export default () => {
   }
 
   const handleEnableFullTextSearchChange = (value: boolean) => {
-    console.log('Enable full text search:', value);
+    logger?.info(`Enable full text search: ${value}`);
     if (value) {
       browserSearch = browserSearchCollection.large;
       browserSearch.init();
@@ -174,7 +174,7 @@ export default () => {
 
   const handleSearchModal = (isModalOpen: boolean) => {
     const action = isModalOpen ? 'open' : 'close';
-    console.log(`SearchModal: Emitting "${searchModalEvent.name}" event, action: "${action}"`);
+    logger?.info(`SearchModal: Emitting "${searchModalEvent.name}" event, action: "${action}"`);
     searchModalEvent.dispatch({ action });
   }
 

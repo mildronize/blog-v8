@@ -19,6 +19,15 @@ function handleSearchUrl(targetElement: HTMLElement | null) {
   }
 }
 
+function isMacOperatingSystem(): boolean {
+  const platform = navigator.platform.toLowerCase();
+  return platform.includes('mac');
+}
+
+function commanderKey() {
+  return isMacOperatingSystem() ? 'CMD + p' : 'CTRL + p';
+}
+
 function commander() {
 
   const searchBox = document.querySelector<HTMLElement>('#placeholder-search-box');
@@ -40,6 +49,7 @@ function commander() {
   searchIcon.addEventListener('click', _openSearchModal);
 
   logger?.info('Initialized');
+  logger?.info(`Press "${commanderKey()}" to open search popup`);
 
 }
 

@@ -30,7 +30,7 @@ export class BrowserLogger implements Logger {
     if (!hasObject) return undefined;
     // Log non-string values
     for (let i = 0; i < messages.length; i++) {
-      if (typeof messages[i] !== "string") console.log(`#${hash}/${i}:`, messages[i]);
+      if (typeof messages[i] !== "string") console.debug(`#${hash}/${i}:`, messages[i]);
     }
     return hash;
   }

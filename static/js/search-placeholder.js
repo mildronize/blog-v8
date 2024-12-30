@@ -1,1 +1,1 @@
-import"./modulepreload-polyfill.js";import{s as o}from"./search-placeholder2.js";import{l as a,g as r,o as c}from"./libs.js";function l(){a("#search-placeholder-root");const e=r("#placeholder-search-box");e.addEventListener("click",()=>c(e,o))}l();
+import"./modulepreload-polyfill.js";import{s as o}from"./browser-logger.js";import{l as a,g as r,o as c}from"./libs.js";function l(){a("#search-placeholder-root");const e=r("#placeholder-search-box");e.addEventListener("click",()=>c(e,o))}l();

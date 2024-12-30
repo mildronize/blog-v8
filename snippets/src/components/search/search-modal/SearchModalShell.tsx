@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { searchModalEvent } from "../search-modal-event.js";
 import { useShortcut } from "./useShortcut.js";
 import SearchModal from "./SearchModal.js";
+import { createLogger } from "../../../utils/browser-logger.js";
+
+const logger = createLogger('search/shell-react');
 
 /**
  * SearchModalShell component, responsible for receiving commands from the commander
@@ -14,7 +17,7 @@ export function SearchModalShell() {
 
   useEffect(() => {
     searchModalEvent.listen((event) => {
-      console.log(`SearchModalShell: Received "${searchModalEvent.name}" event, action: "${event.detail.action}"`);
+      logger?.info(`Received "${searchModalEvent.name}" event, action: "${event.detail.action}"`);
       setIsShow(event.detail.action === 'open');
     });
     return () => {

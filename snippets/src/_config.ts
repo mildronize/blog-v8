@@ -12,7 +12,7 @@ export const config = {
    * - Local development uses "debug" log level
    * - Production uses "info" log level
    */
-  logLevel: "debug" as LogLevel,
+  logLevel: "info" as LogLevel,
   snippetsDir: ".",
   rootDir: '..',
   rootPublicDir,
