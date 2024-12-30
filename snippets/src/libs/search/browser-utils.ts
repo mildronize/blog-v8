@@ -13,3 +13,4 @@ export function joinUrl(hostname: string | undefined, path: string): string {
   }
   return url;
 }
+

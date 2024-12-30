@@ -46,8 +46,8 @@ export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOp
   );
   let totalFileSizeInMegabytes = 0;
   targetIndexPath.forEach((p) => {
-    const stats = fs.statSync(p);
-    totalFileSizeInMegabytes += stats.size / 1024 / 1024;
+    const fileSizeInBytes = fs.statSync(p).size;
+    totalFileSizeInMegabytes += fileSizeInBytes / 1024 / 1024;
   });
   targetIndexPath = targetIndexPath.map((p) => '/' + getRelativePath(p, rootPublicDir));
   await fs.writeJSON(options.searchIndexMetadataPath, {

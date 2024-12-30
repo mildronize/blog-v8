@@ -5,9 +5,9 @@ import fs from 'fs-extra';
 import { composeFrontMatter, extractFrontMatter, generateZolaPostPath } from "./zola";
 import { PostId, IdMapperMetadata, MarkdownFileProcessorMode, MarkdownFileProcessorOutput, MarkdownMetadata } from "./type";
 import { retryNewId } from "./uuid";
-// import removeMd from "remove-markdown";
 import { remark } from 'remark';
 import strip from 'strip-markdown';
+import { thaiWordSegmentation } from "../word-segmentation";
 
 
 export function extractMarkdownMetadata(dir: string, file: string, rawContent: string): MarkdownMetadata {
@@ -27,12 +27,13 @@ export function removeUrls(input: string) {
 }
 
 export async function cleanMarkdownContent(content: string): Promise<string> {
-  // return removeMd(content)
   return removeUrls(String(await remark()
     .use(strip)
     .process(content))
     // Remove new lines
     .replace(/\n/g, ' '))
+    // Remove multiple spaces
+    .replace(/\s\s+/g, ' ')
 }
 
 export interface FileProcessor {
@@ -55,6 +56,7 @@ export class MarkdownFileProcessor implements FileProcessor {
   private logger: Logger;
   private cleanContent: boolean;
   private isIncludeContent: boolean;
+  private enableThaiSegmentationContent: boolean;
 
   constructor(private mode: MarkdownFileProcessorMode, private options: {
     ignoreMarkdownFiles: string[]
@@ -65,12 +67,17 @@ export class MarkdownFileProcessor implements FileProcessor {
      */
     cleanContent?: boolean;
     /**
+     * Enable Thai word segmentation at content
+     */
+    enableThaiSegmentationContent?: boolean;
+    /**
      * Include the content in the output
      */
     isIncludeContent?: boolean;
   }) {
     this.logger = options.logger;
     this.cleanContent = options.cleanContent ?? true;
+    this.enableThaiSegmentationContent = options.enableThaiSegmentationContent ?? true;
     this.isIncludeContent = options.isIncludeContent ?? false;
     this.logger.info(`MarkdownFileProcessor: '${mode}' Mode`);
   }
@@ -121,6 +128,8 @@ export class MarkdownFileProcessor implements FileProcessor {
       let content: string | undefined;
       content = this.isIncludeContent ? result.content : undefined;
       content = content && this.cleanContent ? await cleanMarkdownContent(content) : content;
+      content = content && this.enableThaiSegmentationContent ? thaiWordSegmentation(content) : content;
+
       markdownData.push({
         ...result,
         content,

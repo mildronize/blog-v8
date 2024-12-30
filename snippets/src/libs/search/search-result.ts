@@ -1,6 +1,7 @@
 import { MarkdownMetadata } from '../content';
 import GraphemeSplitter from 'grapheme-splitter';
 import { joinUrl } from './browser-utils';
+// import { prepareWordSegmentation } from './search-index';
 
 export interface RawSearchResult {
   field: string;
@@ -205,13 +206,18 @@ export function createdMatchedTitle(title: string, query: string): string {
  * @returns 
  */
 export function createExcerptWithMultiplesQuery(content: string, query: string, contextSize: number, limit = 3): string[] {
+
+  const simplifedContent = content
+      // Remove '|' from the content
+      .replaceAll('|', '')
+
   const splitQuery = query.split(' ').map((q) => q.trim()).filter((q) => q.length > 0);
   // If there are multiple queries, limit the excerpt to 2, prevent too many excerpts
   const newLimit = splitQuery.length > 1 ? 2 : limit;
   let result: string[] = [];
   for (const q of splitQuery) {
     console.log(`Created excerpt for ${q}`);
-    result.push(createExcerpt(content, q, contextSize, newLimit).join(''));
+    result.push(createExcerpt(simplifedContent, q, contextSize, newLimit).join(''));
     console.log(`Created excerpt for ${q} result: ${result}`);
   }
   return result
@@ -242,11 +248,14 @@ export function createExcerpt(content: string, query: string, contextSize: numbe
     // Calculate the context bounds
     const contextStart = Math.max(0, matchIndex - contextSize);
     const contextEnd = Math.min(safeContent.length, matchIndex + lowerQuery.length + contextSize);
+    // console.log(`Context start: ${contextStart}, context end: ${contextEnd}`);
+    // console.log(`content.length: ${safeContent.length}` , `matchIndex: ${matchIndex}`, `query.length: ${lowerQuery.length}`);
 
     // Extract the context and wrap the matched text with <i></i>
     const beforeMatch = safeContent.slice(contextStart, matchIndex);
-    const matchedText = safeContent.slice(matchIndex, matchIndex + query.length);
-    const afterMatch = safeContent.slice(matchIndex + query.length, contextEnd);
+    const matchedText = safeContent.slice(matchIndex, matchIndex + lowerQuery.length);
+    console.log(`Matched text: ${matchedText}, matchIndex: ${matchIndex}, query.length: ${lowerQuery.length}`);
+    const afterMatch = safeContent.slice(matchIndex + lowerQuery.length, contextEnd);
     const excerpt = `${beforeMatch.toString()}<i>${matchedText.toString()}</i>${afterMatch.toString()}`;
 
     excerpts.push(excerpt.trim());

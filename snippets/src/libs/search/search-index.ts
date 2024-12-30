@@ -9,6 +9,16 @@ export async function searchIndex(index: FlexSearch.Document<unknown, string[]>,
   });
 }
 
+/**
+ * Prepare the input for word segmentation, remove '|' from the input
+ */
+export function prepareWordSegmentation(input: string): string {
+  return input    
+    // Replace '|' with space
+    .replaceAll('|', ' ')
+}
+
+
 export const createFlexSearchIndex = (indexSize: IndexSize, _logger: Logger = new ConsoleLogger()) => new FlexSearch.Document({
   preset: 'match',
   tokenize: indexSize === 'small' ? 'strict' : 'reverse',
@@ -32,7 +42,7 @@ export function buildSearchIndex(options: BuildSearchIndexOptions): FlexSearch.D
     index.add({
       id: item.id,
       title: item.frontmatter.title,
-      content: item.content,
+      content: prepareWordSegmentation(item.content ?? ''),
       tags: (item.frontmatter.taxonomies?.tags ?? []).join(' '),
       // categories: (item.frontmatter.taxonomies?.categories ?? []).join(' '),
     });
