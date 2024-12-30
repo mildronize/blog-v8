@@ -58,6 +58,10 @@
           <span class="sun-icon">{{ sun_icon | safe }}</span>
         </button>
 		    {% endif %}
+        {% set search_icon = load_data(path="static/icon/search.svg") %}
+        <button id="search-header">
+          <span class="search-icon">{{ search_icon | safe }}</span>
+        </button>
       </div>
     </section>
       <section id="brief" class="prose">
@@ -85,9 +89,13 @@
           <a class="instant" href="{{ config.extra.blog_section_path }}">{{ config.extra.recent_more_text }}</a>
         </div>
       </section>
+
     {% endif %}
+    <div class="divider-mt-60"></div>
+    {% include "_footer.html" %}
   </main>
 </div>
+
 {% endblock content %}
 
 {% block script %}

@@ -29,6 +29,36 @@ git submodule update --init --recursive
 make dev
 ```
 
+### How to Debug Frontend with Vite
+
+#### Frontend Centric
+
+Start the server with cors allowed, then you can debug the frontend with Vite
+This will serve the search index file in the `/api` path
+
+```bash
+make serve 
+```
+
+Run the vite server
+
+```bash
+cd snippets && bun install && bun dev
+```
+
+#### Zola Theme Centric
+
+If you want to debug the theme, you can run the Zola server with the following command
+
+```bash
+make dev
+```
+and open another terminal and run the vite server
+
+```bash
+cd snippets && bun install && bun run build:watch
+```
+
 ## 🔑 Generate Azure Credentials
 
 To enable the [Deploy to Azure Static Web App GitHub Action](https://www.notion.so/wrmsoftware/.github/workflows/deploy.yml) for preview environments, you need to generate Azure credentials:

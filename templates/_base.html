@@ -32,8 +32,13 @@
     }
   </script>
   {% endif %}
+  <div id="search-root"></div>
+  <div class="search-modal-loading">Loading Search Modal Component... </div>
   {% block content %}{% endblock content %}
   {% block script %}{% endblock script %}
+  <script type="module" crossorigin src="/js/commander.js"></script>
+  <link rel="stylesheet" crossorigin href="/js/browser-logger.css">
+  <link rel="stylesheet" crossorigin href="/js/search-modal.css">
   <script src="/js/main.js"></script>
 </body>
 

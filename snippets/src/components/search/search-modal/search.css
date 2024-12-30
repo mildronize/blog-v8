@@ -1,0 +1,407 @@
+#search-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--shadow-color-2);
+  z-index: 5;
+
+  opacity: 0;
+  /* Start as invisible */
+  visibility: hidden;
+  /* Hide from view and interaction */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  /* Smooth fade animation */
+}
+
+#search-backdrop.active {
+  opacity: 1;
+  /* Fully visible */
+  visibility: visible;
+  /* Allow interaction */
+}
+
+.app {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-modal-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-modal {
+  width: 95%;
+  padding-top: 5px;
+  padding-bottom: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  max-width: 800px;
+  background: var(--bg-color);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px var(--shadow-color-5);
+  overflow: hidden;
+  position: absolute;
+
+  z-index: 10;
+  top: 70px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 600px) {
+  .search-modal {
+    width: 100%;
+    padding-top: 75px;
+    top: 0px;
+    border-radius: 0px;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow-y: auto;
+  }
+
+}
+
+.results-container {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.result-item {
+  padding: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.result-item h4 {
+  margin: 0 0 5px;
+  font-size: 1em;
+  font-weight: normal;
+  color: var(--primary-color);
+}
+
+
+.result-title {
+  text-decoration: none;
+}
+
+
+.result-title:hover {
+  text-decoration: underline;
+  /* Adds underline on hover */
+  color: var(--primary-color);
+}
+
+.result-item p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.error {
+  color: var(--callout-alert-color);
+  font-size: 14px;
+  padding: 10px;
+}
+
+/**
+  * Checkbox styles
+  */
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+
+/* Explanation text style */
+.checkbox-info {
+  font-size: 0.7em;
+  /* Smaller than the label */
+  color: var(--secondary-text-color, #888);
+  /* Use a subtle color for the info text */
+  margin-left: 28px;
+  /* Indent to align with the label text */
+  line-height: 1.4;
+  /* Improve readability with line spacing */
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 600px) {
+  .checkbox-container {
+    flex-direction: column;
+    /* Stack checkbox and label text */
+    align-items: flex-start;
+  }
+
+  .checkbox-info {
+    margin-left: 0;
+    /* Remove margin to align naturally on a new line */
+    margin-top: 10px;
+    /* Add spacing between label and info text */
+  }
+}
+
+.checkbox-label {
+  font-size: 14px;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.checkbox-label:hover {
+  cursor: pointer;
+}
+
+/* Hide the default checkbox */
+.checkbox {
+  display: none;
+}
+
+/* Custom checkbox */
+.custom-checkbox {
+  width: 18px;
+  height: 18px;
+  background-color: var(--bg-color);
+  /* Use your background color variable */
+  border: 2px solid var(--border-color, #ccc);
+  /* Use var or default border color */
+  border-radius: 4px;
+  /* Rounded corners */
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Change background and border color when checked */
+.checkbox:checked+.custom-checkbox {
+  background-color: var(--primary-color, #4caf50);
+  /* Checked state background */
+  border-color: var(--primary-color, #4caf50);
+}
+
+/* Optional: Add a checkmark */
+.checkbox:checked+.custom-checkbox::after {
+  content: "";
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 6px;
+  height: 10px;
+  border: solid var(--bg-color, white);
+  /* Checkmark color */
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* Hover effect */
+.custom-checkbox:hover {
+  border-color: var(--hover-color, #888);
+  /* Add hover border effect */
+}
+
+/**
+  * Tags styles
+  */
+
+.result-tags {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  /* Spacing between tags */
+  flex-wrap: wrap;
+  /* Wrap tags to the next line if necessary */
+}
+
+.result-tags .tag {
+  padding: 4px 8px;
+  /* Inner padding for the tag */
+  font-size: 0.7em;
+  /* Font size */
+  color: var(--text-color, #333);
+  /* Default text color */
+  background-color: var(--bg-color, #f0f0f0);
+  /* Default background color */
+  border: 1px solid var(--border-color, #ddd);
+  /* Subtle border */
+  border-radius: 10px;
+  /* Rounded corners for a pill shape */
+  transition: all 0.3s ease;
+  /* Smooth transition for hover and focus effects */
+}
+
+.result-tags .tag:hover {
+  background-color: var(--hover-bg-color, #e0e0e0);
+  /* Slightly darker background on hover */
+  border-color: var(--hover-border-color, #ccc);
+  /* Change border color on hover */
+  cursor: pointer;
+}
+
+/* Special styling for matched tags */
+.result-tags .tag.matched {
+  color: var(--text-color, #fff);
+  /* White text for contrast */
+  background-color: var(--highlight-mark-color, #4caf50);
+  /* Modern green background */
+  border-color: var(--highlight-mark-color, #4caf50);
+  /* Border matches background */
+  font-weight: bold;
+  /* Emphasize matched tags */
+}
+
+/**
+  * Result Title & Content Highlight styles
+  */
+
+.result-title i {
+  background-color: var(--text-highlight-color, #fffddb);
+  /* Soft yellow highlight */
+  color: var(--primary-color, #000);
+  /* Text color for contrast */
+  font-weight: bold;
+  font-style: italic;
+  /* Emphasize the highlighted word */
+  padding: 1px 3px;
+  /* Add some padding for better visibility */
+  border-radius: 4px;
+  /* Slightly rounded edges for modern style */
+  font-style: normal;
+  /* Override default italic style of <i> */
+}
+
+.result-content {
+  font-size: 0.8em;
+  line-height: 1.6;
+  color: var(--text-color, #333);
+  /* Use consistent text color */
+}
+
+/* Style all <i> tags within .result-content */
+.result-content i {
+  background-color: var(--primary-pale-color, #fffddb);
+  /* Soft yellow highlight */
+  color: var(--text-color, #000);
+  /* Text color for contrast */
+  font-weight: bold;
+  font-style: italic;
+  /* Emphasize the highlighted word */
+  padding: 1px 3px;
+  /* Add some padding for better visibility */
+  border-radius: 4px;
+  /* Slightly rounded edges for modern style */
+  font-style: normal;
+  /* Override default italic style of <i> */
+}
+
+/**
+  * No result
+  */
+.no-results {
+  font-size: 0.7em;
+  color: var(--blockquote-color);
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.no-results div {
+  margin-top: 10px;
+}
+
+.no-results a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.no-results a:hover {
+  text-decoration: underline;
+}
+
+/**
+  * Loading spinner styles
+  */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  --b: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--primary-color);
+  -webkit-mask:
+    repeating-conic-gradient(#0000 0deg, #000 1deg 70deg, #0000 71deg 90deg),
+    radial-gradient(farthest-side, #0000 calc(100% - var(--b) - 1px), #000 calc(100% - var(--b)));
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+  animation: l5 1s infinite;
+}
+
+@keyframes l5 {
+  to {
+    transform: rotate(.5turn)
+  }
+}
+
+/**
+  * Close message on mobile
+  */
+
+.close-message {
+  font-size: 0.8em;
+  /* Adjust text size */
+  color: var(--bg-color);
+  /* Subtle text color */
+  background: var(--text-pale-color);
+  /* Semi-transparent background for readability */
+  padding: 10px 11px 8px 11px;
+  /* Padding for the text */
+  border-radius: 50%;
+  /* Rounded corners for a modern look */
+  box-shadow: 0 2px 4px var(--shadow-color-1);
+  /* Soft shadow for a floating effect */
+  text-align: center;
+  cursor: pointer;
+}
+
+.close-message:hover {
+  background: var(--primary-color);
+  /* Change background color on hover */
+  color: var(--bg-color);
+  /* Change text color on hover */
+}
+
+/* Fixed-bottom message styling */
+.close-message.fixed {
+  position: fixed;
+  bottom: 20px;
+  /* Adjust space from the bottom of the viewport */
+  left: 50%;
+  transform: translateX(-50%);
+  /* Center horizontally */
+  visibility: hidden;
+}
+
+@media screen and (max-width: 600px) {
+  .close-message.fixed {
+    /* Rounded corners for a modern look */
+    visibility: visible;
+  }
+
+}
