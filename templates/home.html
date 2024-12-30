@@ -58,6 +58,10 @@
           <span class="sun-icon">{{ sun_icon | safe }}</span>
         </button>
 		    {% endif %}
+        {% set search_icon = load_data(path="static/icon/search.svg") %}
+        <button id="search-header">
+          <span class="search-icon">{{ search_icon | safe }}</span>
+        </button>
       </div>
     </section>
       <section id="brief" class="prose">
