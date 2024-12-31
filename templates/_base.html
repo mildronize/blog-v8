@@ -13,14 +13,18 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
   {% include "_custom_font.html" %}
   {% include "_custom_css.html" %}
-  <link rel="stylesheet" href="/main.css">
+  <!-- Preload CSS for Prevent Layout Shifting -->
+  <link rel="preload" rel="stylesheet" href="/preload-main.css" />
+  <!-- Load CSS Asynchronously -->
+  <link rel="preload" rel="stylesheet" href="/main.css" media="print"
+    onload="this.onload=null;this.removeAttribute('media');" fetchpriority="high">
   {% block head %}{% endblock head %}
   {% include "_head_extend.html" %}
   {%- block seo %}
   {%- endblock seo %}
 </head>
 
-<body class="{% block page %}{% endblock page%}{% if config.extra.force_theme == "dark" %}dark{% endif %}">
+<body class="{% block page %}{% endblock page%}{% if config.extra.force_theme == " dark" %}dark{% endif %}">
   {% if not config.extra.force_theme %}
   <script>
     const theme = sessionStorage.getItem('theme');

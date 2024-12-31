@@ -1,0 +1,125 @@
+/**
+  * Prevent Layout Shifts
+  */
+
+/* homepage
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+body.homepage {
+  #wrapper {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--homepage-font-size);
+  }
+
+  main {
+    width: 100%;
+    max-width: var(--homepage-max-width);
+    min-height: 75vh;
+    min-height: 75dvh;
+    padding: 4em 0;
+
+    @media screen and (max-width: 425px) {
+      & {
+        padding: 2em 0;
+      }
+    }
+  }
+
+  #info {
+    padding: 0 15px;
+    display: flex;
+    gap: 1em;
+
+    img {
+      height: var(--avatar-size);
+      width: var(--avatar-size);
+      border-radius: 50%;
+    }
+
+    #text {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      line-height: 1.5;
+      gap: 0.5em;
+    }
+
+    #name,
+    #id {
+      font-size: 1.1em;
+    }
+
+    #id {
+      margin-left: 0.5em;
+      color: var(--primary-color);
+    }
+
+    #bio {
+      color: var(--text-pale-color);
+      font-weight: 300;
+    }
+  }
+
+  #links {
+    padding: 0 15px;
+    margin: 1.75em 0 1.75em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1em;
+    font-size: 1.1em;
+
+    a,
+    button {
+      text-decoration: none;
+      color: var(--text-color);
+
+      @media (hover: hover) {
+        &:hover {
+          color: var(--primary-color);
+        }
+      }
+    }
+
+    #left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+
+      a {
+        border-bottom: 1.5px solid var(--primary-color);
+        line-height: 1.5;
+      }
+    }
+
+    #right {
+      display: flex;
+      gap: 0.5em;
+
+      button {
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+      }
+    }
+
+    @media (max-width: 425px) {
+      #left {
+        gap: 0.75em;
+      }
+    }
+  }
+
+  #brief {
+    padding: 0 15px;
+    font-size: 1em;
+    line-height: var(--homepage-line-height);
+  }
+}
