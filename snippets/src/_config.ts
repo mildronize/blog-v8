@@ -13,6 +13,7 @@ export const config = {
    * - Production uses "info" log level
    */
   logLevel: "info" as LogLevel,
+  enableThaiSegmentationContent: false,
   snippetsDir: ".",
   rootDir: '..',
   rootPublicDir,

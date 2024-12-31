@@ -12,6 +12,7 @@ async function buildSearchMetadata() {
       searchIndexPath: config.searchIndex[indexSize].dir,
       searchIndexMetadataPath: config.searchIndex[indexSize].metadataPath,
       rootPublicDir: config.rootPublicDir,
+      enableThaiSegmentationContent: config.enableThaiSegmentationContent,
     });
   }
 }

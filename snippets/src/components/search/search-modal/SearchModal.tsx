@@ -7,6 +7,7 @@ import { SearchResult } from '../../../libs/search/search-result';
 import { useSearchBrowser } from './useSearchBrowser';
 import { searchModalEvent } from '../search-modal-event';
 import { createLogger } from '../../../utils/browser-logger';
+import { config } from '../../../_config';
 
 const logger = createLogger('search/modal-react');
 
@@ -16,7 +17,8 @@ export const localStorageKey = {
 
 const sharedOptions = {
   hostname: import.meta.env.VITE_SEARCH_METADATA_HOSTNAME,
-  postMetadataPath: '/api/post-metadata.json'
+  postMetadataPath: '/api/post-metadata.json',
+  enableThaiSegmentationContent: config.enableThaiSegmentationContent,
 }
 
 // Initialize the BrowserSearch instance, make sure it's singleton

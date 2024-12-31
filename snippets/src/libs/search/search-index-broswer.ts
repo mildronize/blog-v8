@@ -64,6 +64,10 @@ interface BroswerSearchOptions {
    */
   hostname?: string;
   indexSize: IndexSize;
+  /**
+   * Enable Thai segmentation content
+   */
+  enableThaiSegmentationContent?: boolean;
 }
 
 export class BrowserSearch {
@@ -119,6 +123,7 @@ export class BrowserSearch {
       postMetadata: this.postMetadata,
       hostname: this.options.hostname,
       query,
+      enableThaiSegmentationContent: this.options.enableThaiSegmentationContent,
     });
   }
 

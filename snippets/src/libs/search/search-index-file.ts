@@ -25,7 +25,12 @@ function getRelativePath(path: string, rootPath: string): string {
 
 export async function executeBuildSearchIndex(options: ExecuteBuildSearchIndexOptions): Promise<FlexSearch.Document<unknown, string[]>> {
   const { cwd = process.cwd(), postMetadataFile, searchIndexPath, indexSize, rootPublicDir } = options;
-  const postData = await readAllMarkdown(cwd, postMetadataFile, pinoLogBuilder('readAllMarkdown', 'info'));
+  const postData = await readAllMarkdown({
+    cwd,
+    targetFile: postMetadataFile,
+    enableThaiSegmentationContent: options.enableThaiSegmentationContent,
+    logger: pinoLogBuilder('readAllMarkdown', 'info')
+  });
   const index = buildSearchIndex({
     markdownData: postData.markdownData,
     indexSize,
