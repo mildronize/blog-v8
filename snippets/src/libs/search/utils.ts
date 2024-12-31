@@ -9,8 +9,16 @@ import { ConsoleLogger } from '../../utils/console-logger';
 
 const { sourceDirectories, ignoreMarkdownFiles } = config.blogIdModule;
 
-export async function readAllMarkdown(cwd: string = process.cwd(), targetFile: string, logger: Logger = new ConsoleLogger()): Promise<MarkdownFileProcessorOutput> {
-  const processor = new MarkdownFileProcessor('read', { ignoreMarkdownFiles, logger, isIncludeContent: true });
+export interface ReadAllMarkdownOptions {
+  cwd?: string;
+  targetFile: string;
+  logger?: Logger;
+  enableThaiSegmentationContent?: boolean;
+}
+
+export async function readAllMarkdown(options: ReadAllMarkdownOptions): Promise<MarkdownFileProcessorOutput> {
+  const { cwd = process.cwd(), targetFile, logger = new ConsoleLogger(), enableThaiSegmentationContent } = options;
+  const processor = new MarkdownFileProcessor('read', { ignoreMarkdownFiles, logger, isIncludeContent: true, enableThaiSegmentationContent });
   const processorOutput = await processMarkdownDirectories(sourceDirectories, processor, logger, cwd) ?? new Map();
 
   // Ensure target directory exists

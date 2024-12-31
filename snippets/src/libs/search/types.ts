@@ -23,6 +23,10 @@ export interface ExecuteBuildSearchIndexOptions {
    * Index Size
    */
   indexSize: IndexSize;
+  /**
+   * Enable Thai word segmentation
+   */
+  enableThaiSegmentationContent?: boolean;
 }
 
 export interface BuildSearchIndexOptions {

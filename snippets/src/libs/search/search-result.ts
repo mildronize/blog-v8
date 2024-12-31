@@ -53,6 +53,7 @@ export interface SerializeSearchResultOptions {
   rawResult: RawSearchResult[];
   postMetadata: MarkdownMetadata[];
   hostname?: string;
+  enableThaiSegmentationContent?: boolean;
 }
 
 /**
@@ -99,7 +100,13 @@ export function postProcessSearchResult(searchResult: SearchResult[], options: S
     }
     result.tags = createMatchedTag(metadata.frontmatter.taxonomies?.tags ?? [], options.query);
     if (result.field.includes('content')) {
-      result.excerpt = createExcerptWithMultiplesQuery(metadata.content ?? '', options.query, 50, 3)
+      result.excerpt = createExcerptWithMultiplesQuery({
+        content: metadata.content ?? '',
+        query: options.query,
+        contextSize: 50,
+        limit: 3,
+        enableThaiSegmentationContent: options.enableThaiSegmentationContent
+      })
     }
   }
   return searchResult;
@@ -200,6 +207,23 @@ export function createdMatchedTitle(title: string, query: string): string {
   return title.replace(new RegExp(query, 'gi'), (match) => `<i>${match}</i>`);
 }
 
+export interface CreateExcerptOptions {
+  content: string;
+  query: string;
+  contextSize: number;
+  /**
+   * Limit the number of excerpts
+   * @default 3
+   */
+  limit?: number;
+  /**
+   * Enable Thai segmentation for the content
+   * 
+   * @default false
+   */
+  enableThaiSegmentationContent?: boolean;
+}
+
 /**
  * Support creating excerpt for the search result, highlight the matched text
  * also add context before and after the matched text,
@@ -207,11 +231,12 @@ export function createdMatchedTitle(title: string, query: string): string {
  * This also support query with spaces
  * @returns 
  */
-export function createExcerptWithMultiplesQuery(content: string, query: string, contextSize: number, limit = 3): string[] {
+export function createExcerptWithMultiplesQuery(options: CreateExcerptOptions): string[] {
+  const { content, query, contextSize, limit = 3, enableThaiSegmentationContent = false } = options
 
-  const simplifedContent = content
+  const simplifedContent = enableThaiSegmentationContent ? content
       // Remove '|' from the content
-      .replaceAll('|', '')
+      .replaceAll('|', '') : content;
 
   const splitQuery = query.split(' ').map((q) => q.trim()).filter((q) => q.length > 0);
   // If there are multiple queries, limit the excerpt to 2, prevent too many excerpts
