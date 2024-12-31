@@ -10,7 +10,8 @@
 
 {% block head %}
 {% if config.markdown.highlight_theme == "css" %}
-<link id="hl" rel="stylesheet" type="text/css" href="/hl-{% if config.extra.force_theme == "dark" %}dark{% else %}light{% endif %}.css" />
+<link id="hl" rel="stylesheet" type="text/css" href="/hl-{% if config.extra.force_theme == "dark" %}dark{% else %}light{% endif %}.css" 
+  media="print" onload="this.onload=null;this.removeAttribute('media'); "/>
 {% endif %}
 {% if section.extra.math %}
   {{ macro_math::math_render(style = section.extra.math) }}
