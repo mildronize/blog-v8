@@ -3,4 +3,8 @@ static/js/src
 
 .DS_Store
 
-.obsidian
+# Ignore Obsidian app data
+
+content/.obsidian/appearance.json
+content/.obsidian/core-plugins.json
+content/.obsidian/workspace.json
