@@ -3,9 +3,13 @@ title = "Effect: จัดการปัญหาที่ยากที่ส
 date = "2025-01-10"
 
 [taxonomies]
-tags = [ "Effect", "TypeScript", "Type-Safety"]
+tags = [ "Effect", "TypeScript", "Type-Safety" ]
 categories = [ "TypeScript" ]
+
+[extra]
+id = "8wpo3jn"
 +++
+
 
 สวัสดีครับ วันนี้เรามาพบกับบทความ [Effect](https://effect.website/) ที่เคยสัญญากับลูกเพจ ThaiType ว่าจะมี Video และผมก็ได้พลัดมาเรื่อยๆ เนื่องจากไม่ค่อยได้จับ TypeScript ในงานเท่าไหร่ จนถึงเวลาที่ต้องเขียนบทความล่ะ 
 
