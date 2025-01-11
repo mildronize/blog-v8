@@ -27,12 +27,15 @@ id = "8wpo3jn"
 
 สุดท้ายนี้ อย่างที่บอกไปว่าผมไม่ได้เน้นให้คนเขียน Functional อ่าน ดังนั้นผมคาดหวังว่าแค่เขียน TypeScript มาก็น่าจะอ่านเข้าใจได้ง่ายแล้ว และคนสร้าง Effect เอง ก็ต้องการซ่อนความเป็น Functional Programming ออกจาก Effect และเสนอ Programming Paradiagm ที่ใช้เฉพาะกับ Effect เท่านั้น เพื่อให้คนใช้งานสามารถใช้ได้ง่าย
 
-และอาจจะมีหลายๆ คนอาจจะไม่เห็นด้วยความคิดเห็นผม อย่างไรก็ตามผมอยากให้ลองเอา Result Concept ไปลองเขียนดูโดยไม่ใช่ Effect สักระยะ จะเห็นว่า มันไม่ Smooth เหมือนเขียน Rust เท่าไหร่นัก เดี๋ยวผมจะอธิบายความไม่ smooth ต่อๆ ไป ครับ
+และอาจจะมีหลายๆ คนอาจจะไม่เห็นด้วยความคิดเห็นผม อย่างไรก็ตามผมอยากให้ลองเอา Result Concept ไปลองเขียนดูโดยไม่ใช่ Effect สักระยะ จะเห็นว่า มันไม่ Smooth เหมือนเขียน Rust เท่าไหร่นัก เดี๋ยวผมจะอธิบายความไม่ smooth ต่อๆ ไป ครับ หรือสามารถเข้ามาพูดคุยกันได้ครับ
 {% end %}
 
-## 1. ปัญหาของ JavaScript/TypeScript
+## 1. ปัญหาของ TypeScript (หรือ JavaScript)
 
-`null` ของ JavaScript หรือ TypeScript เองถูกใช้อย่างแพร่หลายเพราะตัวภาษากำหนดค่าของตัวแปรเอาไว้ แต่ปัญหาหลักๆ ของ `null` คือ
+ในภาษา [JavaScript เกิดขึ้นครั้งแรกเพื่อสำหรับการใช้งานบน Browser](https://cybercultural.com/p/1995-the-birth-of-javascript/)  และมันก็ถูกเอามาใช้งานแพร่หลายและหลาย Runtime ไม่ว่าจะเป็นฝั่ง Server-side อย่าง Node.js หรือ [Bun](https://bun.sh/) ในปัจจุบัน 
+ซึ่งใน JavaScript เองก็ถูกพัฒนาอย่างต่อเนื่องจนกระทั่ง 10 ปีที่แล้ว ได้มีภาษา TypeScript ที่เติม Type ให้กับ JavaScript
+
+ในส่วนนี้จะอธิบายถึงปัญหาของค่าของ`null` ของ JavaScript หรือ TypeScript เองถูกใช้อย่างแพร่หลายเพราะตัวภาษากำหนดค่าของตัวแปรเอาไว้ แต่ `null` เองก็มีปัญหาหลายๆ อย่าง รวมถึงปัญหาเรื่องการ Infer Type ของ TypeScript เวลา throw Error หรือแม้แต่เรื่องของการเรียก Try/Catch หลายๆ ชั้น หลายๆ คนเรียกว่า Try/Catch Hell 
 
 ### 1.1 เมื่อค่าของตัวแปรเป็น null มันอาจจะทำให้ Error โดยเราไม่รู้ตัว
 ซึ่งมันอาจจะนำไปสู่ข้อผิดพลาด NullReferenceException ก็ได้ครับ
@@ -58,7 +61,7 @@ console.log(product?.name);
 {% end %}
 
 ### 1.2 มีตัวแปรมีโอกาสเป็น null ทำให้โค๊ดดูยุ่งเหยิง
-เวลาที่มันเกิด null มันจะต้องทำให้เราต้องตรวจสอบค่าของ null อย่างละเอียดถี่ถ้วนทำให้เกิด if/else มากมาย และทำให้โค๊ดอ่านยาก หรือยิ่งเรามี null ซ้อนลงไปลึกๆ แล้วก็ต้องยิ่งตรวจสอบเยอะ
+เวลาที่มันมีโอกาสเกิด null มันจะต้องทำให้เราต้องตรวจสอบค่าของ null อย่างละเอียดถี่ถ้วน จึงทำให้เกิด if/else มากมาย และทำให้โค๊ดอ่านยาก หรือยิ่งเรามี null ซ้อนลงไปลึกๆ แล้วก็ต้องยิ่งตรวจสอบเยอะ
 
 ```ts
 function getProductById(id: number): Product | null {
@@ -73,11 +76,34 @@ if (product !== null) {
 }
 ```
 
+จากตัวอย่างเราจะเห็นว่าเพียงแค่ต้องการตรวจสอบว่า `product` มีค่าเป็น null หรือไม่เราต้องเพิ่ม if/else เพิ่ม ทำให้มีจำนวนบรรทัดที่ต้องทำความเข้าใจเพิ่ม
+ 
+{% tip(header="Tip") %}
+ถ้าเราตั้ง `tsconfig.json` ว่าตาม Tip ข้างบน เราก็สามารถใช้ **Nullish coalescing (`??`)** ได้เหมือนกัน
+
+```ts
+console.log(product?.name ?? 'Product not found');
+```
+{% end %}
+
+จากเหตุผลที่ว่าจากข้อ 1.1 และ 1.2 เราจะเห็นว่า ปัญหาดังกล่าว ถ้าเราใช้งาน TypeScript และ Setup เป็นไปตาม[การตรวจสอบ Type ที่ดีของ Official Document](https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html#getting-stricter-checks) และหากเราเป็นผู้ใช้งาน JavaScript หรือกำลัง [Migrate Code จาก JavaScript ไปยัง TypeScript](https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html) นั้น เราจึงไม่สามารถเปิด Option อย่าง `strict=true` ได้ทันทีทันใดได้ ปัญหาหล่าวนี้ก็ยังคงอยู่
+### 1.3 ปัญหาความเข้าใจผิด เมื่อเกิด null
+ในหลายๆ ครั้ง `null` ถูกนำไปใช้หลายสถานการณ์ เช่น ถ้าเราเขียนฟังก์ชั่น `getProduct` แล้วได้ `null` คำถามคือ `null` แปลว่าไม่มีข้อมูล หรือ มี Error เกิดขึ้นกันแน่
+### 1.4 ปัญหาความเข้ากันได้ เมื่อมีโอกาสเกิด null
+ในบางครั้งเราเห็นว่าการที่เราเรียกใช้ Library ที่แตกต่างกัน หรือรวมระบบที่แตกต่างกัน จะเห็นว่ามีการอ้างอิงที่ `null` ที่ความหมายแตกต่างกันได้ หรือในบางครั้ง อาจจะใช้ `undefined` มาปะปนกับ `null` ด้วย ทำให้เกิดความเข้าใจกัน ในการสื่อสารได้
+
+จากเหตุผลที่ว่าจากข้อ 1.3 และ 1.4 เราจะเห็นว่า `null` หรือ `undefined` ถูกนำไปใช้ปะปนกัน และอาจจะนำไปสู่ความเข้าใจผิดได้ ซึ่งในรายละเอียด พี่รูฟ ได้เขียน[บทความอธิบายปัญหาของ `null`](https://medium.com/odds-team/%E0%B8%97%E0%B8%B3%E0%B9%84%E0%B8%A1%E0%B9%88-null-%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%AA%E0%B8%B4%E0%B9%88%E0%B8%87%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%84%E0%B8%A7%E0%B8%A3%E0%B8%AB%E0%B8%A5%E0%B8%B5%E0%B8%81%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%87-typescript-00be4f158df9) ไว้อย่างเข้าใจง่ายแล้ว 
+
+### 1.5 ปัญหา Try/Catch Hell
+
+หลายๆ คนอาจจะเคยได้ยินปัญหา If/Else Hell หรือ Callback Hell กันมาบ้างแล้ว ซึ่งในบทความของคุณ  [Bret Cameron](https://levelup.gitconnected.com/i-fixed-error-handling-in-javascript-4e3c1a28a292) ได้พูดถึงการปัญหาของ Try/Catch hell
+
+### 1.6  No Type in Error when throwing Error
 
 
+### 1.7 ปัญหา Type เรื่องของ exhaustive check บน Switch Case
 
-- `null` ในภาษา TypeScript
-- No Type in Error when throwing Error
+
 
 ## Option/Result/Either
 - .....
@@ -107,6 +133,12 @@ if (product !== null) {
 
 การที่ต้องแปลงระหว่าง 2 โลก ซึ่งมันไม่สะดวก
 
+และปัญหา Classic ของ ซึ่งที่ยังไม่ใช่ Standard คือ
+มันยังไม่เป็น Standard ในโลก JavaScript มีการนำไปประยุกต์ใช้งานบางกลุ่ม
+และยังไม่เหมาะสำหรับนำไปเขียนใน Library เท่าไหร่นัก
+
+## เปลี่ยนกรอบความคิด โดยการละทิ้ง Promise ไป
+
 Effect.website ทำออกมาเนียบมาก คือ interope ระหว่าง 2 โลกแทบไม่มีเลย
 
 เค้าใช้วิธีคือทิ้ง concept เดิมที่คนใช้อย่างแพร่หลายออกไปทั้งหมดเลย นั่นคือไม่สนใช้ Promise เพราะมัน handle expcected error ยาก แล้วนิยามใหม่ด้วย Object ที่ชื่อว่า Effect ทดแทน การใช้ Promise แบบเดิมทั้งหมดเลย
@@ -116,8 +148,6 @@ Effect.website ทำออกมาเนียบมาก คือ interope 
 แต่ก็มีตัว convert ข้ามไปข้ามมาระหว่างสองโลกนะ แต่ lib Result/Option ส่วนใหญ่พอแปลงไปแล้วมัน map ผลลัพธ์ที่ออกมาจาก Result ได้ไมาเยอะ จุดสุดท้าย ยังไงเราก็ต้องถูกบังคับให้ออกมาอยู่โลกของ Promise อยู่
 
 แต่เจ้า Effect ที่ว่าเราสามารถเขียน code ในโลกของมันได้แบบปกติเลย โดยใช้ generator ทดแทน async/await โดยที่เขียนเป็น imperative ได้เลย โดยจะส่ง value ออกมา โดยใช้ Yield แทน มันก็เลยทำให้ Effect น่าสนใจมากในการจัดการกับ Error และโลกของ never throw any exception
-
-## Why Effect
 
 
 1. เล่าคล้ายๆ อันนี้ [https://www.youtube.com/watch?v=zrNr3JVUc8I](https://www.youtube.com/watch?v=zrNr3JVUc8I)
@@ -133,7 +163,11 @@ Effect.website ทำออกมาเนียบมาก คือ interope 
 
 ## Conclusion
 
+Effect เข้ามาเชื่อมระหว่าง 2 โลก ให้ง่ายขึ้นและเข้าใจง่ายขึ้น
 
+และปัญหา Classic ของ ซึ่งที่ยังไม่ใช่ Standard คือ
+มันยังไม่เป็น Standard ในโลก JavaScript มีการนำไปประยุกต์ใช้งานบางกลุ่ม
+และยังไม่เหมาะสำหรับนำไปเขียนใน Library เท่าไหร่นัก
 
 ## Effect Ref
 
