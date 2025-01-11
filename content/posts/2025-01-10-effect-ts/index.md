@@ -96,7 +96,46 @@ console.log(product?.name ?? 'Product not found');
 
 ### 1.5 ปัญหา Try/Catch Hell
 
-หลายๆ คนอาจจะเคยได้ยินปัญหา If/Else Hell หรือ Callback Hell กันมาบ้างแล้ว ซึ่งในบทความของคุณ  [Bret Cameron](https://levelup.gitconnected.com/i-fixed-error-handling-in-javascript-4e3c1a28a292) ได้พูดถึงการปัญหาของ Try/Catch hell
+หลายๆ คนอาจจะเคยได้ยินปัญหา If/Else Hell หรือ Callback Hell กันมาบ้างแล้ว ซึ่งในบทความของคุณ  [Bret Cameron](https://levelup.gitconnected.com/i-fixed-error-handling-in-javascript-4e3c1a28a292) ได้พูดถึงการปัญหาของ Try/Catch hell ยกตัวอย่างเช่น เราต้องการเขียนอ่านข้อมูลจากไฟล์แล้วเอามาประมวลผลอะไรบางอย่าง 
+
+```ts
+function processFile() {
+  try {
+    function openFile() {
+      try {
+        function readFile() {
+          try {
+            // Simulate reading a file that might throw an error
+            throw new Error("File format is incorrect");
+          } catch (error) {
+            console.error("Error in readFile: ", error.message);
+          }
+        }
+        readFile();
+      } catch (error) {
+        console.error("Error in openFile: ", error.message);
+      }
+    }
+    openFile();
+  } catch (error) {
+    console.error("Error in processFile: ", error.message);
+  }
+}
+```
+
+จะเห็นว่าการเขียนแบบนี้ทำให้อ่านและเข้าใจได้ยาก  
+
+```ts
+function processFile() {
+  try {
+    const fileContent = openFile();
+    const fileData = readFile(fileContent);
+    console.log("File processed successfully:", fileData);
+  } catch (error) {
+    console.error("An error occurred:", error.message);
+  }
+}
+```
 
 ### 1.6  No Type in Error when throwing Error
 
@@ -123,37 +162,50 @@ console.log(product?.name ?? 'Product not found');
 
 และผมเองได้ก็มีโอกาสศึกษาและพัฒนา Library Option & Result ใช้งานเองที่ชื่อว่า [std-types](https://github.com/thaitype/std-typed) และทำให้เข้าใจว่าทำ Option และ Result ถึงไม่เป็นที่นิยม ทั้งๆ ที่หลายๆ ภาษาที่ไม่ใช่ Functional 
 
-### ตัวอย่าง Library
+### ตัวอย่างไลบรารี Option และ Result
+มีไลบรารีหลายตัวใน TypeScript ที่ได้รับความนิยมในการใช้ `Option` และ `Result` ได้แก่:
 - [fp-ts](https://github.com/gcanti/fp-ts) (Star: 10.9k) เป็น Functional Programming Library ที่ครบเครื่องที่สุดใน TypeScript ตอนนี้ Library นี้ไปรวมกับ Effect แล้วครับ
 - [neverthrow](https://github.com/supermacro/neverthrow) (Star: 4.2k) เป็น Result Library ที่สามารถใช้ได้ทั้งแบบ Sync และ Async และมี utility function สำหรับส่งต่อผลลัพธ์ใน Result Ecosystem เดียวกันด้วย
-- [ts-results](https://github.com/vultix/ts-results) (Star: 1.2k) เป็น Result Library เช่นเดียวกัน
-- [typescript-result](https://github.com/everweij/typescript-result) (Star: 127) เป็น Result Library เช่นเดียวกัน
+- [ts-results](https://github.com/vultix/ts-results) (Star: 1.2k) ไลบรารี `Result` ที่มี API เรียบง่าย
+- [typescript-result](https://github.com/everweij/typescript-result) (Star: 127) ไลบรารี `Result` เล็กๆ ตัวนึง
 
 ## ปัญหาของ Option และ Result
 
-การที่ต้องแปลงระหว่าง 2 โลก ซึ่งมันไม่สะดวก
+การที่ต้องแปลงระหว่าง 2 โลก ซึ่งมันไม่สะดวก ...
 
-และปัญหา Classic ของ ซึ่งที่ยังไม่ใช่ Standard คือ
-มันยังไม่เป็น Standard ในโลก JavaScript มีการนำไปประยุกต์ใช้งานบางกลุ่ม
-และยังไม่เหมาะสำหรับนำไปเขียนใน Library เท่าไหร่นัก
-
-## เปลี่ยนกรอบความคิด โดยการละทิ้ง Promise ไป
-
-Effect.website ทำออกมาเนียบมาก คือ interope ระหว่าง 2 โลกแทบไม่มีเลย
-
-เค้าใช้วิธีคือทิ้ง concept เดิมที่คนใช้อย่างแพร่หลายออกไปทั้งหมดเลย นั่นคือไม่สนใช้ Promise เพราะมัน handle expcected error ยาก แล้วนิยามใหม่ด้วย Object ที่ชื่อว่า Effect ทดแทน การใช้ Promise แบบเดิมทั้งหมดเลย
-
-ซึ่ง Object Effect นั้นก็คล้ายๆ กับ Result ของ Higher Kind Type ใน Fp นั้นแหละ
-
-แต่ก็มีตัว convert ข้ามไปข้ามมาระหว่างสองโลกนะ แต่ lib Result/Option ส่วนใหญ่พอแปลงไปแล้วมัน map ผลลัพธ์ที่ออกมาจาก Result ได้ไมาเยอะ จุดสุดท้าย ยังไงเราก็ต้องถูกบังคับให้ออกมาอยู่โลกของ Promise อยู่
-
-แต่เจ้า Effect ที่ว่าเราสามารถเขียน code ในโลกของมันได้แบบปกติเลย โดยใช้ generator ทดแทน async/await โดยที่เขียนเป็น imperative ได้เลย โดยจะส่ง value ออกมา โดยใช้ Yield แทน มันก็เลยทำให้ Effect น่าสนใจมากในการจัดการกับ Error และโลกของ never throw any exception
+### เปลี่ยนกรอบความคิด โดยการละทิ้ง Promise ไป
 
 
 1. เล่าคล้ายๆ อันนี้ [https://www.youtube.com/watch?v=zrNr3JVUc8I](https://www.youtube.com/watch?v=zrNr3JVUc8I)
 	1. กับ [https://www.youtube.com/watch?v=PxIBWjiv3og](https://www.youtube.com/watch?v=PxIBWjiv3og)
 	2. [https://youtu.be/SloZE4i4Zfk?si=j34szF3POk2F0p52](https://youtu.be/SloZE4i4Zfk?si=j34szF3POk2F0p52)
 	3. [https://www.youtube.com/watch?v=Mikn2MXPaNg](https://www.youtube.com/watch?v=Mikn2MXPaNg)
+
+
+ไลบรารี `Effect` เลือกที่จะละทิ้งแนวคิด `Promise` ที่แพร่หลาย และกำหนดโครงสร้างใหม่ที่ชื่อว่า `Effect` เพื่อคิดใหม่เกี่ยวกับการจัดการข้อผิดพลาดและการเขียนโปรแกรมอะซิงโครนัส แนวทางนี้มีรากฐานมาจากประเภทข้อมูลสูง (Higher-Kinded Types) คล้ายกับ `Result` แต่เพิ่มความสามารถและความยืดหยุ่นมากขึ้น
+
+#### คุณสมบัติเด่นของ Effect:
+
+1. **รองรับการทำงานร่วมกับแนวคิดเดิม**: แม้ว่า `Effect` จะนำเสนอแนวคิดใหม่ แต่ก็มีเครื่องมือสำหรับแปลงกลับไปกลับมาระหว่าง `Effect` และ `Promise` เพื่อให้การใช้งานสามารถค่อย ๆ ปรับตัวได้
+2. **รูปแบบการเขียนโปรแกรมแบบ Imperative**: `Effect` ใช้ generators ทำให้สามารถเขียนโค้ดอะซิงโครนัสในรูปแบบ imperative ได้ โดยใช้ `yield` แทน `async/await` ซึ่งช่วยให้โค้ดอ่านง่ายและเข้าใจง่าย
+3. **การจัดการข้อผิดพลาดแบบ Never-Throw**: ต่างจาก `Promise` ที่อาจส่งผ่านข้อยกเว้นที่ไม่ได้จัดการ `Effect` บังคับให้มีการจัดการข้อผิดพลาดอย่างชัดเจน ทำให้โค้ดมีความคาดการณ์ได้และมีความทนทาน
+
+#### ข้อดีของ Effect
+
+- ขจัดความยุ่งยากในการเปลี่ยนผ่านระหว่าง `Option`/`Result` และ `Promise`
+- ส่งเสริมแนวทางที่เป็นหนึ่งเดียว ทำให้สามารถเขียนโค้ดในโลกของ `Effect` ได้โดยไม่ต้องแปลงค่ากลับไปกลับมา
+- ให้การจัดการข้อผิดพลาดที่แข็งแรง ลดปัญหาที่เกิดขึ้นใน runtime
+### ข้อจำกัดและทิศทางในอนาคต
+
+แม้ `Effect` จะมีศักยภาพสูง แต่ก็ยังมีข้อจำกัดบางประการ:
+
+- **ยังไม่เป็นมาตรฐาน**: `Effect` ยังไม่ได้รับการยอมรับเป็นมาตรฐานใน ecosystem ของ JavaScript
+- **การรวมเข้ากับไลบรารีอื่น**: ไลบรารีและเฟรมเวิร์กที่มีอยู่ยังคงพึ่งพา `Promise` ทำให้การรวม `Effect` เข้ากับระบบเหล่านี้เป็นเรื่องท้าทาย
+- **การใช้งานเฉพาะกลุ่ม**: แม้เหมาะสำหรับบางโปรเจกต์ แต่ `Effect` อาจยังไม่เหมาะสำหรับการพัฒนาไลบรารีทั่วไปในขณะนี้
+
+### สรุป
+
+แนวทาง `Effect` เสนอทางเลือกที่น่าสนใจสำหรับการเขียนโปรแกรมอะซิงโครนัสใน JavaScript โดยแก้ปัญหาสำคัญใน workflow ที่ใช้ `Promise` แนวทางนี้ช่วยให้การจัดการข้อผิดพลาดมีประสิทธิภาพมากขึ้น และลดความยุ่งยากในการเขียนโปรแกรมเชิงฟังก์ชันใน TypeScript แม้ `Effect` จะยังอยู่ในช่วงเริ่มต้น แต่ก็มีศักยภาพที่จะเปลี่ยนวิธีการจัดการข้อผิดพลาดและงานอะซิงโครนัสในโปรเจกต์ TypeScript ได้ในอนาคต
 
 ## Introduction to Effect
 - 
@@ -168,6 +220,11 @@ Effect เข้ามาเชื่อมระหว่าง 2 โลก ใ
 และปัญหา Classic ของ ซึ่งที่ยังไม่ใช่ Standard คือ
 มันยังไม่เป็น Standard ในโลก JavaScript มีการนำไปประยุกต์ใช้งานบางกลุ่ม
 และยังไม่เหมาะสำหรับนำไปเขียนใน Library เท่าไหร่นัก
+
+## อ่านเพิ่มเติม
+- เป็นบทความที่อธิบายเรื่อง Effect ได้ดีมากๆ และนำเสนอปัญหาของ JavaScript และ Promise แบบดั่งเดิม [https://github.com/antoine-coulon/effect-introduction](https://github.com/antoine-coulon/effect-introduction)
+- Effect Crash Course: [https://github.com/pigoz/effect-crashcourse](https://github.com/pigoz/effect-crashcourse)
+- Blog Effect: [https://dnlytras.com/blog/effect-ts](https://dnlytras.com/blog/effect-ts)
 
 ## Effect Ref
 
