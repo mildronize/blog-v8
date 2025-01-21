@@ -4,8 +4,12 @@ date = "2025-01-21"
 
 [taxonomies]
 categories = [ "API" ]
-tags = [ "API", "Security", "System Design", "Azure", "Azure Table"]
+tags = [ "API", "Security", "System Design", "Azure", "Azure Table" ]
+
+[extra]
+id = "1fpztz1"
 +++
+
 
 วันก่อนไปนั่งแกะ Authentication ของ Azure table มาเลย ว่าเวลาที่เค้ายืนยันตัวตน ผ่าน API เค้าทำยังไง แล้วก็เจอว่าเค้าใช้ เค้าใช้ Signature คู่กับ Access Key และบังเอิญโพสของ [Alex Xu ใน X](https://x.com/alexxubyte) ว่าด้วยเรื่องของ ["How do we design effective and safe APIs?"](https://x.com/alexxubyte/status/1881034986561982952?t=u2PahKOS7wvncXHEorTJzQ&s=19) ซึ่งอธิบายเรื่องนึงที่ผมสังเกตุเห็นก็คือ
 
