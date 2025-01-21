@@ -111,7 +111,7 @@ Body: { "productId": 123, "quantity": 1 }
 
 ## ตัวอย่างการใช้งานจริงจาก Azure Table
 
-ในตัวอย่างผมแกะมาจาก Scheme ที่เป็น  **Shared Key Lite** ซึ่งเป็นวิธีการ Authentication ไปยัง Azure Table วิธีการนึง [**Shared Key authorization**](https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key) ซึ่งผมได้แกะมาจาก Source Code ของ Azure Table Client ที่อยู่ใน npm [@azure/data-tables@13.3.0](https://www.npmjs.com/package/@azure/data-tables) โดยตัวอย่างข้างล่างผมหยิบมาจากตัวอย่างโค๊ด [tablesNamedCredentialPolicy.ts](https://github.com/Azure/azure-sdk-for-js/blob/%40azure/data-tables_13.3.0/sdk/tables/data-tables/src/tablesNamedCredentialPolicy.ts)
+ในตัวอย่างผมแกะมาจาก Scheme ที่เป็น  **Shared Key Lite** ซึ่งเป็นวิธีการ Authentication ไปยัง Azure Table วิธีการนึง [**Shared Key authorization**](https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key) ซึ่งผมได้แกะมาจาก Source Code ของ Azure Table Client ที่อยู่ใน npm [@azure/data-tables@13.3.0](https://www.npmjs.com/package/@azure/data-tables) โดยตัวอย่างข้างล่างผมหยิบมาจากตัวอย่างโค๊ด [tablesNamedCredentialPolicy.ts](https://github.com/Azure/azure-sdk-for-js/blob/%40azure/data-tables_13.3.0/sdk/tables/data-tables/src/tablesNamedCredentialPolicy.ts#L37-L64)
 
 Azure Table Storage ใช้การยืนยันตัวตนแบบ **Shared Key Lite** โดยต้องสร้าง Signature จากข้อมูลใน Request  เช่น:
 
