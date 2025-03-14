@@ -3,4 +3,16 @@ static/js/src
 
 .DS_Store
 
-.obsidian
+
+# Obsidians
+.obsidian/*
+# Exception   
+!.obsidian/plugins
+!.obsidian/core-plugins.json
+!.obsidian/community-plugins.json
+# Plugin Files
+
+# Exclude Untitled Notes
+Untitled*
+# Exclude "bad" names
+null*
