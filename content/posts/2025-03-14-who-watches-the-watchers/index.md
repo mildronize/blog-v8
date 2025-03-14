@@ -6,7 +6,10 @@ date = "2025-03-14"
 categories = [ "Security" ]
 tags = [ "Security", "System Design" ]
 
+[extra]
+id = "eev8i65"
 +++
+
 
 ช่วงนี้กำลังออกแบบระบบ Security อยู่ ตอนแรกคิดว่าไม่น่าจะยาก แค่ต้อง **Encrypt ข้อมูลใน Vault** ก็พอ แต่พอเริ่มทำจริงๆ เจอปัญหาคลาสสิกขึ้นมาเลย
 
