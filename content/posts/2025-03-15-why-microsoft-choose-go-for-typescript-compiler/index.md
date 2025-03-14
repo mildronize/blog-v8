@@ -4,8 +4,12 @@ date = "2025-03-15"
 
 [taxonomies]
 categories = [ "TypeScript" ]
-tags = [ "TypeScript", "Design Choice", "tsc", "golang"]
+tags = [ "TypeScript", "Design Choice", "tsc", "golang" ]
+
+[extra]
+id = "8odujuo"
 +++
+
 
 
 ตอนนี้เรื่อง TypeScript กำลังจะย้าย Compiler ไปใช้ Go แทน JavaScript กำลังเป็นประเด็นร้อน มีคนดังหลายคนในวงการออกมาวิเคราะห์กันเพียบ อย่าง Theo, Matt Pocock, และ Maximilian Schwarzmüller ซึ่งแน่นอนว่ามันต้องถึงเวลาของเพจ Thaitype แล้วแหละ แต่ว่าจะไม่ได้ดังอะไรขนาดนั้น 5555+ แต่เรื่องนี้น่าสนใจมากๆ 
