@@ -36,6 +36,8 @@ TypeScript Compiler เดิมเขียนด้วย JavaScript และ
 
 Microsoft ทดลองเขียน Prototype ใน Rust, Go และ C# มาแล้ว ซึ่ง Rust มีปัญหาด้านการจัดการ Memory ที่ต้องใช้ Borrow Checker ซึ่งทำให้การแปลง Code ที่เดิมเขียนแบบ Dynamic ไปเป็น Rust ยุ่งยากขึ้นหลายเท่า ถ้าจะ Rewrite ใหม่ทั้งหมดใน Rust อาจใช้เวลา "หลายปี" กว่าที่จะทำให้มันเสถียร
 
+**หมายเหตุ:**  ซึ่งปัญหาไม่ได้อยู่ที่ตัวภาษา แต่อยู่การออกแบบ ถ้าจะออกแบบไม่ดี ก็จะเจอปัญหาจัดการ Memory ไม่ดีนัก ดังนั้นการทีี่ทำให้ Rust จัดการ Memory ได้ดี ก็คือต้องออกแบบใหม่ทั้งหมด ไม่สามารถ Port ไปใช้ได้โดยง่าย
+
 ### ✅ **Parallelism & Shared Memory Concurrency**
 
 Go มี **Goroutines** และรองรับ **Shared Memory Concurrency** ทำให้สามารถรันการตรวจสอบ Type ได้หลาย Process พร้อมกัน ซึ่งช่วยให้ Compiler เร็วขึ้นแบบเห็นได้ชัด ในขณะที่ JavaScript ต้องใช้ Web Workers ซึ่งไม่สามารถแชร์ Memory ได้โดยตรง ทำให้การทำ Parallel Processing มี Overhead สูงกว่า
