@@ -36,7 +36,7 @@ TypeScript Compiler เดิมเขียนด้วย JavaScript และ
 
 Microsoft ทดลองเขียน Prototype ใน Rust, Go และ C# มาแล้ว ซึ่ง Rust มีประเด็นเรื่องการจัดการ Memory ที่ต้องใช้ Borrow Checker ซึ่งทำให้การแปลง Code ที่เดิมเขียนแบบ Dynamic ไปเป็น Rust ยุ่งยากขึ้นหลายเท่า ถ้าจะ Rewrite ใหม่ทั้งหมดใน Rust อาจใช้เวลา "หลายปี" กว่าที่จะทำให้มันเสถียร
 
-**หมายเหตุ:**  ซึ่งปัญหาไม่ได้อยู่ที่ตัวภาษา แต่อยู่การออกแบบ ถ้าจะออกแบบไม่ดี ก็จะเจอปัญหาจัดการ Memory ไม่ดีนัก ดังนั้นการทีี่ทำให้ Rust จัดการ Memory ได้ดี ก็คือต้องออกแบบใหม่ทั้งหมด ไม่สามารถ Port ไปใช้ได้โดยง่าย
+**หมายเหตุ:**  ซึ่งปัญหาไม่ได้อยู่ที่ตัวภาษา แต่อยู่การออกแบบตามแบบฉบับของตัวภาษานั้นๆ แล้วทำให้หน้าตาโค๊ดเปลี่ยนไปเยอะ จนทำให้ย้ายปรับปรุงให้เสร็จใช้เวลานาน เพราะฉะนั้นวัตถุประสงค์ของการเปลี่ยน Compiler คือการทำให้การเปลี่ยนแปลงเป็นไปอย่างราบรื่นและรวดเร็วที่สุด โดยที่ยังคงความเสถียรเหมือนเดิม
 
 ### ✅ **Parallelism & Shared Memory Concurrency**
 
@@ -71,9 +71,9 @@ Anders Hejlsberg สรุปประเด็นนี้ไว้ได้ช
 สุดท้ายแล้ว ถ้ามันเร็วขึ้น 10 เท่า และยังคงความเสถียรเหมือนเดิม ใช้ได้โดยความสามารถเท่าเดิม แค่นี้ผมก้ Happy มากๆ แล้วนะละ
 
 ## อ้างอิงต่างๆ 
-- Official Post Annoucement byAnders : "A 10x Faster TypeScript": https://devblogs.microsoft.com/typescript/typescript-native-port/
+- Official Post Annoucement byAnders : "A 10x Faster TypeScript": <https://devblogs.microsoft.com/typescript/typescript-native-port/>
 - Official Video Announcement by Anders: [https://www.youtube.com/watch?v=pNlq-EVld70](https://www.youtube.com/watch?v=pNlq-EVld70)
-- Anders Hejlsberg: [https://github.com/microsoft/typescript-go/discussions/411#discussioncomment-12476436](https://github.com/microsoft/typescript-go/discussions/411#discussioncomment-12476436)
+- Anders Hejlsberg: <https://github.com/microsoft/typescript-go/discussions/411#discussioncomment-12476218>
 -  TypeScript is being ported to Go | interview with Anders Hejlsberg: [https://www.youtube.com/watch?v=10qowKUW82U](https://www.youtube.com/watch?v=10qowKUW82U)
 - Maximilian Schwarzmüller : [https://www.youtube.com/watch?v=tRiIcCOhN6A](https://www.youtube.com/watch?v=tRiIcCOhN6A)
 - Theo: [https://www.youtube.com/watch?v=3-W95H5_lX0](https://www.youtube.com/watch?v=3-W95H5_lX0)
