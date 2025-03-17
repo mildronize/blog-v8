@@ -1,6 +1,7 @@
 +++
 title = "Effect: จัดการผลลัพธ์ (Result) ใน TypeScript ครบวงจร ไม่ว่าจะสำเร็จหรือไม่ และ Type-safety อีกด้วย"
-date = "2025-01-10"
+date = "2025-03-17"
+draft = true
 
 [taxonomies]
 tags = [ "Effect", "TypeScript", "Type-Safety", "Result", "Option" ]
