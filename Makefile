@@ -1,5 +1,5 @@
 serve-watch:
-	zola serve
+	zola serve --drafts
 
 # serve-cors: The serve-cors target is used to serve the site with CORS enabled.
 serve-cors:
