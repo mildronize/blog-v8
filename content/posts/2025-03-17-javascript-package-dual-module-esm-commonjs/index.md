@@ -5,9 +5,18 @@ draft = true
 
 [taxonomies]
 categories = [ "JavaScript" ]
-tags = [ "JavaScript", "Dual Module", "NPM Package", "ESM", "CommonJS"]
+tags = [
+  "JavaScript",
+  "Dual Module",
+  "NPM Package",
+  "ESM",
+  "CommonJS"
+]
 
+[extra]
+id = "1kpw9yk"
 +++
+
 
 
 # how most npm package which support both esm and commonjs publish into npm registry, 
