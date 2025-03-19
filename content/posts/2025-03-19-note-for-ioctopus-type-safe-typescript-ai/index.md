@@ -4,8 +4,19 @@ date = "2025-03-19"
 
 [taxonomies]
 categories = [ "TypeScript" ]
-tags = [ "TypeScript", "ioctopus", "DI", "AI", "Type-Safe", "inversify" ]
+tags = [
+  "TypeScript",
+  "ioctopus",
+  "DI",
+  "AI",
+  "Type-Safe",
+  "inversify"
+]
+
+[extra]
+id = "ud63sjg"
 +++
+
 
 ## แรงจูงใจ: ทำไมถึงอยากใช้ ioctopus?
 
