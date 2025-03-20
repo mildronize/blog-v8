@@ -17,10 +17,33 @@ tags = [
 id = "ud63sjg"
 +++
 
+วันนี้จะมาคุยกันเรื่อง Dependency Injection (DI) ใน TypeScript โดยเฉพาะปัญหาที่เกิดขึ้นเมื่อใช้ DI บน Edge Runtime เช่น Vercel Edge ซึ่งเป็นข้อจำกัดของบาง Library ที่ใช้ Reflection API
+
+**Background: Dependency Injection ใน Framework ดังๆ**
+
+หลายๆ คนที่เขียน Backend กันอยู่แล้ว อาจจะเคยใช้ Framework พวก Nest.js หรือถ้า .NET หรือ Java Spring Boot สิ่งที่ Framework พวกนี้ทำคล้ายๆ กันก็คือ เรื่องของ Decorator สำหรับทำ Dependency Injection และใช่ครับ นั่นเป็นหนึ่งใน Use Case ที่พบเห็นได้ทั่วไป และเป็นส่วนประกอบสำคัญของระบบระบบถอดประกอบส่วนต่างๆ ได้ อย่างเช่น Clean Architecture ของ ลุง Bob...
+
+ตัวอย่างใน Nest.js:
+
+```ts
+import { Controller, Get } from '@nestjs/common';
+
+@Controller('example')
+export class ExampleController {
+  @Get()
+  getHello(): string {
+    return 'Hello, NestJS!';
+  }
+}
+```
+
+แต่จริงๆ แล้ว Dependency Injection ไม่จำเป็นต้องใช้ decorator ก็ได้นะ
+
+การที่ library ใน Node.js จะใช้ decorator เพื่อทำ Dependency Injection มันต้องใช้ Reflection API (Reflect-metadata) เพื่อที่จะทำให้มันเกิดได้ แต่มันปัญหาก็คือมันผูกอยู่กับ Node.js Runtime กับพวกอื่นๆ ถ้าเราจะทำให้มันทำงานทุก Runtime ได้ ตรงนี้จึงไม่ตอบโจทย์
 
 ## แรงจูงใจ: ทำไมถึงอยากใช้ ioctopus?
 
-ช่วงที่ทำระบบ Dependency Injection (DI) ต้องการหา Runtime Agnostic Library ที่รองรับ Edge Runtime ของ Vercel หรือ Runtime อื่นๆ ได้ โดยที่ไม่ต้องใช้ [Reflection API](https://www.npmjs.com/package/reflect-metadata) ซึ่งเป็นข้อจำกัดของ [Inversify](https://github.com/inversify/InversifyJS) ทำให้ได้ลองใช้ [@evyweb/ioctopus](https://github.com/Evyweb/ioctopus) ซึ่งถูกออกแบบมาเพื่อลดความซับซ้อนและช่วยให้โค้ดสะอาดขึ้น 
+ช่วงที่ทำระบบ Dependency Injection (DI) ต้องการหา Runtime Agnostic Library ที่รองรับ Edge Runtime ของ Vercel หรือ Runtime อื่นๆ ได้ โดยที่ไม่ต้องใช้ [Reflection API](https://www.npmjs.com/package/reflect-metadata) ซึ่งเป็นข้อจำกัดของ [Inversify](https://github.com/inversify/InversifyJS) ทำให้ได้ลองใช้ [@evyweb/ioctopus](https://github.com/Evyweb/ioctopus) ซึ่งถูกออกแบบมาเพื่อลดความซับซ้อนและช่วยให้โค้ดสะอาดขึ้น
 
 > version ของ @evyweb/ioctopus ณ ตอนนี้เป็นเวอร์ชั่น 1.2.0
 
@@ -53,7 +76,7 @@ container.bind(DI.DEP2).toValue(42);
 container.bind('CURRIED_FUNCTION_WITH_DEPENDENCIES')
   .toCurry(curriedFunctionWithDependencies, [DI.DEP1]);
 
-// Step 4: ใช้งาน Dependencies ผ่าน Container 
+// Step 4: ใช้งาน Dependencies ผ่าน Container
 // ตรงนี้เราจะได้ Data จาก Dependencies ที่ผูกไว้ก่อนหน้า และเอาไปใช้งานได้จริง
 const myService = container.get<MyServiceInterface>(DI.HIGHER_ORDER_FUNCTION_WITH_DEPENDENCIES);
 ```
@@ -77,7 +100,7 @@ container.bind('DEP2').toValue(42);
 container.bind('CURRIED_FUNCTION_WITH_DEPENDENCIES')
   .toCurry(curriedFunctionWithDependencies, ['DEP1']);
 
-// Step 3: ใช้งาน Dependencies ผ่าน Container 
+// Step 3: ใช้งาน Dependencies ผ่าน Container
 const myService = container.get('CURRIED_FUNCTION_WITH_DEPENDENCIES');
 ```
 
@@ -115,7 +138,7 @@ const myService = container.get('HIGHER_ORDER_FUNCTION_WITH_DEPENDENCIES');
 
 เพราะ `createContainer(serviceRegistry)` ได้รับ serviceRegistry อยู่แล้ว เลยไม่จำเป็นต้อง `serviceRegistry.get(...)` ก่อนเรียก `container.get(...)`
 
-และเพื่อให้เห็นภาพมากขึ้นเราลองมาดูตัวอย่างโค๊ดกัน 
+และเพื่อให้เห็นภาพมากขึ้นเราลองมาดูตัวอย่างโค๊ดกัน
 
 ```ts
 export function createContainer<Services extends Record<string, unknown> = {}>(
@@ -131,7 +154,7 @@ export function createContainer<Services extends Record<string, unknown> = {}>(
         if(!dependencyKey) {
             throw new Error(`No key found for dependency: ${dependencyKey}`);
         }
-       
+
        // ...
     }
     // ...
@@ -152,7 +175,7 @@ export function createContainer<Services extends Record<string, unknown> = {}>(
 Error: No key found for dependency: undefined
 ```
 
-ตอนแรก คิดว่าเป็นปัญหาจาก Jest / Vitest Runtime เพราะใน AI ก็บอกมาแบบนั้น แต่เมื่อไปรันบน Node.js ตรงๆ กลับพบว่า ไม่เกี่ยวเลย! จากที่เคยเข้าใจว่า 
+ตอนแรก คิดว่าเป็นปัญหาจาก Jest / Vitest Runtime เพราะใน AI ก็บอกมาแบบนั้น แต่เมื่อไปรันบน Node.js ตรงๆ กลับพบว่า ไม่เกี่ยวเลย! จากที่เคยเข้าใจว่า
 
 > แต่ตอน get(...) ค่า serviceRegistry.get(dependency) กลับ undefined (ตรง 📌 B)
 
@@ -194,7 +217,7 @@ Error: No key found for dependency: undefined
 export function createContainer<Services extends Record<string, unknown> = {}>(
     serviceRegistry: ServiceRegistry<Services>
 ): Container<Services> {
-    // ... 
+    // ...
     const resolveDependencyKey = (dependency: DependencyKeyType<Services>) => {
         let dependencyKey: symbol | undefined;
 
@@ -208,14 +231,14 @@ export function createContainer<Services extends Record<string, unknown> = {}>(
 
         return dependencyKey;
     };
-    
+
 
     const get = <T>(dependency: DependencyKeyType<Services>): T => {
         const dependencyKey = resolveDependencyKey(dependency);
         if (!dependencyKey) {
             throw new Error(`No key found for dependency: ${dependency.toString()}`);
         }
-        // ... 
+        // ...
     };
 }
 ```
@@ -241,4 +264,4 @@ export function createContainer<Services extends Record<string, unknown> = {}>(
 การตั้งสมมติฐานควรตั้งอย่างใจเย็น ค่อยๆ ลดความเป็นไปได้ลง อย่าเชื่อ AI เยอะ แม้ว่าจะเป็น Model ที่ฉลาดๆ อย่าง o1 ก็ตาม
 เพราะบริบทที่เข้าใจของ AI อาจจะไม่ตรงกับบริบทที่เราเข้าใจ และอาจจะทำให้เสียเวลาไปมากกว่าที่ควรจะเป็น
 
-ถ้าใครเคยเจอปัญหาแนวนี้ มาแชร์กันได้ในคอมเมนต์เลยครับ 
+ถ้าใครเคยเจอปัญหาแนวนี้ มาแชร์กันได้ในคอมเมนต์เลยครับ
