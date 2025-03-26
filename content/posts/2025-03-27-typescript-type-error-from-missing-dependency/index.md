@@ -4,8 +4,12 @@ date = "2025-03-27"
 
 [taxonomies]
 categories = [ "TypeScript" ]
-tags = [ "TypeScript"]
+tags = [ "TypeScript" ]
+
+[extra]
+id = "67b3z7y"
 +++
+
 
 
 ช่วงนี้ผมกำลังทำ npm package สำหรับจัดการ stack ต่าง ๆ ใน Kubernetes โดยใช้ไลบรารี `kubernetes-models` ร่วมกับระบบ controller ที่ผมเขียนเองชื่อว่า `kubricate` ซึ่งทุกอย่างดูจะโอเคดี แต่พอเขียนเป็น class และมี method ที่เรียกใช้ `new KubricateController().add(...)` แล้วคืนค่าออกมา TypeScript ก็เริ่มร้อง
