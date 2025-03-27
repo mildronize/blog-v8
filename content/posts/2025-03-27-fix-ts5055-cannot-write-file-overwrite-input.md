@@ -4,8 +4,18 @@ date = "2025-03-27"
 
 [taxonomies]
 categories = [ "TypeScript" ]
-tags = [ "TypeScript", "tsconfig", "build", "npm-package", "debugging" ]
+tags = [
+  "TypeScript",
+  "tsconfig",
+  "build",
+  "npm-package",
+  "debugging"
+]
+
+[extra]
+id = "2gqjhha"
 +++
+
 
 ช่วงที่ผมกำลังพัฒนา library ตัวหนึ่งชื่อว่า `kubricate` ซึ่งเป็น framework สำหรับจัดการ Kubernetes manifests ด้วย TypeScript ผมตั้งค่าให้ build แบบ dual output ทั้ง ESM และ CJS โดยใช้ TypeScript compile ไปที่ `dist/esm` และ Babel แปลงเป็น `dist/cjs` ต่อ
 
