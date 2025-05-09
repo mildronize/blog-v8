@@ -57,6 +57,7 @@ recent_more_text = "more »"
 sections = [
     { name = "posts", path = "/posts", is_external = false },
     { name = "projects", path = "/projects", is_external = false },
+    { name = "talks", path = "/talks", is_external = false },
     { name = "about", path = "/about", is_external = false },
     { name = "garden", path = "https://garden.thadaw.com", is_external = true },
     { name = "resume", path = "/resume", is_external = true },
