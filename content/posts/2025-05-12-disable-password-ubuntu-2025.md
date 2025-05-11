@@ -4,14 +4,12 @@ date = "2025-05-12"
 
 [taxonomies]
 categories = [ "Linux" ]
-tags = [
-  "ssh",
-  "ubuntu",
-  "cloud-init",
-  "security",
-  "debugging"
-]
+tags = [ "ssh", "ubuntu", "cloud-init", "security", "debugging" ]
+
+[extra]
+id = "6nnlqym"
 +++
+
 
 I recently set up a small VM running Ubuntu and wanted to secure it a bit. One of the first things I usually do is disable SSH password authentication and use only key-based login. It’s more secure and makes SSH a lot more convenient if you’re jumping between machines often.
 
