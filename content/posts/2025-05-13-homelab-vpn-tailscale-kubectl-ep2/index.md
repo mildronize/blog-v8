@@ -5,7 +5,11 @@ date = "2025-05-13"
 [taxonomies]
 categories = [ "Kubernetes" ]
 tags = [ "Kubernetes", "ubuntu" ]
+
+[extra]
+id = "r7bizkr"
 +++
+
 
 ช่วงนี้ผมเริ่มกลับมาเล่น Homelab ใหม่อีกครั้งหลังจากที่ปล่อยให้เครื่อง Ubuntu Server วางฝุ่นมานานสองปี ตอนแรกว่าจะเอาไว้เล่นเกม แต่มันก็ไม่ได้ใช้สักที เลยตัดสินใจเปลี่ยนมาใช้ทำ Homelab แทน
 
