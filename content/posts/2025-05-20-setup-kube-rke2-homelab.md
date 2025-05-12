@@ -6,7 +6,11 @@ draft = true
 [taxonomies]
 categories = [ "Kubernetes" ]
 tags = [ "Kubernetes", "ubuntu" ]
+
+[extra]
+id = "24gzuld"
 +++
+
 
 ```
 $ lsb_release -a
