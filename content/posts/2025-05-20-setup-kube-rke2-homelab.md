@@ -389,3 +389,12 @@ $ cat /etc/fstab
 /dev/ubuntu-vg/kubedata /opt/kube-data ext4 defaults 0 2
 /dev/sda2 /mnt/storage-hdd ext4 defaults 0 2
 ```
+
+### After Reboot i've check again
+
+```bash
+$ mount | grep -E '/var/lib|/opt/kube-data|/mnt/storage-hdd'
+/dev/mapper/ubuntu--vg-kubedata on /opt/kube-data type ext4 (rw,relatime)
+/dev/mapper/ubuntu--vg-varlib on /var/lib type ext4 (rw,relatime)
+/dev/sda2 on /mnt/storage-hdd type ext4 (rw,relatime)
+```
