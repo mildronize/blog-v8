@@ -10,6 +10,7 @@ tags = [ "EasyOCR", "uv", "Thai", "Python", "Thai NLP" ]
 id = "c08tz9l"
 +++
  
+![cover](cover.jpg)
 
 {% note(header="TL;DR") %}
 ภาษาไทย OCR ยังไม่สมบูรณ์แบบ แต่ก็พอใช้ได้ในระดับฟรี เอาไปใช้ร่วมกับ GPT ช่วยปรับแก้ได้
