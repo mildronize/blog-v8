@@ -3,9 +3,13 @@ title = "ลอง EasyOCR ภาษาไทย และเล่น uv คร
 date = "2025-05-16"
 
 [taxonomies]
-categories = [ "OCR"]
-tags = [ "EasyOCR", "uv", "Thai","Python", "Thai NLP" ]
-+++ 
+categories = [ "OCR" ]
+tags = [ "EasyOCR", "uv", "Thai", "Python", "Thai NLP" ]
+
+[extra]
+id = "c08tz9l"
++++
+ 
 
 {% note(header="TL;DR") %}
 ภาษาไทย OCR ยังไม่สมบูรณ์แบบ แต่ก็พอใช้ได้ในระดับฟรี เอาไปใช้ร่วมกับ GPT ช่วยปรับแก้ได้
