@@ -4,8 +4,21 @@ date = "2025-05-17"
 
 [taxonomies]
 categories = [ "DevOps" ]
-tags = [ "Bun", "Docker", "Colima", "Mac M1", "QEMU", "Arm64", "x86", "M Series" ]
+tags = [
+  "Bun",
+  "Docker",
+  "Colima",
+  "Mac M1",
+  "QEMU",
+  "Arm64",
+  "x86",
+  "M Series"
+]
+
+[extra]
+id = "19kgsqu"
 +++
+
  
 ![cover](cover.jpg)
 
