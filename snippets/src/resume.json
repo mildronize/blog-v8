@@ -20,25 +20,10 @@
   },
   "work": [
     {
-      "position": "Technical Lead",
-      "startDate": "2024-11",
-      "endDate": "present",
-      "name": "T.T. Software Solution / WRM Software",
-      "location": "Thailand",
-      "summary": "As Technical Lead, I guide the team in delivering scalable, high-quality solutions by overseeing system architecture, infrastructure management, and DevOps workflows while driving strategic initiatives and fostering innovation.",
-      "highlights": [
-        "Lead and mentor the team to deliver scalable, high-quality solutions aligned with business objectives.",
-        "Oversee infrastructure management, system architecture, and DevOps workflows to ensure operational efficiency.",
-        "Drive the technology roadmap and foster innovation through strategic initiatives and technical consultation.",
-        "Collaborate with stakeholders to align technical goals with broader business objectives and ensure seamless delivery."
-      ],
-      "url": "https://www.linkedin.com/company/t-t-software-solution"
-    },
-    {
       "position": "DevOps & SRE Team Lead",
       "startDate": "2022-06",
-      "endDate": "2024-11",
-      "name": "T.T. Software Solution / WRM Software",
+      "endDate": "present",
+      "name": "WRM Software",
       "location": "Thailand",
       "summary": "Directed the delivery of secure, scalable infrastructure and system reliability while driving compliance and fostering team success through strategic leadership.",
       "highlights": [
@@ -46,20 +31,20 @@
         "Championed SOC2 compliance by implementing security controls, conducting assessments, and addressing risks proactively.",
         "Spearheaded sprint planning, code reviews, and technical consultation to deliver high-quality solutions aligned with business goals."
       ],
-      "url": "https://www.linkedin.com/company/t-t-software-solution"
+      "url": "https://www.linkedin.com/company/eleapp-inc."
     },
     {
       "position": "DevSecOps Engineer",
       "startDate": "2021-09",
       "endDate": "2022-06",
-      "name": "T.T. Software Solution / WRM Software",
+      "name": "WRM Software",
       "location": "Thailand",
       "summary": "Established DevOps processes and workflows from scratch, leveraging GitHub Actions, Terraform, and Azure.",
-     "highlights": [
-    "Built DevOps workflows and infrastructure as code from scratch using GitHub Actions, Terraform, and Azure, while creating automation tools in TypeScript to streamline processes.",
-    "Consulted and educated teams on DevOps practices, bringing legacy .NET applications into a modern CI/CD pipeline and promoting a culture of collaboration, alongside implementing robust development."
-  ],
-      "url": "https://www.linkedin.com/company/t-t-software-solution"
+      "highlights": [
+        "Built DevOps workflows and infrastructure as code from scratch using GitHub Actions, Terraform, and Azure, while creating automation tools in TypeScript to streamline processes.",
+        "Consulted and educated teams on DevOps practices, bringing legacy .NET applications into a modern CI/CD pipeline and promoting a culture of collaboration, alongside implementing robust development."
+      ],
+      "url": "https://www.linkedin.com/company/eleapp-inc."
     },
     {
       "position": "Full-Time Lecturer",
