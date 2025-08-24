@@ -114,7 +114,7 @@ Cloudflare กลายเป็นเหมือน รปภ. ด่านห
 
 เมื่อเราตั้งค่า Cloudflare DNS เป็น DNS only แล้ว เราก็ไปตั้งค่า Custom Domain ใน Azure App Service หรือ Container App ได้เลย พอ Azure ตรวจสอบความเป็นเจ้าของโดเมนเสร็จแล้ว เราก็กลับมาเปลี่ยน Cloudflare เป็น Proxy Mode ได้เลย
 
-![](dns-name-check.jpg)
+![](cloudflare-dns-name-check.jpg)
 
 เพราะไม่อย่างนั้น เวลาที่เราเปิด Proxy Mode ทันทีตั้งแต่แรก Azure จะตรวจสอบความเป็นเจ้าของโดเมนไม่ผ่าน Cloudflare จะไม่มี DNS record ที่ Azure ต้องการให้ตรวจสอบ อย่างเช่น ถ้าผมเปิด Proxy Mode
 
