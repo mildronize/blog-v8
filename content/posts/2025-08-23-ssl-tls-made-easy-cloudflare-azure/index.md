@@ -4,16 +4,12 @@ date = "2025-08-23"
 
 [taxonomies]
 categories = [ "DevOps" ]
-tags = [
-  "SSL",
-  "TLS",
-  "HTTPS",
-  "Certificate",
-  "Cloudflare",
-  "Azure",
-]
+tags = [ "SSL", "TLS", "HTTPS", "Certificate", "Cloudflare", "Azure" ]
 
+[extra]
+id = "93rv20c"
 +++
+
 
 สวัสดีครับ วันนี้อยากมาเล่าเรื่อง **SSL/TLS หรือ HTTPS** กันสักหน่อย
 คือหลาย ๆ คน (รวมถึงตัวผมเองเมื่อก่อน) มักจะรู้สึกว่า SSL นี่มันเหมือน **หลุมดำ** เลยครับ
