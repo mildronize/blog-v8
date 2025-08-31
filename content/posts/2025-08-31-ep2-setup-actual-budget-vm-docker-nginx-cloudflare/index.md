@@ -4,8 +4,20 @@ date = "2025-08-31"
 
 [taxonomies]
 categories = [ "DevOps" ]
-tags = [ "SSL", "Actual Budget", "HTTPS", "Certificate", "Cloudflare", "Azure", "Nginx"]
+tags = [
+  "SSL",
+  "Actual Budget",
+  "HTTPS",
+  "Certificate",
+  "Cloudflare",
+  "Azure",
+  "Nginx"
+]
+
+[extra]
+id = "06bt012"
 +++
+
 
 {% note(header="Series SSL/TLS กับ Cloudflare") %}
 - EP 1: [เข้าใจ SSL/TLS แบบง่าย ๆ ผ่าน Cloudflare และ Azure](/posts/ssl-tls-made-easy-cloudflare-azure/)
