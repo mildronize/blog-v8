@@ -8,10 +8,9 @@ tags = [ "SSL", "Actual Budget", "HTTPS", "Certificate", "Cloudflare", "Azure", 
 +++
 
 {% note(header="Series SSL/TLS กับ Cloudflare") %}
-- EP 1: [เข้าใจ SSL/TLS แบบง่าย ๆ ผ่าน Cloudflare และ Azure](/posts/2025-08-23-ssl-tls-made-easy-cloudflare-azure/)
+- EP 1: [เข้าใจ SSL/TLS แบบง่าย ๆ ผ่าน Cloudflare และ Azure](/posts/ssl-tls-made-easy-cloudflare-azure/)
 - EP 2: ลงมือจริง: Setup Actual Budget บน VM ด้วย Docker, Nginx และ Cloudflare (บทความนี้)
 {% end %}
-
 
 
 สวัสดีครับ วันนี้ก็จะมาต่อกันใน **EP2** ของซีรีส์ SSL/TLS ที่เราเริ่มไว้กันนะครับ ถ้าใครได้อ่านตอนแรกไปแล้วก็น่าจะพอเห็นภาพกว้าง ๆ ว่า HTTPS มันทำงานยังไง ผ่านตัวอย่าง Cloudflare กับ Azure ว่าเวลาเราเลือกใช้ Managed Service หรือ VM เองเนี่ย เรื่องของ certificate จะต่างกันยังไง แต่พอเข้าใจแล้ว คราวนี้เราจะลอง “ลงมือจริง” กันดูบ้างครับ

@@ -11,6 +11,11 @@ id = "93rv20c"
 +++
 
 
+{% note(header="Series SSL/TLS กับ Cloudflare") %}
+- EP 1: เข้าใจ SSL/TLS แบบง่าย ๆ ผ่าน Cloudflare และ Azure (บทความนี้)
+- EP 2: [ลงมือจริง: Setup Actual Budget บน VM ด้วย Docker, Nginx และ Cloudflare](/posts/ep2-setup-actual-budget-vm-docker-nginx-cloudflare/)
+{% end %}
+
 สวัสดีครับ วันนี้อยากมาเล่าเรื่อง **SSL/TLS หรือ HTTPS** กันสักหน่อย
 คือหลาย ๆ คน (รวมถึงตัวผมเองเมื่อก่อน) มักจะรู้สึกว่า SSL นี่มันเหมือน **หลุมดำ** เลยครับ
 ไม่รู้ว่ามันทำงานยังไง เห็นแค่พอเปิดเว็บแล้วมี “กุญแจสีเขียว” โผล่มาในเบราว์เซอร์ ก็น่าจะโอเคแล้ว
