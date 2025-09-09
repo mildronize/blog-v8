@@ -1,5 +1,5 @@
 +++
-title = "พื้นฐานของ DNS และการย้าย DNS ไปยัง Azure DNS Zone"
+title = "เข้าใจพื้นฐานของ DNS และการย้าย DNS ไปยัง Azure DNS Zone"
 date = "2025-09-09"
 
 [taxonomies]
