@@ -101,7 +101,7 @@ Cloudflare กลายเป็นเหมือน รปภ. ด่านห
 
 ### ตัวอย่างการตั้งค่า Custom Domain และ SSL บน Azure App Service
 
-![](app-service-custom-domain.jpg)
+![](azure-app-service-custom-domain.jpg)
 
 สามารถดูวิธีการตั้งค่า Custom Domain และ SSL บน Azure App Service ได้ที่ [Microsoft Docs: Add a custom domain to your app in Azure App Service](https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain) ครับ
 
