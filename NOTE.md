@@ -1,0 +1,1 @@
+sips -s formatOptions 50 create-azure-dns-zone.jpg --out out/create-azure-dns-zone.jpg
