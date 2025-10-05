@@ -5,7 +5,11 @@ date = "2025-10-05"
 [taxonomies]
 tags = [ "Console.log", "Event Loop", "Node.js", "JavaScript" ]
 categories = [ "Node.js" ]
+
+[extra]
+id = "38afpyx"
 +++
+
 
 สวัสดีเช้าวันอาทิตย์ พอดีวันก่อนได้มีโอกาสไปเห็นโพสต์ Twitter นึง โพสต์ถึงเรื่องของการที่ลบคอนโซลล็อก (`console.log`) ออกไปจาก Node.js แล้วก็ทำให้ **Performance ของ Server ดีขึ้น เยอะเลย**
 
