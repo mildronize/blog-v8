@@ -1,0 +1,8 @@
+<div class="youtube-wrapper {% if class %}{{ class }}{% endif %}">
+    <iframe
+        src="https://www.youtube.com/embed/{{ id }}{% if autoplay %}?autoplay=1{% endif %}"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+</div>
