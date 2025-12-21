@@ -1,0 +1,15 @@
+<div class="youtube-embed {% if class %}{{ class }}{% endif %}">
+    <iframe
+        src="https://www.youtube.com/embed/{{ id }}{% if autoplay %}?autoplay=1{% endif %}"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        title="{% if alt %}{{ alt }}{% else %}YouTube video{% endif %}">
+    </iframe>
+
+    {% if alt %}
+    <div class="youtube-caption">
+        {{ alt }}
+    </div>
+    {% endif %}
+</div>
