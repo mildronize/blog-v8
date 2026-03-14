@@ -115,7 +115,13 @@ export class MarkdownFileProcessor implements FileProcessor {
         continue;
       }
       const markdownContent = await fs.readFile(file, "utf8");
-      const result = extractMarkdownMetadata(dir, file, markdownContent);
+      let result: MarkdownMetadata;
+      try {
+        result = extractMarkdownMetadata(dir, file, markdownContent);
+      } catch (e) {
+        this.logger.debug(`Skipping (no valid front matter): ${file}`);
+        continue;
+      }
       if (!result.id) {
         if (this.mode === 'update') {
           const addedId = await this.updateId(file, markdownContent);

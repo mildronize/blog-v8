@@ -25,11 +25,16 @@ export function extractFrontMatter(markdownContent: string, options?: Partial<Fr
   const parser = options?.parser ?? defaultOptions.parser;
 
   const [start, _end] = delimiters;
-  const frontmatter = markdownContent.split(start)[1];
+  const parts = markdownContent.split(start);
+  const frontmatter = parts[1];
+
+  if (frontmatter == null) {
+    throw new Error('No front matter found — file may not have +++ delimiters');
+  }
 
   return {
     data: parser(frontmatter),
-    content: markdownContent.split(start)[2],
+    content: parts[2],
   }
 }
 
