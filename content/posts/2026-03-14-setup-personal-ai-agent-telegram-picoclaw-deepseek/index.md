@@ -5,9 +5,20 @@ date = "2026-03-14"
 draft = false
 
 [taxonomies]
-categories = ["AI"]
-tags = ["ai-agent", "picoclaw", "telegram", "notion", "deepseek", "digitalocean"]
+categories = [ "AI" ]
+tags = [
+  "ai-agent",
+  "picoclaw",
+  "telegram",
+  "notion",
+  "deepseek",
+  "digitalocean"
+]
+
+[extra]
+id = "i3df643"
 +++
+
 
 สวัสดีครับ วันก่อนผมได้มีโอกาสไปฟังงาน OpenClaw Meetup ครั้งแรกที่กรุงเทพ ในงานมีหลายๆ คนเข้ามาแชร์ประสบการณ์การใช้ OpenClaw กัน น่าสนใจดี แต่ที่ทำให้ผมหยุดฟังจริงจังเลยคือตอนที่พี่โดมคลาวน์พูดถึง PicoClaw ที่เขียนด้วย Golang เบามากๆ สามารถรันบน VM spec ต่ำๆ ได้ ตอนนั้นผมนั่งฟังแล้วคิดในใจว่า "อันนี้น่าเอามาเล่นจัง"
 
