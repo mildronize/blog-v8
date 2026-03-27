@@ -48,7 +48,7 @@ generator prismabox {
 พอมาฝั่ง route ก็ไม่ต้องเขียน `t.Object({...})` เองครับ import จาก prismabox แล้วใช้ `t.Pick` เอา field ที่ต้องการได้เลย
 
 ```typescript
-import { TodoPlain, TodoPlainInputCreate } from '../../../generated/prismabox/Todo'
+import { TodoPlain, TodoPlainInputCreate } from '#generated/prismabox/Todo'
 
 const CreateTodoBody = t.Pick(TodoPlainInputCreate, ['title', 'description'])
 
