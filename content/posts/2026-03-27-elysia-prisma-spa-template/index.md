@@ -4,10 +4,13 @@ description = "แชร์ประสบการณ์ทำ full-stack templ
 date = "2026-03-27"
 
 [taxonomies]
-tags = ["elysia", "prisma", "typescript", "react", "bun"]
-categories = ["Web Development"]
+tags = [ "elysia", "prisma", "typescript", "react", "bun" ]
+categories = [ "Web Development" ]
 
+[extra]
+id = "m4lk6op"
 +++
+
 
 ตอนที่ไปงาน BKK.JS 24 มีโอกาสได้พูดคุยกับออม แล้วก็ถามข้อสงสัยเกี่ยวกับ Elysia หลายอย่างเลยครับ ทำให้เข้าใจความตั้งใจในการออกแบบของออมมากขึ้น ทั้งเรื่องการออกแบบ Framework, การเขียน TypeScript, รวมถึงการ Optimize ต่างๆ
 
