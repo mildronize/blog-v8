@@ -5,7 +5,7 @@
     "label": "Technical Lead",
     "email": "thada.wth@gmail.com",
     "location": {
-      "city": "Hatyai",
+      "city": "Bangkok",
       "countryCode": "TH",
       "country": "Thailand"
     },
@@ -20,10 +20,10 @@
   },
   "work": [
     {
-      "position": "DevOps & SRE Team Lead",
+      "position": "DevOps Engineer (Lead)",
       "startDate": "2022-06",
       "endDate": "present",
-      "name": "WRM Software",
+      "name": "Itron (formerly Urbint and WRM Software)",
       "location": "Thailand",
       "summary": "Directed the delivery of secure, scalable infrastructure and system reliability while driving compliance and fostering team success through strategic leadership.",
       "highlights": [
@@ -31,7 +31,7 @@
         "Championed SOC2 compliance by implementing security controls, conducting assessments, and addressing risks proactively.",
         "Spearheaded sprint planning, code reviews, and technical consultation to deliver high-quality solutions aligned with business goals."
       ],
-      "url": "https://www.linkedin.com/company/eleapp-inc."
+      "url": "https://www.linkedin.com/company/itroninc/"
     },
     {
       "position": "DevSecOps Engineer",
@@ -136,8 +136,8 @@
     {
       "name": "Tools",
       "keywords": [
+        "AI Agents",
         "Docker",
-        "Memcached",
         "Jenkins",
         "Notion"
       ]
@@ -171,24 +171,21 @@
   ],
   "projects": [
     {
-      "name": "Nammatham",
-      "description": "Azure Functions Framework",
+      "name": "Kubricate",
+      "description": "TypeScript framework for type-safe Kubernetes infrastructure",
       "highlights": [
-        "Introduced v1 using the Decorator pattern to address challenges in Azure Functions Node.js v3.",
-        "Designed and developed a modular framework in v2 leveraging Azure Functions v4.",
-        "Successfully deployed the project in production, serving as the backbone of DevOps automation."
+        "Built a TypeScript framework replacing YAML with type-safe, reusable Stacks for Kubernetes manifest generation",
+        "Designed declarative secret management with pluggable connectors (Azure Key Vault, 1Password, Vault) for pipeline-time hydration",
+        "Delivered a CLI-first GitOps workflow (kubricate generate, secret apply) separating config from deployment"
       ],
       "keywords": [
         "Node.js",
         "TypeScript",
-        "Serverless",
-        "Azure Functions",
-        "FaaS",
-        "Nammatham"
+        "Kubernetes"
       ],
-      "startDate": "2023-01-01",
+      "startDate": "2025-01-01",
       "endDate": "present",
-      "url": "https://nammatham.thaitype.dev",
+      "url": "https://kubricate.thaitype.dev",
       "roles": [
         "Creator"
       ],
