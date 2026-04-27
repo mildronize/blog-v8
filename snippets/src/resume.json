@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
   "basics": {
     "name": "Thada Wangthammang",
-    "label": "Technical Lead",
+    "label": "DevOps Engineer (Lead)",
     "email": "thada.wth@gmail.com",
     "location": {
       "city": "Bangkok",
@@ -113,7 +113,8 @@
       "keywords": [
         "GitHub Actions",
         "Terraform",
-        "Azure"
+        "Azure",
+        "Kubernetes"
       ]
     },
     {
@@ -138,7 +139,6 @@
       "keywords": [
         "AI Agents",
         "Docker",
-        "Jenkins",
         "Notion"
       ]
     }
